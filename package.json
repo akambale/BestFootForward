@@ -1,0 +1,19 @@
+{
+  "name": "auth-service",
+  "version": "1.0.0",
+  "description": "Authentication micro service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo No tests have yet been written"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tbd"
+  },
+  "author": "Amogh Kambale",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.5",
+    "express": "^4.16.4"
+  }
+}
