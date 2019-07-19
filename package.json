@@ -1,19 +1,12 @@
 {
-  "name": "auth-service",
+  "name": "BestFoodForward",
   "version": "1.0.0",
-  "description": "Authentication micro service",
-  "main": "index.js",
+  "description": "An app to help you improve your dating profile",
+  "main": "server.js",
   "scripts": {
-    "test": "echo No tests have yet been written"
-  },
-  "repository": {
-    "type": "git",
-    "url": "tbd"
+    "test": "npm start",
+    "start": "node server.js"
   },
   "author": "Amogh Kambale",
-  "license": "MIT",
-  "dependencies": {
-    "bcrypt": "^3.0.5",
-    "express": "^4.16.4"
-  }
+  "license": "ISC"
 }
