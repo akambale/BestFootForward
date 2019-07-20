@@ -1,12 +1,58 @@
 {
-  "name": "BestFoodForward",
+  "name": "BestFootForward",
   "version": "1.0.0",
   "description": "An app to help you improve your dating profile",
   "main": "server.js",
   "scripts": {
     "test": "npm start",
-    "start": "node server.js"
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx",
+    "compile:all": "concurrently \"npm:build\" \"npm:compile-watch\"",
+    "start-prod": "concurrently \"npm:build-prod\" \"node src/server.js\"",
+    "build": "webpack --config webpack.dev.js -d --watch",
+    "build-prod": "webpack --config webpack.prod.js",
+    "start": "nodemon src/server.js",
+    "compile-scss": "node-sass src/scss/main.scss dist/index.css",
+    "compile-watch": "node-sass src/scss/main.scss dist/index.css --watch"
   },
   "author": "Amogh Kambale",
-  "license": "ISC"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.4.2",
+    "mysql": "^2.17.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-relay": "^5.0.0",
+    "@babel/polyfill": "^7.2.5",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^5.0.0",
+    "relay-compiler": "^5.0.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.7.0",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.3",
+    "prettier": "^1.16.4",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.3",
+    "webpack-merge": "^4.1.5"
+  }
 }

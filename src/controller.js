@@ -1,8 +1,8 @@
-const connection = require('connection.js');
+const connection = require('./connection.js');
 
 const db = {};
 
-db.insertUser = args => {
+db.insertUser = (args, send) => {
   const { userName } = args;
   var qString = `INSERT INTO users (name) VALUES ('${userName}');`;
   connection.query(qString, (error, results, fields) => {
@@ -12,20 +12,14 @@ db.insertUser = args => {
       return false;
     }
     // function will return true or false
-    return true;
+    send(results[0]);
   });
 };
 
-db.getUser = args => {
+db.getUser = (args, cb) => {
   const { userID } = args;
   var qString = `SELECT user_id, name FROM users WHERE user_id = '${userID}';`;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      throw error;
-    }
-
-    return results;
-  });
+  connection.query(qString, cb);
 };
 
 db.getAllUsers = args => {
@@ -35,7 +29,7 @@ db.getAllUsers = args => {
       return false;
     }
 
-    return results;
+    send(results[0]);
   });
 };
 
@@ -47,7 +41,7 @@ db.insertContent = args => {
       return false;
     }
 
-    return true;
+    send(results[0]);
   });
 };
 
