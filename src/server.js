@@ -1,24 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
-
-const schema = buildSchema(`
-  type Query {
-    hello: String
-  }`);
-
-const root = { hello: () => 'Hello world!' };
-const app = express();
-app.use(
-  '/graphql',
-  graphqlHTTP({
-    schema,
-    rootValue: root,
-    graphiql: true,
-  }),
-);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

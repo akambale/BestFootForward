@@ -1,4 +1,4 @@
-const connection = require('./connection.js');
+const connection = require('./connection.js/index.js');
 
 const db = {};
 
@@ -73,7 +73,7 @@ db.insertRating = args => {
 
 db.getAvgRating = args => {
   const { contentID } = args;
-  var qString = `SELECT AVG(rating) AS 'Average Rating' FROM ratings WHERE content_id = ${contentID};`;
+  var qString = `SELECT COUNT(rating) AS 'Total Votes', AVG(rating) AS 'Average Rating' FROM ratings WHERE picture_id = = ${contentID};`;
   connection.query(qString, (error, results, fields) => {
     if (error) {
       return false;
