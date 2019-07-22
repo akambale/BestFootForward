@@ -1,0 +1,8 @@
+#endpoint: ''
+endpoint: https://us1.prisma.sh/amogh-53a5a8/BestFootForward/dev
+
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client
