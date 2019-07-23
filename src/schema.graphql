@@ -1,16 +1,52 @@
-  type Query {
-    info: String!
-    feed: [Link!]!
-  }
+type Query {
+  info: String!
+  feed: [Link!]!
+}
 
-  type Mutation {
-    post(url: String!, description: String!): Link!
-    updateLink(id: ID!, url: String, description: String): Link
-    deleteLink(id: ID!): Link
-  }
+type Mutation {
+  post(url: String!, description: String!): Link!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload  
+}
 
-  type Link {
-    id: ID!
-    description: String!
-    url: String!
-  }
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  pictures: [Picture]!
+  blurbs: [Blurbs]!
+  feedback: [Feedback]!
+}
+
+type Blurb {
+  id: ID!
+  user: User!
+  text: String!
+  ratings: [Ratings]!
+}
+
+
+type Picture {
+  id: ID!
+  user: User!
+  url: String!
+  ratings: [Ratings]!
+}
+
+type Feedback {
+  id: ID!
+  user: User!
+  writtenByID: String!
+  text: String!
+  createdAt: DateTime!
+}
+
+Rating {
+  id: ID!
+  score: Int!
+}
