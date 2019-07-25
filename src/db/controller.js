@@ -1,66 +1,74 @@
-const connection = require('./connection.js/index.js');
+const connection = require('./connection.js');
 
 const db = {};
 
-db.insertUser = (args, send) => {
-  const { userName } = args;
-  var qString = `INSERT INTO users (name) VALUES ('${userName}');`;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      // I'm really bad at backend, not sure how to properly handle errors.
-      // just going to throw false on error
-      return false;
-    }
-    // function will return true or false
-    send(results[0]);
-  });
-};
-
 db.getUser = (args, cb) => {
   const { userID } = args;
-  var qString = `SELECT user_id, name FROM users WHERE user_id = '${userID}';`;
+  var qString = `SELECT userID, name FROM users WHERE userID = '${userID}';`;
   connection.query(qString, cb);
 };
 
-db.getAllUsers = args => {
-  var qString = 'SELECT * FROM users';
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      return false;
+db.insertUser = (args, cb) => {
+  const { name, age } = args;
+  var qString = `INSERT INTO users (name, age) VALUES ('${name}', ${age});`;
+  connection.query(qString, cb);
+};
+
+db.getAllUsers = (args, cb) => {
+  var qString = 'SELECT userID, name FROM users';
+  connection.query(qString, cb);
+};
+
+db.insertBlurb = (args, cb) => {
+  const { userID, blurb } = args;
+  var qString = `INSERT INTO blurbs (userID, blurb) VALUES (${userID}, '${blurb}');`;
+  connection.query(qString, cb);
+};
+
+const getAllBlurbsFromUserID = (userID, cb) => {
+  var qString = `SELECT blurbID, blurb FROM blurbs WHERE userID = ${userID};`;
+  connection.query(qString, cb);
+};
+
+db.insertPicture = (args, cb) => {
+  const { userID, picture } = args;
+  var qString = `INSERT INTO pictures (userID, pictureURL) VALUES (${userID}, '${picture}');`;
+  connection.query(qString, cb);
+};
+
+const getAllPicturesFromUserID = (userID, cb) => {
+  var qString = `SELECT pictureID, pictureURL FROM pictures WHERE userID = ${userID};`;
+  connection.query(qString, cb);
+};
+
+db.getAllPicturesAndBlurbsFromUserID = (args, cb) => {
+  const { userID } = args;
+  let data = [];
+  let error = false;
+  getAllBlurbsFromUserID(userID, (err, results) => {
+    if (err) {
+      error = true;
+      cb({ error, data });
+      return;
     }
 
-    send(results[0]);
+    data = results;
+    getAllPicturesFromUserID(userID, (err, results) => {
+      if (err) {
+        error = true;
+        cb({ error, data: [] });
+        return;
+      }
+
+      data = data.concat(results);
+      cb({ error, data });
+    });
   });
 };
 
-db.insertContent = args => {
-  const { userID, content } = args;
-  var qString = `INSERT INTO content (user_id, content) VALUES (${userID}, '${content}');`;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      return false;
-    }
-
-    send(results[0]);
-  });
-};
-
-db.getContent = args => {
-  const { contentID } = args;
-
-  var qString = `SELECT content_id, content FROM content WHERE content_id = '${contentID}';`;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      return false;
-    }
-
-    return results;
-  });
-};
-
-db.insertRating = args => {
+db.insertRating = (args, cb) => {
   const { contentID, rating } = args;
-  var qString = `INSERT INTO ratings (content_id, rating) VALUES (${contentID}, ${rating});
+  var qString = `INSERT INTO ratings (contentID, rating) VALUES (${contentID}, ${rating});
   `;
   connection.query(qString, (error, results, fields) => {
     if (error) {
@@ -71,40 +79,28 @@ db.insertRating = args => {
   });
 };
 
-db.getAvgRating = args => {
-  const { contentID } = args;
-  var qString = `SELECT COUNT(rating) AS 'Total Votes', AVG(rating) AS 'Average Rating' FROM ratings WHERE picture_id = = ${contentID};`;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      return false;
-    }
+db.getAvgRating = (args, cb) => {
+  const { pictureID, blurbID } = args;
+  let qString = '';
+  if (pictureID) {
+    qString = `SELECT COUNT(rating) AS 'Total Votes', ROUND(AVG(rating) * 100, 0) AS 'Average Rating' FROM ratings WHERE pictureID = ${pictureID};`;
+  } else {
+    qString = `SELECT COUNT(rating) AS 'Total Votes', ROUND(AVG(rating) * 100, 0) AS 'Average Rating' FROM ratings WHERE blurbID = ${blurbID};`;
+  }
 
-    return results;
-  });
+  connection.query(qString, cb);
 };
 
-db.insertFeedback = args => {
-  const { userName } = args;
-  var qString = ``;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      throw error;
-    }
-
-    // some code here
-  });
+db.insertFeedback = (args, cb) => {
+  const { userID, feedbackText } = args;
+  var qString = `INSERT INTO feedback (userID, feedbackText) VALUES (${userID}, '${feedbackText})`;
+  connection.query(qString, cb);
 };
 
-db.getFeedback = args => {
-  const { userName } = args;
-  var qString = ``;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      throw error;
-    }
-
-    // some code here
-  });
+db.getAllFeedbackForUser = (args, cb) => {
+  const { userID } = args;
+  var qString = `SELECT feedbackID, feedbackText FROM feedback WHERE userID = ${userID}`;
+  connection.query(qString, cb);
 };
 
 module.exports = db;

@@ -3,54 +3,52 @@ CREATE DATABASE best_foot;
 USE best_foot;
 
 CREATE TABLE users (
-  user_id INT AUTO_INCREMENT,
+  userID INT AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   age INT,
-  PRIMARY KEY(user_id)
+  PRIMARY KEY(userID)
 );
 
 CREATE TABLE blurbs (
-  blurb_id INT
-  AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  blurb VARCHAR
-  (255) NOT NULL,
-  PRIMARY KEY (blurb_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  blurbID INT AUTO_INCREMENT,
+  userID INT NOT NULL,
+  blurb VARCHAR (255) NOT NULL,
+  PRIMARY KEY (blurbID),
+  FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 CREATE TABLE pictures(
-  picture_id INT
+  pictureID INT
   AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  picture_url TEXT NOT NULL,
-  PRIMARY KEY(picture_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  userID INT NOT NULL,
+  pictureURL TEXT NOT NULL,
+  PRIMARY KEY(pictureID),
+  FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 CREATE TABLE ratings(
-  rating_id INT AUTO_INCREMENT,
-  picture_id INT,
-  blurb_id INT,
+  ratingID INT AUTO_INCREMENT,
+  pictureID INT,
+  blurbID INT,
   rating INT NOT NULL,
-  PRIMARY KEY (rating_id),
-  FOREIGN KEY (picture_id) REFERENCES pictures(picture_id),
-  FOREIGN KEY (blurb_id) REFERENCES blurbs(blurb_id)
+  PRIMARY KEY (ratingID),
+  FOREIGN KEY (pictureID) REFERENCES pictures(pictureID),
+  FOREIGN KEY (blurbID) REFERENCES blurbs(blurbID)
 
 );
 
 CREATE TABLE feedback(
-  feedback_id INT AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  feedback_text TEXT NOT NULL,
+  feedbackID INT AUTO_INCREMENT,
+  userID INT NOT NULL,
+  feedbackText TEXT NOT NULL,
   created DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (feedback_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  PRIMARY KEY (feedbackID),
+  FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 -- CREATE TABLE login(
---   user_id INT AUTO_INCREMENT,
+--   userID INT AUTO_INCREMENT,
 --   password VARCHAR(255),
 --   token VARCHAR(255) NOT NULL,
---   PRIMARY KEY (user_id) REFERENCES users(user_id)
+--   PRIMARY KEY (userID) REFERENCES users(userID)
 -- )
