@@ -61,6 +61,14 @@ app.post('/api/picture', (req, res) => {
   });
 });
 
+app.get('/api/firstPicture', (req, res) => {
+  db.getFirstPicture(req.query, (error, results) => {
+    if (error) {
+      console.log(error);
+    }
+  });
+});
+
 //done
 app.get('/api/userContent', async (req, res) => {
   db.getAllPicturesAndBlurbsFromUserID(req.query, data => {

@@ -1,0 +1,29 @@
+.profile {
+  &-box {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    flex-direction: column;
+    height: 150px;
+  }
+
+  &-name {
+    font-size: 32px;
+    color: teal;
+  }
+
+  &-photo {
+    max-height: 100px;
+    max-width: 100px;
+  }
+}
+
+.select-profile {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1200px;
+  height: 2000px;
+}
