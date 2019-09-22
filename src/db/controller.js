@@ -103,4 +103,10 @@ db.getAllFeedbackForUser = (args, cb) => {
   connection.query(qString, cb);
 };
 
+db.getFirstPicture = (args, cb) => {
+  const { userID } = args;
+  var qString = `SELECT pictureID, pictureURL FROM pictures WHERE userID = ${userID} LIMIT 1`;
+  connection.query(qString, cb);
+};
+
 module.exports = db;

@@ -66,6 +66,7 @@ app.get('/api/firstPicture', (req, res) => {
     if (error) {
       console.log(error);
     }
+    res.send({ err: false, data: results });
   });
 });
 
