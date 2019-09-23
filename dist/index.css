@@ -21,6 +21,10 @@ body {
   color: #0059ff;
   font-size: 1.5rem; }
 
+.textarea {
+  height: 100px;
+  width: 200px; }
+
 .profile-box {
   margin: 20px;
   padding: 20px;

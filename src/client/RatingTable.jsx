@@ -1,35 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import RatingTableRow from './RatingTableRow';
 
 const RatingTable = props => {
-  const [a, b] = useState();
+  const [a, b] = useState(null);
 
-  axios.get(`/api/userContent?userID=${props.id}`).then(response => {
-    const { data, err } = response.data;
-    if (err) {
-      alert('something went wrong 😞');
-      return;
-    }
-    const userContentArr = data.map(content => {
-      const { blurbID, blurb, pictureID, pictureURL } = content;
-      if (content.blurb) {
-        return (
-          <div className='table'>
-            <div className='left'>{blurb}</div>
-            <div className='right'>75%</div>
-          </div>
-        );
-      } else {
-        return (
-          <div className='table'>
-            <img className='left' src={pictureURL} />
-            <div className='right'>75%</div>
-          </div>
-        );
+  if (a === null) {
+    axios.get(`/api/userContent?userID=${props.userID}`).then(response => {
+      const { data, err } = response.data;
+      if (err) {
+        alert('something went wrong 😞');
+        return;
       }
+      const userContentArr = data.map((content, i) => {
+        return <RatingTableRow key={i} content={content} />;
+      });
+      b(userContentArr);
     });
-    b(userContentArr);
-  });
+  }
 
   return <div>{a}</div>;
 };

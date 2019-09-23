@@ -66,16 +66,20 @@ db.getAllPicturesAndBlurbsFromUserID = (args, cb) => {
   });
 };
 
-db.insertRating = (args, cb) => {
-  const { contentID, rating } = args;
-  var qString = `INSERT INTO ratings (contentID, rating) VALUES (${contentID}, ${rating});
-  `;
-  connection.query(qString, (error, results, fields) => {
-    if (error) {
-      return false;
+db.insertRating = (requestBody, cb) => {
+  const { blurbID, pictureID, rating } = requestBody;
+  let qString = '';
+  if (blurbID) {
+    qString = `INSERT INTO ratings (blurbID, rating) VALUES (${blurbID}, ${rating});`;
+  } else {
+    qString = `INSERT INTO ratings (pictureID, rating) VALUES (${pictureID}, ${rating});`;
+  }
+  connection.query(qString, err => {
+    if (err) {
+      cb({ error: true, data: false });
     }
 
-    return true;
+    cb({ error: false, data: true });
   });
 };
 
@@ -83,9 +87,9 @@ db.getAvgRating = (args, cb) => {
   const { pictureID, blurbID } = args;
   let qString = '';
   if (pictureID) {
-    qString = `SELECT COUNT(rating) AS 'Total Votes', ROUND(AVG(rating) * 100, 0) AS 'Average Rating' FROM ratings WHERE pictureID = ${pictureID};`;
+    qString = `SELECT COUNT(rating) AS 'voteCount', ROUND(AVG(rating) * 100, 0) AS 'avgRating' FROM ratings WHERE pictureID = ${pictureID};`;
   } else {
-    qString = `SELECT COUNT(rating) AS 'Total Votes', ROUND(AVG(rating) * 100, 0) AS 'Average Rating' FROM ratings WHERE blurbID = ${blurbID};`;
+    qString = `SELECT COUNT(rating) AS 'voteCount', ROUND(AVG(rating) * 100, 0) AS 'avgRating' FROM ratings WHERE blurbID = ${blurbID};`;
   }
 
   connection.query(qString, cb);

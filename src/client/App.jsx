@@ -6,11 +6,17 @@ import Blurb from './Blurb.jsx';
 import Picture from './Picture.jsx';
 import RateProfile from './RateProfile.jsx';
 import RatingTable from './RatingTable.jsx';
+import Feedback from './Feedback.jsx';
 import axios from 'axios';
 
 const App = () => {
   const [cardStack, setStack] = useState([]);
-  const [displayRatingTable, setDisplayRatingTable] = useState(false);
+  const [ratingTable, setDisplayRatingTable] = useState(null);
+
+  const removeTopCard = () => {
+    const newDeck = cardStack.slice(1);
+    setStack(newDeck);
+  };
 
   const addUserCardsToDeck = id => {
     axios.get(`/api/userContent?userID=${id}`).then(response => {
@@ -22,22 +28,26 @@ const App = () => {
       const userContentArr = data.map(content => {
         const { blurbID, blurb, pictureID, pictureURL } = content;
         if (content.blurb) {
-          return <Blurb key={blurbID} blurbID={blurbID} blurb={blurb} />;
+          return {
+            card: <Blurb key={blurbID} blurbID={blurbID} blurb={blurb} />,
+            blurbID: blurbID,
+            pictureID: null,
+          };
         } else {
-          return <Picture pictureID={pictureID} key={pictureID} pictureURL={pictureURL} />;
+          return {
+            card: <Picture pictureID={pictureID} key={pictureID} pictureURL={pictureURL} />,
+            blurbID: null,
+            pictureID: pictureID,
+          };
         }
       });
+      userContentArr.push(<Feedback removeTopCard={removeTopCard} />);
       setStack(userContentArr);
     });
-    setDisplayRatingTable(false);
+    setDisplayRatingTable(null);
   };
 
-  const showRatings = () => setDisplayRatingTable(true);
-
-  const removeTopCard = () => {
-    const newDeck = cardStack.slice(1);
-    setStack(newDeck);
-  };
+  const showRatings = userID => setDisplayRatingTable(<RatingTable userID={userID} />);
 
   return (
     <div>
@@ -47,12 +57,18 @@ const App = () => {
       </div>
       <div>
         {cardStack.length > 0 ? (
-          <RateProfile card={cardStack[0]} removeTopCard={removeTopCard} />
+          <RateProfile
+            card={cardStack[0].card}
+            removeTopCard={removeTopCard}
+            blurbID={cardStack[0].blurbID}
+            pictureID={cardStack[0].pictureID}
+          />
         ) : (
           <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />
         )}
       </div>
-      {displayRatingTable ? <RatingTable id={1} /> : null}
+      {ratingTable}
+      <button onClick={() => setDisplayRatingTable(null)}>clear results</button>
     </div>
   );
 };

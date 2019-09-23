@@ -23,10 +23,10 @@ const Profile = props => {
     <div className='profile-box'>
       <img src={pictureURL} alt='user image here' className='profile-photo' />
       <p className='profile-name' onClick={() => props.setProfile(props.userID)}>
-        {props.name ? props.name : 'Bob Belcher'}
+        {props.name}
       </p>
       <button onClick={() => props.addUserCardsToDeck(props.userID)}>Rate Profile</button>
-      <button onClick={props.showRatings}>View Rating Results</button>
+      <button onClick={() => props.showRatings(props.userID)}>View Rating Results</button>
     </div>
   );
 };

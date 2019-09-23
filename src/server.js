@@ -71,15 +71,16 @@ app.get('/api/firstPicture', (req, res) => {
 });
 
 //done
-app.get('/api/userContent', async (req, res) => {
+app.get('/api/userContent', (req, res) => {
   db.getAllPicturesAndBlurbsFromUserID(req.query, data => {
     res.send(data);
   });
 });
 
 app.post('/api/ratings', async (req, res) => {
-  const result = await db.insertUser(req.data);
-  res.send(result);
+  db.insertRating(req.body, data => {
+    res.send(data);
+  });
 });
 
 //done
