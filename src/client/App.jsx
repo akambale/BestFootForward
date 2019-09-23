@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-
 import SelectProfile from './SelectProfile.jsx';
-import Blurb from './Blurb.jsx';
-import Picture from './Picture.jsx';
 import RateProfile from './RateProfile.jsx';
 import RatingTable from './RatingTable.jsx';
 import Feedback from './Feedback.jsx';
@@ -16,6 +13,7 @@ const App = () => {
   const removeTopCard = () => {
     const newDeck = cardStack.slice(1);
     setStack(newDeck);
+    console.log(cardStack);
   };
 
   const addUserCardsToDeck = id => {
@@ -25,23 +23,7 @@ const App = () => {
         alert('something went wrong 😞');
         return;
       }
-      const userContentArr = data.map(content => {
-        const { blurbID, blurb, pictureID, pictureURL } = content;
-        if (content.blurb) {
-          return {
-            card: <Blurb key={blurbID} blurbID={blurbID} blurb={blurb} />,
-            blurbID: blurbID,
-            pictureID: null,
-          };
-        } else {
-          return {
-            card: <Picture pictureID={pictureID} key={pictureID} pictureURL={pictureURL} />,
-            blurbID: null,
-            pictureID: pictureID,
-          };
-        }
-      });
-      userContentArr.push(<Feedback removeTopCard={removeTopCard} />);
+      const userContentArr = data.map(content => ({ ...content, removeTopCard }));
       setStack(userContentArr);
     });
     setDisplayRatingTable(null);
@@ -57,12 +39,7 @@ const App = () => {
       </div>
       <div>
         {cardStack.length > 0 ? (
-          <RateProfile
-            card={cardStack[0].card}
-            removeTopCard={removeTopCard}
-            blurbID={cardStack[0].blurbID}
-            pictureID={cardStack[0].pictureID}
-          />
+          <RateProfile cardObj={cardStack[0]} removeTopCard={removeTopCard} />
         ) : (
           <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />
         )}

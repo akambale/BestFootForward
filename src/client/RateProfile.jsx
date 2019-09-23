@@ -1,35 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import Blurb from './Blurb.jsx';
+import Picture from './Picture.jsx';
+
 const RateProfile = props => {
-  const { blurbID, pictureID, removeTopCard, card } = props;
-  const postRating = rating => {
-    let postObject = {};
+  const [card, setCurrentCard] = useState(null);
+  const [postObject, setPostObject] = useState({});
+  const { removeTopCard, cardObj } = props;
+  const { blurbID, pictureID, blurb, pictureURL } = cardObj;
 
+  if (card === null) {
     if (blurbID) {
-      postObject = {
-        rating,
+      console.log(props);
+      setCurrentCard(<Blurb key={blurbID} blurbID={blurbID} blurb={blurb} />);
+      setPostObject({
         blurbID,
-      };
+      });
     } else {
-      postObject = {
-        rating,
+      setCurrentCard(<Picture pictureID={pictureID} key={pictureID} pictureURL={pictureURL} />);
+      setPostObject({
         pictureID,
-      };
+      });
     }
-
-    axios.post('/api/ratings', postObject).then(response => {
+  }
+  const postRating = rating => {
+    axios.post('/api/ratings', { ...postObject, rating }).then(response => {
       const { error } = response.data;
       if (error) {
         alert('something went wrong 😞');
       } else {
         removeTopCard();
+        setCurrentCard(null);
       }
     });
   };
 
   return (
     <div>
-      <div>{card}</div>
+      {card}
       <div className='like-dislike-container'>
         <button
           className='like-dislike-container__dislike like-dislike-container__button-shared'
