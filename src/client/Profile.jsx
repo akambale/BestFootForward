@@ -11,7 +11,7 @@ const Profile = props => {
         alert('something went wrong 😞');
         return;
       }
-      setPictureURL(data.pictureURL);
+      setPictureURL(data[0].pictureURL);
     });
   };
 
@@ -20,11 +20,13 @@ const Profile = props => {
   }
 
   return (
-    <div className='profile-box' onClick={props.setProfile(props.userID)}>
+    <div className='profile-box'>
       <img src={pictureURL} alt='user image here' className='profile-photo' />
       <p className='profile-name' onClick={() => props.setProfile(props.userID)}>
         {props.name ? props.name : 'Bob Belcher'}
       </p>
+      <button onClick={() => props.addUserCardsToDeck(props.userID)}>Rate Profile</button>
+      <button onClick={props.showRatings}>View Rating Results</button>
     </div>
   );
 };

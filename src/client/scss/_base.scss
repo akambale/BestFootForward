@@ -14,9 +14,15 @@ $color-blue: #0059ff;
 .app {
   color: $color-blue;
   font-size: 2rem;
+}
+
+.sassyDiv {
+  font-size: 3rem;
+  color: $color-sassy;
   text-align: center;
-  .sassyDiv {
-    font-size: 3rem;
-    color: $color-sassy;
-  }
+}
+
+.subtitle {
+  color: $color-blue;
+  font-size: 1.5rem;
 }

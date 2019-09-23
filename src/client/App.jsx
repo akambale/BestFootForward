@@ -5,13 +5,14 @@ import SelectProfile from './SelectProfile.jsx';
 import Blurb from './Blurb.jsx';
 import Picture from './Picture.jsx';
 import RateProfile from './RateProfile.jsx';
+import RatingTable from './RatingTable.jsx';
 import axios from 'axios';
 
 const App = () => {
-  const [currentProfile, changeCurrentProfile] = useState([]);
-  // const [nextProfile, changeNextProfile] = useState([]);
+  const [cardStack, setStack] = useState([]);
+  const [displayRatingTable, setDisplayRatingTable] = useState(false);
 
-  const setProfile = id => {
+  const addUserCardsToDeck = id => {
     axios.get(`/api/userContent?userID=${id}`).then(response => {
       const { data, err } = response.data;
       if (err) {
@@ -26,25 +27,32 @@ const App = () => {
           return <Picture pictureID={pictureID} key={pictureID} pictureURL={pictureURL} />;
         }
       });
-      changeCurrentProfile(userContentArr);
+      setStack(userContentArr);
     });
+    setDisplayRatingTable(false);
   };
 
+  const showRatings = () => setDisplayRatingTable(true);
+
   const removeTopCard = () => {
-    const newDeck = currentProfile.slice(1);
-    changeCurrentProfile(newDeck);
+    const newDeck = cardStack.slice(1);
+    setStack(newDeck);
   };
 
   return (
     <div>
-      <div className='sassyDiv'>Best Foot Forward</div>
+      <div className='sassyDiv'>
+        Best Foot Forward <br />
+        <span className='subtitle'>The app to help you optimize your dating profile</span>
+      </div>
       <div>
-        {currentProfile.length > 0 ? (
-          <RateProfile card={currentProfile[0]} removeTopCard={removeTopCard} />
+        {cardStack.length > 0 ? (
+          <RateProfile card={cardStack[0]} removeTopCard={removeTopCard} />
         ) : (
-          <SelectProfile setProfile={setProfile} />
+          <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />
         )}
       </div>
+      {displayRatingTable ? <RatingTable id={1} /> : null}
     </div>
   );
 };

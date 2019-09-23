@@ -15,14 +15,27 @@ const SelectProfile = props => {
       }
 
       const profiles = data.map(({ name, userID }) => {
-        return <Profile name={name} userID={userID} key={userID} setProfile={props.setProfile} />;
+        return (
+          <Profile
+            name={name}
+            userID={userID}
+            key={userID}
+            addUserCardsToDeck={props.addUserCardsToDeck}
+            showRatings={props.showRatings}
+          />
+        );
       });
 
       setProfiles(profiles);
     });
   }
 
-  return <div className='select-profile'>{profiles}</div>;
+  return (
+    <div className='select-profile'>
+      <h3>Select a profile to rate or review results</h3>
+      <div className='select-profile__cards'>{profiles}</div>
+    </div>
+  );
 };
 
 export default SelectProfile;

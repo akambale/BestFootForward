@@ -10,21 +10,26 @@ body {
 
 .app {
   color: #0059ff;
-  font-size: 2rem;
+  font-size: 2rem; }
+
+.sassyDiv {
+  font-size: 3rem;
+  color: #cc4397;
   text-align: center; }
-  .app .sassyDiv {
-    font-size: 3rem;
-    color: #cc4397; }
+
+.subtitle {
+  color: #0059ff;
+  font-size: 1.5rem; }
 
 .profile-box {
   margin: 20px;
   padding: 20px;
   border: 1px solid black;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-content: center;
   flex-direction: column;
-  height: 150px; }
+  height: 250px; }
 
 .profile-name {
   font-size: 32px;
@@ -35,10 +40,54 @@ body {
   max-width: 100px; }
 
 .select-profile {
+  padding: 50px; }
+  .select-profile__cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px; }
+
+.picture {
+  height: 500px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black; }
+
+.blurb {
+  width: 250px;
+  height: 500px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black; }
+
+.like-dislike-container {
   display: flex;
-  flex-wrap: wrap;
-  width: 1200px;
-  height: 2000px; }
+  justify-content: space-between;
+  align-content: center;
+  width: 250px;
+  height: 30px;
+  padding-left: 40px; }
+  .like-dislike-container__button-shared {
+    color: white;
+    border: none;
+    width: 50%; }
+  .like-dislike-container__like {
+    background-color: green; }
+  .like-dislike-container__dislike {
+    background-color: red; }
+
+.left {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  height: 150px; }
+
+.right {
+  border-bottom: 1px solid black;
+  width: 300px;
+  height: 50px; }
+
+.table {
+  width: 420px;
+  display: flex; }
 
 html,
 body {
