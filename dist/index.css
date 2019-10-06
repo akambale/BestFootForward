@@ -9,8 +9,9 @@ body {
   padding: 0; }
 
 .app {
-  color: #0059ff;
-  font-size: 2rem; }
+  position: relative;
+  max-width: 500px;
+  max-height: 800px; }
 
 .sassyDiv {
   font-size: 3rem;
@@ -26,8 +27,8 @@ body {
   width: 200px; }
 
 .profile-box {
-  margin: 20px;
-  padding: 20px;
+  margin: 10px;
+  padding: 10px;
   border: 1px solid black;
   display: flex;
   justify-content: flex-end;
@@ -44,11 +45,11 @@ body {
   max-width: 100px; }
 
 .select-profile {
-  padding: 50px; }
+  padding: 10px; }
   .select-profile__cards {
     display: flex;
     flex-wrap: wrap;
-    width: 1200px; }
+    width: inherit; }
 
 .picture {
   height: 500px;
@@ -92,6 +93,40 @@ body {
 .table {
   width: 420px;
   display: flex; }
+
+.nav-bar {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: aqua;
+  width: 100%; }
+  .nav-bar-heading {
+    font-size: 2rem; }
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%; }
+  .menu-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute;
+    height: 100%;
+    width: 70%;
+    background-color: purple; }
+  .menu-dismiss {
+    height: 100%;
+    width: 30%;
+    background-color: gray;
+    opacity: .5;
+    float: right; }
+
+.body {
+  display: flex;
+  justify-content: center; }
 
 html,
 body {

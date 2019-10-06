@@ -1,7 +1,7 @@
 .profile {
   &-box {
-    margin: 20px;
-    padding: 20px;
+    margin: 10px;
+    padding: 10px;
     border: 1px solid black;
     display: flex;
     justify-content: flex-end;
@@ -22,12 +22,12 @@
 }
 
 .select-profile {
-  padding: 50px;
+  padding: 10px;
 
   &__cards {
     display: flex;
     flex-wrap: wrap;
-    width: 1200px;
+    width: inherit;
   }
 }
 
@@ -82,4 +82,50 @@
 .table {
   width: 420px;
   display: flex;
+}
+
+
+.nav-bar {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: aqua;
+  width: 100%;
+
+
+  &-heading {
+    font-size: 2rem;
+  }
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute; 
+    height: 100%;
+    width: 70%;
+    background-color: purple;
+  }
+
+  &-dismiss {
+    height: 100%;
+    width: 30%;
+    background-color: gray;
+    opacity: .5;
+    float: right;
+  }
+}
+
+
+.body {
+  display: flex;
+  justify-content: center;
 }

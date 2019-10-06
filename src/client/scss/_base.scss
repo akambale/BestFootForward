@@ -12,8 +12,11 @@ $color-sassy: #cc4397;
 $color-blue: #0059ff;
 
 .app {
-  color: $color-blue;
-  font-size: 2rem;
+  // color: $color-blue;
+  // font-size: 2rem;
+  position: relative;
+  max-width: 500px;
+  max-height: 800px;
 }
 
 .sassyDiv {

@@ -4,16 +4,24 @@ import SelectProfile from './SelectProfile.jsx';
 import RateProfile from './RateProfile.jsx';
 import RatingTable from './RatingTable.jsx';
 import Feedback from './Feedback.jsx';
+import Nav from './Nav.jsx'
+import Menu from './Menu.jsx'
 import axios from 'axios';
 
 const App = () => {
   const [cardStack, setStack] = useState([]);
-  const [ratingTable, setDisplayRatingTable] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
+  const [pageContent, setPageContent] = useState(<SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />);
+  const [userIDBeingRated, setUserIDBeingRated] = useState(1);
 
   const removeTopCard = () => {
     const newDeck = cardStack.slice(1);
     setStack(newDeck);
     console.log(cardStack);
+
+    if (cardStack.length === 0) {
+      setPageContent(<RatingTable userID={userIDBeingRated} />)
+    }
   };
 
   const addUserCardsToDeck = id => {
@@ -25,27 +33,21 @@ const App = () => {
       }
       const userContentArr = data.map(content => ({ ...content, removeTopCard }));
       setStack(userContentArr);
+      setPageContent(<RateProfile cardObj={cardStack[0]} removeTopCard={removeTopCard} />)
+      setUserIDBeingRated(id);
     });
-    setDisplayRatingTable(null);
   };
-
-  const showRatings = userID => setDisplayRatingTable(<RatingTable userID={userID} />);
+  
+  const displayMenu = () => setShowMenu(true);
+  const hideMenu = () => setShowMenu(false);
+  const showRatings = () => setPageContent(<RatingTable userID={userIDBeingRated} />);
+  const changeViewSelectProfile = () => setPageContent(<SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />);
 
   return (
-    <div>
-      <div className='sassyDiv'>
-        Best Foot Forward <br />
-        <span className='subtitle'>The app to help you optimize your dating profile</span>
-      </div>
-      <div>
-        {cardStack.length > 0 ? (
-          <RateProfile cardObj={cardStack[0]} removeTopCard={removeTopCard} />
-        ) : (
-          <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />
-        )}
-      </div>
-      {ratingTable}
-      <button onClick={() => setDisplayRatingTable(null)}>clear results</button>
+    <div className='app'>
+      {showMenu ? <Menu hideMenu={hideMenu} changeViewSelectProfile={changeViewSelectProfile}/> : null}
+      <Nav displayMenu={displayMenu} />
+      {pageContent}
     </div>
   );
 };
