@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Blurb = props => (
+const Blurb = ({blurb}) => (
   <div className='blurb'>
-    <h4>Dating Profile Description</h4>
-    <p>{props.blurb}</p>
+    <h3>Dating Profile Description</h3>
+    <p>{blurb}</p>
   </div>
 );
 

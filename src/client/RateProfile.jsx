@@ -1,59 +1,39 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Blurb from './Blurb.jsx';
-import Picture from './Picture.jsx';
+import RatingTable from './RatingTable.jsx';
+import Card from './Card.jsx';
 
-const RateProfile = props => {
-  const [card, setCurrentCard] = useState(null);
-  const [postObject, setPostObject] = useState({});
-  const { removeTopCard, cardObj } = props;
-  const { blurbID, pictureID, blurb, pictureURL } = cardObj;
+const RateProfile = ({userID, setPageContent}) => {
+  const [cardStack, setCardStack] = useState([])
+  const [currentCard, setCurrentCard] = useState(null);
+  const [cardIndex, setCardIndex] = useState(0)
 
-  if (card === null) {
-    if (blurbID) {
-      console.log(props);
-      setCurrentCard(<Blurb key={blurbID} blurbID={blurbID} blurb={blurb} />);
-      setPostObject({
-        blurbID,
-      });
-    } else {
-      setCurrentCard(<Picture pictureID={pictureID} key={pictureID} pictureURL={pictureURL} />);
-      setPostObject({
-        pictureID,
-      });
-    }
-  }
-  const postRating = rating => {
-    axios.post('/api/ratings', { ...postObject, rating }).then(response => {
-      const { error } = response.data;
-      if (error) {
+  console.log(cardIndex);
+
+  if (cardStack.length === 0) {
+    axios.get(`/api/userContent?userID=${userID}`).then(response => {
+      const { data, err } = response.data;
+      if (err) {
         alert('something went wrong 😞');
-      } else {
-        removeTopCard();
-        setCurrentCard(null);
+        return;
       }
+      setCardStack(data);
     });
-  };
+  } else if (cardIndex >= cardStack.length) {
+      setPageContent(<RatingTable userID={userID} />)
+  } else if (!currentCard) {
+    setCurrentCard(cardStack[cardIndex]);
+  } else {
+    return (
+      <Card
+        currentCard={currentCard}
+        setCardIndex={setCardIndex}
+        cardIndex={cardIndex}
+      />
+    );
+  }
 
-  return (
-    <div>
-      {card}
-      <div className='like-dislike-container'>
-        <button
-          className='like-dislike-container__dislike like-dislike-container__button-shared'
-          onClick={() => postRating(0)}
-        >
-          Dislike
-        </button>
-        <button
-          className='like-dislike-container__like like-dislike-container__button-shared'
-          onClick={() => postRating(1)}
-        >
-          Like
-        </button>
-      </div>
-    </div>
-  );
+  return null;
 };
 
 export default RateProfile;

@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Menu = (props) => (
+const Menu = ({changeViewToSelectProfile, hideMenu}) => (
   <div className='menu'>
     <section className='menu-container'>
-      <button onClick={changeViewSelectProfile}>Browse Profiles</button>
+      <button onClick={changeViewToSelectProfile}>Browse Profiles</button>
       <button>About</button>
     </section>
-    <div className='menu-dismiss' onClick={props.hideMenu} />
+    <div className='menu-dismiss' onClick={hideMenu} />
   </div>
 );
 

@@ -9,43 +9,24 @@ import Menu from './Menu.jsx'
 import axios from 'axios';
 
 const App = () => {
-  const [cardStack, setStack] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
-  const [pageContent, setPageContent] = useState(<SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />);
-  const [userIDBeingRated, setUserIDBeingRated] = useState(1);
+  const [pageContent, setPageContent] = useState(null);
 
-  const removeTopCard = () => {
-    const newDeck = cardStack.slice(1);
-    setStack(newDeck);
-    console.log(cardStack);
-
-    if (cardStack.length === 0) {
-      setPageContent(<RatingTable userID={userIDBeingRated} />)
-    }
-  };
-
-  const addUserCardsToDeck = id => {
-    axios.get(`/api/userContent?userID=${id}`).then(response => {
-      const { data, err } = response.data;
-      if (err) {
-        alert('something went wrong 😞');
-        return;
-      }
-      const userContentArr = data.map(content => ({ ...content, removeTopCard }));
-      setStack(userContentArr);
-      setPageContent(<RateProfile cardObj={cardStack[0]} removeTopCard={removeTopCard} />)
-      setUserIDBeingRated(id);
-    });
-  };
-  
   const displayMenu = () => setShowMenu(true);
   const hideMenu = () => setShowMenu(false);
+  
+  const addUserCardsToDeck = id => setPageContent(<RateProfile userID={id} setPageContent={setPageContent} />);
+  const selectProfileComponent = <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />;
+  
   const showRatings = () => setPageContent(<RatingTable userID={userIDBeingRated} />);
-  const changeViewSelectProfile = () => setPageContent(<SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />);
+  const changeViewToSelectProfile = () => setPageContent(selectProfileComponent);
 
+  if (!pageContent) {
+    changeViewToSelectProfile();
+  }
   return (
     <div className='app'>
-      {showMenu ? <Menu hideMenu={hideMenu} changeViewSelectProfile={changeViewSelectProfile}/> : null}
+      {showMenu ? <Menu hideMenu={hideMenu} changeViewToSelectProfile={changeViewToSelectProfile}/> : null}
       <Nav displayMenu={displayMenu} />
       {pageContent}
     </div>
