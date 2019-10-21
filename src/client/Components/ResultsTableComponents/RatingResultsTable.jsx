@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import RatingTableRow from './RatingTableRow';
+import RatingResultsTableRow from './RatingResultsTableRow';
 
-const RatingTable = ({userID, changeViewToSelectProfile}) => {
+const RatingResultsTable = ({userID, changeViewToSelectProfile}) => {
   const [userContent, setUserContent] = useState([]);
   const [feedback, setFeedback] = useState([])
 
@@ -14,7 +14,7 @@ const RatingTable = ({userID, changeViewToSelectProfile}) => {
         return;
       }
       const userContentArr = data.map((content, i) => {
-        return <RatingTableRow key={i} content={content} />;
+        return <RatingResultsTableRow key={i} content={content} />;
       });
       setUserContent(userContentArr);
     });
@@ -43,4 +43,4 @@ const RatingTable = ({userID, changeViewToSelectProfile}) => {
   );
 };
 
-export default RatingTable;
+export default RatingResultsTable;

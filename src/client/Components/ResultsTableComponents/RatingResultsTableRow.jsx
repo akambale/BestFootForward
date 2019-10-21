@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const RatingTableRow = props => {
+const RatingResultsTableRow = props => {
   const [totalVotes, setTotalVotes] = useState('');
   const [averageRating, setAverageRating] = useState('');
 
@@ -38,4 +38,4 @@ const RatingTableRow = props => {
   );
 };
 
-export default RatingTableRow;
+export default RatingResultsTableRow;

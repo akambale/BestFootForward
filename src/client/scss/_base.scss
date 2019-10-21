@@ -8,29 +8,20 @@ body {
   padding: 0;
 }
 
-$color-sassy: #cc4397;
-$color-blue: #0059ff;
 
-.app {
-  // color: $color-blue;
-  // font-size: 2rem;
-  position: relative;
-  max-width: 500px;
-  max-height: 800px;
-}
 
-.sassyDiv {
-  font-size: 3rem;
-  color: $color-sassy;
-  text-align: center;
-}
+$color-off-white: #eae7dc;
+$color-text: #8e8d8a;
+$color-pink: #e98074;
+$color-poop: #d8c3a5;
+$color-red: #ea584f;
 
-.subtitle {
-  color: $color-blue;
-  font-size: 1.5rem;
-}
 
-.textarea {
-  height: 100px;
-  width: 200px;
+$color-tan: #efe2ba;
+$color-gold: #d79922;
+$color-blue: #4056a1;
+$color-light-blue: #c5cbe3;
+
+p, h3, h4, h5, h6 {
+  color: $color-pink;
 }

@@ -1,6 +1,6 @@
 const path = require('path');
 
-const SRC_DIR = path.join(__dirname, '/src/client');
+const SRC_DIR = path.join(__dirname, '/src/client/Components');
 const DES_DIR = path.join(__dirname, '/dist');
 
 module.exports = {

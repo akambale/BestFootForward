@@ -1,12 +1,7 @@
 // basics
-@import 'base.scss';
+@import 'base';
 @import 'components';
 @import 'layout';
 
 // Third party scripts
 @import 'vendor/simple-grid';
-
-div.sassyDiv {
-  font-size: 3rem;
-  color: #cc4397;
-}

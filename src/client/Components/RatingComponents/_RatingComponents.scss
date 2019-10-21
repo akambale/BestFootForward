@@ -1,0 +1,53 @@
+
+.blurb {
+  width: 250px;
+  height: 500px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid $color-red;
+
+  &-text {
+    color: $color-red;
+    font-weight: bold;
+  }
+
+  &-title {
+    font-weight: lighter;
+  }
+}
+
+.like-dislike-container {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  width: 250px;
+  height: 30px;
+  padding-left: 40px;
+
+  &__button-shared {
+    color: white;
+    border: none;
+    width: 50%;
+  }
+
+  &__like {
+    background-color: green;
+  }
+  &__dislike {
+    background-color: red;
+  }
+}
+
+
+.textarea {
+  height: 100px;
+  width: 200px;
+}
+
+
+.picture {
+  height: 500px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid $color-red;
+}

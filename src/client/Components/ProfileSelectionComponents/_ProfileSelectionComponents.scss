@@ -1,0 +1,33 @@
+
+.profile {
+  &-box {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid $color-red;
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+    flex-direction: column;
+    height: 250px;
+  }
+
+  &-name {
+    font-size: 32px;
+    color: $color-red;
+  }
+
+  &-photo {
+    max-height: 100px;
+    max-width: 100px;
+  }
+}
+
+.select-profile {
+  padding: 10px;
+
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: inherit;
+  }
+}
