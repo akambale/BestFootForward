@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import SelectProfile from './SelectProfile.jsx';
 import RateProfile from './RateProfile.jsx';
 import RatingTable from './RatingTable.jsx';
-import Feedback from './Feedback.jsx';
+import Feedback from './Feedback.jsx'
 import Nav from './Nav.jsx'
 import Menu from './Menu.jsx'
-import axios from 'axios';
 
 const App = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -14,12 +13,13 @@ const App = () => {
 
   const displayMenu = () => setShowMenu(true);
   const hideMenu = () => setShowMenu(false);
-  
-  const addUserCardsToDeck = id => setPageContent(<RateProfile userID={id} setPageContent={setPageContent} />);
-  const selectProfileComponent = <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />;
-  
-  const showRatings = () => setPageContent(<RatingTable userID={userIDBeingRated} />);
   const changeViewToSelectProfile = () => setPageContent(selectProfileComponent);
+  const showRatings = (userID) => setPageContent(<RatingTable userID={userID} changeViewToSelectProfile={changeViewToSelectProfile} />);
+  const showFeedback = (userID) => setPageContent(<Feedback userID={userID} showRatings={showRatings} />)
+  
+  const addUserCardsToDeck = id => setPageContent(<RateProfile userID={id} showFeedback={showFeedback} />);
+  const selectProfileComponent = <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} showRatings={showRatings} />;
+  
 
   if (!pageContent) {
     changeViewToSelectProfile();

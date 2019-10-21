@@ -70,18 +70,32 @@
 .left {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
-  height: 150px;
+  overflow: hidden;
+  max-height: 150px;
+  max-width: 270px;
+
+  &-image {
+    max-width: 75%;
+    max-height: 75%;
+  }
 }
 
 .right {
   border-bottom: 1px solid black;
-  width: 300px;
-  height: 50px;
+  width: 150px;
 }
 
 .table {
   width: 420px;
   display: flex;
+
+  &-feedback-row {
+    margin: 8px;
+  }
+
+  &-master {
+    max-width: 420px;
+  }
 }
 
 

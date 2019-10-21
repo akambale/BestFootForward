@@ -4,7 +4,7 @@ import CardStack from './CardStack.jsx';
 import Blurb from './Blurb.jsx';
 import Picture from './Picture.jsx';
 
-const RateProfile = ({userID, setPageContent}) => {
+const RateProfile = ({userID, showFeedback}) => {
   const [cards, setCards] = useState([]);
   if (cards.length === 0) {
     axios.get(`/api/userContent?userID=${userID}`).then(response => {
@@ -35,7 +35,7 @@ const RateProfile = ({userID, setPageContent}) => {
       ));
 
       setCards(
-        <CardStack cardObjects={cardObjects} setPageContent={setPageContent} userID={userID}/>
+        <CardStack showFeedback={showFeedback} cardObjects={cardObjects} userID={userID}/>
       );
     });
   }

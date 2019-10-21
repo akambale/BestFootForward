@@ -93,12 +93,10 @@ app.get('/api/avgRating', async (req, res) => {
   });
 });
 
+//done
 app.post('/api/feedback', async (req, res) => {
-  db.insertFeedback(req.query, (error, results) => {
-    if (error) {
-      res.send({ error: true, data: results });
-    }
-    res.send({ error: false, data: results });
+  db.insertFeedback(req.body, data => {
+    res.send(data);
   });
 });
 

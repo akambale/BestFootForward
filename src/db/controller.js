@@ -77,6 +77,7 @@ db.insertRating = (requestBody, cb) => {
   connection.query(qString, err => {
     if (err) {
       cb({ error: true, data: false });
+      return;
     }
 
     cb({ error: false, data: true });
@@ -97,8 +98,15 @@ db.getAvgRating = (args, cb) => {
 
 db.insertFeedback = (args, cb) => {
   const { userID, feedbackText } = args;
-  var qString = `INSERT INTO feedback (userID, feedbackText) VALUES (${userID}, '${feedbackText})`;
-  connection.query(qString, cb);
+  var qString = `INSERT INTO feedback (userID, feedbackText) VALUES (${userID}, '${feedbackText}')`;
+  connection.query(qString, err => {
+    if (err) {
+      cb({ error: true, data: false });
+      return;
+    }
+
+    cb({ error: false, data: true });
+  });
 };
 
 db.getAllFeedbackForUser = (args, cb) => {

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Profile from './Profile.jsx';
 
-const SelectProfile = ({addUserCardsToDeck}) => {
+const SelectProfile = ({addUserCardsToDeck, showRatings}) => {
   const [profiles, setProfiles] = useState([]);
 
   if (profiles.length < 1) {
@@ -21,6 +21,7 @@ const SelectProfile = ({addUserCardsToDeck}) => {
             userID={userID}
             key={userID}
             addUserCardsToDeck={addUserCardsToDeck}
+            showRatings={showRatings}
           />
         );
       });

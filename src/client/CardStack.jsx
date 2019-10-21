@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import LikeDislikeButtons from './LikeDislikeButtons.jsx';
-import RatingTable from './RatingTable.jsx';
 
-const CardStack = ({cardObjects, setPageContent, userID}) => {
+const CardStack = ({cardObjects, userID, showFeedback}) => {
   const [cardIndex, setCardIndex] = useState(0);
-  console.log('cardIndex', cardIndex);
 
   if (cardIndex >= cardObjects.length) {
-    setPageContent(<RatingTable userID={userID} />)
+    showFeedback(userID);
     return null;
   }
   const {element, postObject} = cardObjects[cardIndex];

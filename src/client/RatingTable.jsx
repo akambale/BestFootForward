@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import RatingTableRow from './RatingTableRow';
 
-const RatingTable = props => {
-  const [a, b] = useState(null);
+const RatingTable = ({userID, changeViewToSelectProfile}) => {
+  const [userContent, setUserContent] = useState([]);
+  const [feedback, setFeedback] = useState([])
 
-  if (a === null) {
-    axios.get(`/api/userContent?userID=${props.userID}`).then(response => {
+  if (userContent.length === 0) {
+    axios.get(`/api/userContent?userID=${userID}`).then(response => {
       const { data, err } = response.data;
       if (err) {
         alert('something went wrong 😞');
@@ -15,11 +16,31 @@ const RatingTable = props => {
       const userContentArr = data.map((content, i) => {
         return <RatingTableRow key={i} content={content} />;
       });
-      b(userContentArr);
+      setUserContent(userContentArr);
     });
+
+    axios.get(`/api/feedback?userID=${userID}`).then(response => {
+      const { data, err } = response.data;
+      if (err) {
+        alert('something went wrong 😞');
+        return;
+      }
+
+      const feedbackComponents = data.map(({feedbackText, feedbackID}) => <li key={feedbackID} className='table-feedback-row'>{feedbackText}</li>)
+      setFeedback(feedbackComponents);
+    })
   }
 
-  return <div>{a}</div>;
+  return (
+    <div className='table-master'>
+      {userContent}
+      <h4>Feedback from raters</h4>
+      <ul>
+        {feedback}
+      </ul>
+      <button onClick={changeViewToSelectProfile}>Return to Home Page</button>
+    </div>
+  );
 };
 
 export default RatingTable;
