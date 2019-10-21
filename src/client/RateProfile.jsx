@@ -1,39 +1,45 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import RatingTable from './RatingTable.jsx';
-import Card from './Card.jsx';
+import CardStack from './CardStack.jsx';
+import Blurb from './Blurb.jsx';
+import Picture from './Picture.jsx';
 
 const RateProfile = ({userID, setPageContent}) => {
-  const [cardStack, setCardStack] = useState([])
-  const [currentCard, setCurrentCard] = useState(null);
-  const [cardIndex, setCardIndex] = useState(0)
-
-  console.log(cardIndex);
-
-  if (cardStack.length === 0) {
+  const [cards, setCards] = useState([]);
+  if (cards.length === 0) {
     axios.get(`/api/userContent?userID=${userID}`).then(response => {
       const { data, err } = response.data;
       if (err) {
         alert('something went wrong 😞');
-        return;
+        return null;
       }
-      setCardStack(data);
-    });
-  } else if (cardIndex >= cardStack.length) {
-      setPageContent(<RatingTable userID={userID} />)
-  } else if (!currentCard) {
-    setCurrentCard(cardStack[cardIndex]);
-  } else {
-    return (
-      <Card
-        currentCard={currentCard}
-        setCardIndex={setCardIndex}
-        cardIndex={cardIndex}
-      />
-    );
-  }
 
-  return null;
-};
+      const cardObjects = data.map(({blurbID, blurb, pictureID, pictureURL}) => (
+        blurbID ? (
+          { 
+            element: <Blurb 
+              key={blurbID} 
+              blurb={blurb} 
+            />,
+            postObject: {blurbID},
+          }
+        ) : (
+          {
+            element: <Picture 
+              key={pictureID} 
+              pictureURL={pictureURL}
+            />,
+            postObject: {pictureID},
+          }
+        )
+      ));
+
+      setCards(
+        <CardStack cardObjects={cardObjects} setPageContent={setPageContent} userID={userID}/>
+      );
+    });
+  }
+  return <div>{cards}</div>;
+}
 
 export default RateProfile;
