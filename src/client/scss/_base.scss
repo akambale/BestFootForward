@@ -6,9 +6,8 @@ body {
   font-weight: 400;
   margin: 0;
   padding: 0;
+  outline: none;
 }
-
-
 
 $color-off-white: #eae7dc;
 $color-text: #8e8d8a;
@@ -16,12 +15,15 @@ $color-pink: #e98074;
 $color-poop: #d8c3a5;
 $color-red: #ea584f;
 
-
 $color-tan: #efe2ba;
 $color-gold: #d79922;
 $color-blue: #4056a1;
 $color-light-blue: #c5cbe3;
 
-p, h3, h4, h5, h6 {
+p,
+h3,
+h4,
+h5,
+h6 {
   color: $color-pink;
 }

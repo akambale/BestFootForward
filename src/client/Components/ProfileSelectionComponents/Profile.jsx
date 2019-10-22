@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Profile = ({userID, name, addUserCardsToDeck, showRatings}) => {
+const Profile = ({ userID, name, addUserCardsToDeck, showRatings }) => {
   const [pictureURL, setPictureURL] = useState();
 
   const getFirstPicture = userID => {
@@ -20,11 +20,17 @@ const Profile = ({userID, name, addUserCardsToDeck, showRatings}) => {
   }
 
   return (
-    <div className='profile-box'>
-      <img src={pictureURL} alt='user image here' className='profile-photo' />
-      <p className='profile-name'>{name}</p>
-      <button onClick={() => addUserCardsToDeck(userID)}>Rate Profile</button>
-      <button onClick={() => showRatings(userID)}>View Rating Results</button>
+    <div className='profile__container'>
+      <img src={pictureURL} alt='user image here' className='profile__photo' />
+      <p className='profile__name'>{name}</p>
+      <div className='profile__button__container'>
+        <div tabIndex='1' className='profile__button' onClick={() => addUserCardsToDeck(userID)}>
+          Rate Profile
+        </div>
+        <div tabIndex='1' className='profile__button' onClick={() => showRatings(userID)}>
+          View Rating Results
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,22 +1,14 @@
 import React from 'react';
 
-const LikeDislikeButtons = ({postRating}) => (
-    <div>
-      <div className='like-dislike-container'>
-      <button
-        className='like-dislike-container__dislike like-dislike-container__button-shared'
-        onClick={() => postRating(0)}
-      >
-        Dislike
-      </button>
-      <button
-        className='like-dislike-container__like like-dislike-container__button-shared'
-        onClick={() => postRating(1)}
-      >
-        Like
-      </button>
+const LikeDislikeButtons = ({ postRating }) => (
+  <div className='vote__container'>
+    <div className='vote__button vote__button__dislike' onClick={() => postRating(0)} tabIndex='1'>
+      <div className='vote__button__x'></div>
+    </div>
+    <div className='vote__button vote__button__like' onClick={() => postRating(1)} tabIndex='1'>
+      <div className='vote__button__check'></div>
     </div>
   </div>
-); 
+);
 
 export default LikeDislikeButtons;

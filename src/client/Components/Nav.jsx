@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 
-
-const Nav = (props) => (
-  <section className='nav-bar'>
-    <button className='nav-bar-menu-button' onClick={props.displayMenu}>
-      <div className='nav-bar-menu-button-icon' />
-    </button>
-    <h1 className="nav-bar-heading">
-      Best Foot Forward
-    </h1>
-  </section>
-)
+const Nav = props => (
+  <nav className='nav-bar'>
+    <div className='nav-bar__menu-button' onClick={props.displayMenu} tabIndex='1'>
+      <div className='nav-bar__menu-button__icon' />
+    </div>
+    <h1 className='nav-bar__heading'>Best Foot Forward</h1>
+  </nav>
+);
 
 export default Nav;

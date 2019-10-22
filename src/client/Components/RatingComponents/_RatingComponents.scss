@@ -1,49 +1,104 @@
-
 .blurb {
-  width: 250px;
-  height: 500px;
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid $color-red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
-  &-text {
+  &__container {
+    width: 80%;
+    height: 450px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid $color-red;
+  }
+
+  &__text {
     color: $color-red;
     font-weight: bold;
   }
 
-  &-title {
+  &__title {
     font-weight: lighter;
   }
+
+  &__flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+  }
 }
 
-.like-dislike-container {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  width: 250px;
-  height: 30px;
-  padding-left: 40px;
+.vote {
+  &__container {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    width: 100%;
+  }
 
-  &__button-shared {
+  &__button {
     color: white;
-    border: none;
-    width: 50%;
-  }
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
 
-  &__like {
-    background-color: green;
-  }
-  &__dislike {
-    background-color: red;
+    &:focus {
+      border: 3px solid $color-blue;
+    }
+
+    &__like {
+      background-color: $color-poop;
+    }
+    &__dislike {
+      background-color: $color-red;
+    }
+
+    &__check {
+      height: 40px;
+      width: 5px;
+      transform: translateX(8px) rotate(45deg);
+      background-color: white;
+      border-radius: 10px;
+    }
+
+    &__check::after {
+      height: 20px;
+      width: 5px;
+      transform: translate(-8px, 28px) rotate(-90deg);
+      background-color: white;
+      border-radius: 10px;
+    }
+
+    &__x,
+    &__x::after {
+      height: 40px;
+      width: 5px;
+      transform: rotate(45deg);
+      background-color: white;
+      border-radius: 10px;
+    }
+
+    &__x::after {
+      transform: rotate(-90deg);
+    }
+
+    &__check::after,
+    &__x::after {
+      content: '';
+      display: inline-block;
+    }
   }
 }
-
 
 .textarea {
   height: 100px;
   width: 200px;
 }
-
 
 .picture {
   height: 500px;
