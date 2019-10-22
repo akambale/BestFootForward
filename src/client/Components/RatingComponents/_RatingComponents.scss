@@ -155,3 +155,9 @@
   padding: 20px;
   border: 1px solid $color-red;
 }
+
+.card-stack__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

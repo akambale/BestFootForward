@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import LikeDislikeButtons from './LikeDislikeButtons.jsx';
 
-const CardStack = ({cardObjects, userID, showFeedback}) => {
+const CardStack = ({ cardObjects, userID, showFeedback }) => {
   const [cardIndex, setCardIndex] = useState(0);
 
   if (cardIndex >= cardObjects.length) {
     showFeedback(userID);
     return null;
   }
-  const {element, postObject} = cardObjects[cardIndex];
+  const { element, postObject } = cardObjects[cardIndex];
 
   const postRating = rating => {
     axios.post('/api/ratings', { ...postObject, rating }).then(response => {
@@ -24,10 +24,8 @@ const CardStack = ({cardObjects, userID, showFeedback}) => {
 
   return (
     <div>
-      {element}
-      <LikeDislikeButtons 
-        postRating={postRating}
-      />
+      <div className='card-stack__conatiner'>{element}</div>
+      <LikeDislikeButtons postRating={postRating} />
     </div>
   );
 };
