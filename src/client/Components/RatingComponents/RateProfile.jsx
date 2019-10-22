@@ -4,7 +4,24 @@ import CardStack from './CardStack.jsx';
 import Blurb from './Blurb.jsx';
 import Picture from './Picture.jsx';
 
-const RateProfile = ({userID, showFeedback}) => {
+const shuffle = arr => {
+  let currentIndex = arr.length;
+  let temporaryValue;
+  let randomIndex;
+
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = arr[currentIndex];
+    arr[currentIndex] = arr[randomIndex];
+    arr[randomIndex] = temporaryValue;
+  }
+
+  return arr;
+};
+
+const RateProfile = ({ userID, showFeedback }) => {
   const [cards, setCards] = useState([]);
   if (cards.length === 0) {
     axios.get(`/api/userContent?userID=${userID}`).then(response => {
@@ -14,32 +31,24 @@ const RateProfile = ({userID, showFeedback}) => {
         return null;
       }
 
-      const cardObjects = data.map(({blurbID, blurb, pictureID, pictureURL}) => (
-        blurbID ? (
-          { 
-            element: <Blurb 
-              key={blurbID} 
-              blurb={blurb} 
-            />,
-            postObject: {blurbID},
-          }
-        ) : (
-          {
-            element: <Picture 
-              key={pictureID} 
-              pictureURL={pictureURL}
-            />,
-            postObject: {pictureID},
-          }
-        )
-      ));
+      const shuffledData = shuffle(data);
 
-      setCards(
-        <CardStack showFeedback={showFeedback} cardObjects={cardObjects} userID={userID}/>
+      const cardObjects = shuffledData.map(({ blurbID, blurb, pictureID, pictureURL }) =>
+        blurbID
+          ? {
+              element: <Blurb key={blurbID} blurb={blurb} />,
+              postObject: { blurbID },
+            }
+          : {
+              element: <Picture key={pictureID} pictureURL={pictureURL} />,
+              postObject: { pictureID },
+            },
       );
+
+      setCards(<CardStack showFeedback={showFeedback} cardObjects={cardObjects} userID={userID} />);
     });
   }
   return <div>{cards}</div>;
-}
+};
 
 export default RateProfile;
