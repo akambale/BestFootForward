@@ -3,12 +3,15 @@
     margin: 10px;
     padding: 10px;
     border: 1px solid $color-red;
+    border-radius: 10px;
+    background-color: $color-pink-light;
     display: flex;
     align-items: center;
     flex-direction: column;
     height: 250px;
     width: 150px;
     text-align: center;
+    box-shadow: 0px 10px 15px 0px grey;
   }
 
   &__name {
@@ -17,8 +20,14 @@
   }
 
   &__photo {
-    max-height: 100px;
     max-width: 100px;
+
+    &-container {
+      max-height: 100px;
+      max-width: 100px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
   }
 
   &__button {

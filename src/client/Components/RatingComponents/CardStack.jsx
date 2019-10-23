@@ -24,7 +24,7 @@ const CardStack = ({ cardObjects, userID, showFeedback }) => {
 
   return (
     <div>
-      <div className='card-stack__conatiner'>{element}</div>
+      <div className='card-stack__container'>{element}</div>
       <LikeDislikeButtons postRating={postRating} />
     </div>
   );

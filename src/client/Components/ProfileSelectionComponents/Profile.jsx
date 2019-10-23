@@ -21,7 +21,9 @@ const Profile = ({ userID, name, addUserCardsToDeck, showRatings }) => {
 
   return (
     <div className='profile__container'>
-      <img src={pictureURL} alt='user image here' className='profile__photo' />
+      <div className='profile__photo-container'>
+        <img src={pictureURL} alt='user image here' className='profile__photo' />
+      </div>
       <p className='profile__name'>{name}</p>
       <div className='profile__button__container'>
         <div tabIndex='1' className='profile__button' onClick={() => addUserCardsToDeck(userID)}>

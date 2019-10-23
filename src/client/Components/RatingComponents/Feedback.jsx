@@ -25,23 +25,24 @@ const Feedback = ({ showRatings, userID }) => {
 
   return (
     <div className='feedback'>
-      <h3 className='feedback-title'>
-        Add some <span className='feedback-title-span'>constructive</span> feedback (optional)
-      </h3>
       <div className='feedback__textarea-container'>
         <textarea
           value={message}
           onChange={changeMessage}
           className='feedback__textarea'
-          placeholder='Type here . . . '
+          placeholder='Type here to give constructive feedback (optional) . . .'
         ></textarea>
       </div>
-      <div className='feedback__button-container'>
-        <div className='feedback__button' tabIndex='1' onClick={() => showRatings(userID)}>
-          Skip
+      <div className='vote__container'>
+        <div
+          className='vote__button vote__button__dislike'
+          onClick={() => showRatings(userID)}
+          tabIndex='1'
+        >
+          <p className='feedback__button-text'>Skip</p>
         </div>
-        <div className='feedback__button' tabIndex='1' onClick={submitFeedback}>
-          Submit
+        <div className='vote__button vote__button__like' onClick={submitFeedback} tabIndex='1'>
+          <p className='feedback__button-text'>Submit</p>
         </div>
       </div>
     </div>
