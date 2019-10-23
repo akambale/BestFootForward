@@ -26,7 +26,9 @@ const About = ({ changeViewToSelectProfile }) => (
       <a href='http://amoghk.com/contact'> Contact him about jobs</a> so he can afford to go on
       dates.
     </p>
-    <button onClick={changeViewToSelectProfile}>Go back</button>
+    <div className='table__dismiss-button' tabIndex='1' onClick={changeViewToSelectProfile}>
+      Return to Browse Profiles
+    </div>
   </div>
 );
 

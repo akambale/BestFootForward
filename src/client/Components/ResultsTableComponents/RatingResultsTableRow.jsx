@@ -31,9 +31,15 @@ const RatingResultsTableRow = props => {
   }
 
   return (
-    <div className='table'>
-      {blurb ? <div className='left'>{blurb}</div> : <div className='left'><img className='left-image' src={pictureURL} /></div>}
-      <div className='right'>{`Total Votes: ${totalVotes}`}<br />{`Average Rating: ${averageRating}%`}</div>
+    <div className='table__row'>
+      {blurb ? (
+        <div className='table__row__blurb'>{blurb}</div>
+      ) : (
+        <div className='table__row__image-container'>
+          <img className='table__row__image' src={pictureURL} />
+        </div>
+      )}
+      <div>{`Total Votes: ${totalVotes} | Average Rating: ${averageRating}%`}</div>
     </div>
   );
 };

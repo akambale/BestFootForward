@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import RatingResultsTableRow from './RatingResultsTableRow';
 
-const RatingResultsTable = ({userID, changeViewToSelectProfile}) => {
+const RatingResultsTable = ({ userID, changeViewToSelectProfile }) => {
   const [userContent, setUserContent] = useState([]);
-  const [feedback, setFeedback] = useState([])
+  const [feedback, setFeedback] = useState([]);
 
   if (userContent.length === 0) {
     axios.get(`/api/userContent?userID=${userID}`).then(response => {
@@ -26,19 +26,24 @@ const RatingResultsTable = ({userID, changeViewToSelectProfile}) => {
         return;
       }
 
-      const feedbackComponents = data.map(({feedbackText, feedbackID}) => <li key={feedbackID} className='table-feedback-row'>{feedbackText}</li>)
+      const feedbackComponents = data.map(({ feedbackText, feedbackID }) => (
+        <li key={feedbackID} className='table__feedback-row'>
+          "{feedbackText}"
+        </li>
+      ));
       setFeedback(feedbackComponents);
-    })
+    });
   }
 
   return (
-    <div className='table-master'>
+    <div className='table'>
+      <h3 className='table-heading-padding'>Total Votes for Profile Content</h3>
       {userContent}
-      <h4>Feedback from raters</h4>
-      <ul>
-        {feedback}
-      </ul>
-      <button onClick={changeViewToSelectProfile}>Return to Home Page</button>
+      <h4 className='table-heading-padding'>Feedback from Raters</h4>
+      <ul className='table__feedback-row-container'>{feedback}</ul>
+      <div className='table__dismiss-button' tabIndex='0' onClick={changeViewToSelectProfile}>
+        Return to Browse Profiles
+      </div>
     </div>
   );
 };

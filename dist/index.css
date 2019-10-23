@@ -28,7 +28,7 @@ h6 {
   height: 250px;
   width: 150px;
   text-align: center;
-  box-shadow: 0px 10px 15px 0px grey; }
+  box-shadow: 5px 3px 15px -5px grey; }
 
 .profile__name {
   font-size: 32px;
@@ -46,13 +46,13 @@ h6 {
   background-color: #e98074;
   font-size: 10px;
   padding: 3px;
-  width: 100%;
+  width: 110px;
   height: 30px;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid gray; }
+  border: 1px solid gray; }
   .profile__button:focus {
     border: 3px solid #4056a1; }
   .profile__button__container {
@@ -83,7 +83,7 @@ h6 {
     border: 5px solid #ea584f;
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0px 10px 15px 0px grey;
+    box-shadow: 5px 3px 15px -5px grey;
     background-color: #fdf6f5; }
   .blurb__text {
     color: #ea584f;
@@ -163,14 +163,13 @@ h6 {
     padding: 30px;
     background-color: #fdf6f5; }
     .feedback__textarea-container {
-      box-shadow: 0px 10px 15px 0px grey;
       height: 500px;
       width: 400px;
       margin: 20px;
       border: 5px solid #ea584f;
       border-radius: 15px;
       padding: 20px;
-      box-shadow: 0px 10px 15px 0px grey;
+      box-shadow: 5px 3px 15px -5px grey;
       background-color: #fdf6f5; }
 
 .picture {
@@ -186,34 +185,67 @@ h6 {
     align-items: center;
     background-color: #fdf6f5;
     overflow: hidden;
-    box-shadow: 0px 10px 15px 0px grey; }
+    box-shadow: 5px 3px 15px -5px grey; }
 
 .card-stack__container {
   display: flex;
   justify-content: center;
   align-items: center; }
 
-.left {
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
-  overflow: hidden;
-  max-height: 150px;
-  max-width: 270px; }
-  .left-image {
-    max-width: 75%;
-    max-height: 75%; }
-
-.right {
-  border-bottom: 1px solid black;
-  width: 150px; }
-
 .table {
-  width: 420px;
-  display: flex; }
-  .table-feedback-row {
-    margin: 8px; }
-  .table-master {
-    max-width: 420px; }
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center; }
+  .table-heading-padding {
+    padding: 10px; }
+  .table__feedback-row {
+    padding: 8px 0px;
+    list-style-type: none;
+    font-style: italic;
+    text-align: left; }
+    .table__feedback-row-container {
+      padding: 0px 30px; }
+  .table__row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; }
+    .table__row::after {
+      position: relative;
+      content: '';
+      width: 85%;
+      height: 1px;
+      background-color: lightgray;
+      margin: 10px auto; }
+    .table__row__blurb {
+      padding: 10px 30px;
+      font-size: 12px;
+      font-style: italic; }
+    .table__row__image {
+      max-width: 100%; }
+      .table__row__image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-height: 100px;
+        width: 100px;
+        overflow: hidden;
+        border-radius: 10px;
+        border: 2px solid #e98074;
+        margin: 10px 0px; }
+  .table__dismiss-button {
+    height: 50px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e98074;
+    border: 1px solid gray;
+    margin: 20px auto;
+    color: white; }
+    .table__dismiss-button:focus {
+      border: 2px solid #4056a1; }
 
 .app {
   position: relative;
@@ -224,12 +256,15 @@ h6 {
   overflow: scroll; }
 
 .nav-bar {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: start;
   align-items: center;
   background-color: #d8c3a5;
   width: 100%;
-  box-shadow: 0px 0px 3px gray; }
+  box-shadow: 0px -8px 15px 0px grey;
+  z-index: 1; }
   .nav-bar__heading {
     font-size: 2rem;
     color: #ea584f;
@@ -264,7 +299,7 @@ h6 {
   .menu__button {
     width: 100%;
     height: 50px;
-    border: 3px solid #d79922;
+    border: 3px solid #ea584f;
     padding: 10px;
     display: flex;
     align-items: center; }
@@ -276,14 +311,18 @@ h6 {
     justify-content: flex-start;
     position: absolute;
     height: 100%;
-    width: 70%;
-    background-color: #d79922; }
+    width: 40%;
+    background-color: #ea584f;
+    opacity: 1; }
   .menu__dismiss {
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 100%;
-    width: 30%;
+    width: 60%;
+    z-index: 9;
     background-color: gray;
-    opacity: 0.5;
-    float: right; }
+    opacity: 0.5; }
 
 .body {
   display: flex;

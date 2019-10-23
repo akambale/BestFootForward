@@ -13,14 +13,14 @@ const Menu = ({ changeViewToSelectProfile, hideMenu, changeViewToAbout }) => {
 
   return (
     <div className='menu'>
-      <section className='menu__container'>
+      <div className='menu__container'>
         <div className='menu__button' tabIndex='1' onClick={browseProfiles}>
           Browse Profiles
         </div>
         <div className='menu__button' tabIndex='1' onClick={about}>
           About
         </div>
-      </section>
+      </div>
       <div className='menu__dismiss' onClick={hideMenu} />
     </div>
   );
