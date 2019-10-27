@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Profile from './Profile.jsx';
 
-const SelectProfile = ({addUserCardsToDeck, showRatings}) => {
+const SelectProfile = () => {
   const [profiles, setProfiles] = useState([]);
 
   if (profiles.length < 1) {
@@ -15,15 +15,7 @@ const SelectProfile = ({addUserCardsToDeck, showRatings}) => {
       }
 
       const profiles = data.map(({ name, userID }) => {
-        return (
-          <Profile
-            name={name}
-            userID={userID}
-            key={userID}
-            addUserCardsToDeck={addUserCardsToDeck}
-            showRatings={showRatings}
-          />
-        );
+        return <Profile name={name} userID={userID} key={userID} />;
       });
 
       setProfiles(profiles);

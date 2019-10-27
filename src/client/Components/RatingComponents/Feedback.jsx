@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { navigate } from '@reach/router';
+import LikeDislikeButtons from './LikeDislikeButtons.jsx';
 
-const Feedback = ({ showRatings, userID }) => {
+const Feedback = ({ userID }) => {
   const [message, setMessage] = useState('');
 
   const changeMessage = e => {
@@ -16,10 +18,10 @@ const Feedback = ({ showRatings, userID }) => {
           alert('something went wrong 😞');
           return;
         }
-        showRatings(userID);
+        navigate(`/results/${userID}`);
       });
     } else {
-      showRatings(userID);
+      navigate(`/results/${userID}`);
     }
   };
 
@@ -33,18 +35,12 @@ const Feedback = ({ showRatings, userID }) => {
           placeholder='Type here to give constructive feedback (optional) . . .'
         ></textarea>
       </div>
-      <div className='vote__container'>
-        <div
-          className='vote__button vote__button__dislike'
-          onClick={() => showRatings(userID)}
-          tabIndex='1'
-        >
-          <p className='feedback__button-text'>Skip</p>
-        </div>
-        <div className='vote__button vote__button__like' onClick={submitFeedback} tabIndex='1'>
-          <p className='feedback__button-text'>Submit</p>
-        </div>
-      </div>
+      <LikeDislikeButtons
+        dislikeAction={() => navigate(`/results/${userID}`)}
+        dislikeMessage={'Skip'}
+        likeAction={submitFeedback}
+        likeMessage={'Submit'}
+      />
     </div>
   );
 };

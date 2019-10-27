@@ -7,43 +7,24 @@ import Feedback from './RatingComponents/Feedback.jsx';
 import Nav from './Nav.jsx';
 import Menu from './Menu.jsx';
 import About from './About.jsx';
+import { Router, Link } from '@reach/router';
 
 const App = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [pageContent, setPageContent] = useState(null);
 
   const displayMenu = () => setShowMenu(true);
   const hideMenu = () => setShowMenu(false);
-  const changeViewToSelectProfile = () => setPageContent(selectProfileComponent);
-  const changeViewToAbout = () => setPageContent(aboutComponent);
-  const showRatings = userID =>
-    setPageContent(
-      <RatingResultsTable userID={userID} changeViewToSelectProfile={changeViewToSelectProfile} />,
-    );
-  const showFeedback = userID =>
-    setPageContent(<Feedback userID={userID} showRatings={showRatings} />);
 
-  const addUserCardsToDeck = id =>
-    setPageContent(<RateProfile userID={id} showFeedback={showFeedback} />);
-  const selectProfileComponent = (
-    <SelectProfile addUserCardsToDeck={addUserCardsToDeck} showRatings={showRatings} />
-  );
-  const aboutComponent = <About changeViewToSelectProfile={changeViewToSelectProfile} />;
-
-  if (!pageContent) {
-    changeViewToSelectProfile();
-  }
   return (
     <div className='app'>
-      {showMenu ? (
-        <Menu
-          hideMenu={hideMenu}
-          changeViewToSelectProfile={changeViewToSelectProfile}
-          changeViewToAbout={changeViewToAbout}
-        />
-      ) : null}
+      {showMenu ? <Menu hideMenu={hideMenu} /> : null}
       <Nav displayMenu={displayMenu} />
-      {pageContent}
+      <Router>
+        <SelectProfile path='/' />
+        <RateProfile path='rateprofile/:userID' />
+        <RatingResultsTable path='results/:userID' />
+        <About path='about' />
+      </Router>
     </div>
   );
 };

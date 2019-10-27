@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import RatingResultsTableRow from './RatingResultsTableRow';
+import { navigate } from '@reach/router';
 
-const RatingResultsTable = ({ userID, changeViewToSelectProfile }) => {
+const RatingResultsTable = ({ userID }) => {
   const [userContent, setUserContent] = useState([]);
   const [feedback, setFeedback] = useState([]);
 
@@ -13,8 +14,8 @@ const RatingResultsTable = ({ userID, changeViewToSelectProfile }) => {
         alert('something went wrong 😞');
         return;
       }
-      const userContentArr = data.map((content, i) => {
-        return <RatingResultsTableRow key={i} content={content} />;
+      const userContentArr = data.map((content, pictureID, blurbID) => {
+        return <RatingResultsTableRow key={pictureID ? pictureID : blurbID} content={content} />;
       });
       setUserContent(userContentArr);
     });
@@ -41,7 +42,7 @@ const RatingResultsTable = ({ userID, changeViewToSelectProfile }) => {
       {userContent}
       <h4 className='table-heading-padding'>Feedback from Raters</h4>
       <ul className='table__feedback-row-container'>{feedback}</ul>
-      <div className='table__dismiss-button' tabIndex='0' onClick={changeViewToSelectProfile}>
+      <div className='table__dismiss-button' tabIndex='0' onClick={() => navigate('/')}>
         Return to Browse Profiles
       </div>
     </div>

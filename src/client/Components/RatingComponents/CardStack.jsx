@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import LikeDislikeButtons from './LikeDislikeButtons.jsx';
+import { navigate } from '@reach/router';
 
-const CardStack = ({ cardObjects, userID, showFeedback }) => {
+const CardStack = ({ cardObjects, userID }) => {
   const [cardIndex, setCardIndex] = useState(0);
 
   if (cardIndex >= cardObjects.length) {
-    showFeedback(userID);
+    navigate(`feedback/${userID}`);
     return null;
   }
   const { element, postObject } = cardObjects[cardIndex];
@@ -25,7 +26,18 @@ const CardStack = ({ cardObjects, userID, showFeedback }) => {
   return (
     <div>
       <div className='card-stack__container'>{element}</div>
-      <LikeDislikeButtons postRating={postRating} />
+      {postObject !== null ? (
+        <LikeDislikeButtons dislikeAction={() => postRating(0)} likeAction={() => postRating(1)} />
+      ) : null
+      // (
+      //   <LikeDislikeButtons
+      //     dislikeAction={() => navigate(`/results/${userID}`)}
+      //     dislikeMessage={'Skip'}
+      //     likeAction={submitFeedback}
+      //     likeMessage={'Submit'}
+      //   />
+      // )
+      }
     </div>
   );
 };

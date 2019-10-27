@@ -12,22 +12,22 @@ INSERT INTO blurbs (userID, blurb) VALUES (3, 'I love cats and I hate going outs
 INSERT INTO blurbs (userID, blurb) VALUES (3, 'WHY DOESNT ANY MAN LOVE ME? Will you love me and promise to never leave me? If so please swipe right');
 
 
-INSERT INTO pictures (userID, pictureURL) VALUES (1, './pics/amogh/1.jpg');
-INSERT INTO pictures (userID, pictureURL) VALUES (1, './pics/amogh/2.jpg');
-INSERT INTO pictures (userID, pictureURL) VALUES (1, './pics/amogh/3.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (1, './pics/amogh/4.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (1, './pics/amogh/5.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (1, './pics/amogh/6.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (2, './pics/bob/1.jpg');
-INSERT INTO pictures (userID, pictureURL) VALUES (2, './pics/bob/2.jpg');
-INSERT INTO pictures (userID, pictureURL) VALUES (2, './pics/bob/3.jpg');
-INSERT INTO pictures (userID, pictureURL) VALUES (2, './pics/bob/4.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (2, './pics/bob/5.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (3, './pics/gayle/1.jpg');
-INSERT INTO pictures (userID, pictureURL) VALUES (3, './pics/gayle/2.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (3, './pics/gayle/3.png');
-INSERT INTO pictures (userID, pictureURL) VALUES (3, './pics/gayle/4.jpg');
-INSERT INTO pictures (userID, pictureURL) VALUES (3, './pics/gayle/5.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (1, 'http://localhost:3000/pics/amogh/1.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (1, 'http://localhost:3000/pics/amogh/2.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (1, 'http://localhost:3000/pics/amogh/3.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (1, 'http://localhost:3000/pics/amogh/4.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (1, 'http://localhost:3000/pics/amogh/5.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (1, 'http://localhost:3000/pics/amogh/6.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (2, 'http://localhost:3000/pics/bob/1.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (2, 'http://localhost:3000/pics/bob/2.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (2, 'http://localhost:3000/pics/bob/3.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (2, 'http://localhost:3000/pics/bob/4.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (2, 'http://localhost:3000/pics/bob/5.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (3, 'http://localhost:3000/pics/gayle/1.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (3, 'http://localhost:3000/pics/gayle/2.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (3, 'http://localhost:3000/pics/gayle/3.png');
+INSERT INTO pictures (userID, pictureURL) VALUES (3, 'http://localhost:3000/pics/gayle/4.jpg');
+INSERT INTO pictures (userID, pictureURL) VALUES (3, 'http://localhost:3000/pics/gayle/5.jpg');
 
 
 INSERT INTO ratings (pictureID, rating) VALUES(1, 0);

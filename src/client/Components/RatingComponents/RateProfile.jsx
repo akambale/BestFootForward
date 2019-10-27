@@ -3,6 +3,7 @@ import axios from 'axios';
 import CardStack from './CardStack.jsx';
 import Blurb from './Blurb.jsx';
 import Picture from './Picture.jsx';
+import Feedback from './Feedback.jsx';
 
 const shuffle = arr => {
   let currentIndex = arr.length;
@@ -21,7 +22,7 @@ const shuffle = arr => {
   return arr;
 };
 
-const RateProfile = ({ userID, showFeedback }) => {
+const RateProfile = ({ userID }) => {
   const [cards, setCards] = useState([]);
   if (cards.length === 0) {
     axios.get(`/api/userContent?userID=${userID}`).then(response => {
@@ -45,7 +46,11 @@ const RateProfile = ({ userID, showFeedback }) => {
             },
       );
 
-      setCards(<CardStack showFeedback={showFeedback} cardObjects={cardObjects} userID={userID} />);
+      cardObjects.push({
+        element: <Feedback userID={userID} />,
+        postObject: null,
+      });
+      setCards(<CardStack cardObjects={cardObjects} userID={userID} />);
     });
   }
   return <div>{cards}</div>;

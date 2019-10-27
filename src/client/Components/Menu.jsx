@@ -1,25 +1,16 @@
 import React from 'react';
+import { Link } from '@reach/router';
 
-const Menu = ({ changeViewToSelectProfile, hideMenu, changeViewToAbout }) => {
-  const browseProfiles = () => {
-    changeViewToSelectProfile();
-    hideMenu();
-  };
-
-  const about = () => {
-    changeViewToAbout();
-    hideMenu();
-  };
-
+const Menu = ({ hideMenu }) => {
   return (
     <div className='menu'>
       <div className='menu__container'>
-        <div className='menu__button' tabIndex='1' onClick={browseProfiles}>
+        <Link className='menu__button' to='/' onClick={hideMenu}>
           Browse Profiles
-        </div>
-        <div className='menu__button' tabIndex='1' onClick={about}>
+        </Link>
+        <Link className='menu__button' to='about' onClick={hideMenu}>
           About
-        </div>
+        </Link>
       </div>
       <div className='menu__dismiss' onClick={hideMenu} />
     </div>

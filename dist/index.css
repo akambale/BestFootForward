@@ -249,11 +249,13 @@ h6 {
 
 .app {
   position: relative;
-  width: 450px;
-  height: 700px;
+  width: 100%;
+  height: 100%;
   background-color: #eae7dc;
-  margin: 50px 0px;
   overflow: scroll; }
+
+#app {
+  height: 100%; }
 
 .nav-bar {
   position: sticky;
@@ -323,10 +325,6 @@ h6 {
     z-index: 9;
     background-color: gray;
     opacity: 0.5; }
-
-.body {
-  display: flex;
-  justify-content: center; }
 
 .about {
   margin: 20px; }

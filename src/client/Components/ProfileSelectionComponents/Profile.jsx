@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from '@reach/router';
 
-const Profile = ({ userID, name, addUserCardsToDeck, showRatings }) => {
+const Profile = ({ userID, name }) => {
   const [pictureURL, setPictureURL] = useState();
 
   const getFirstPicture = userID => {
@@ -26,12 +27,12 @@ const Profile = ({ userID, name, addUserCardsToDeck, showRatings }) => {
       </div>
       <p className='profile__name'>{name}</p>
       <div className='profile__button__container'>
-        <div tabIndex='1' className='profile__button' onClick={() => addUserCardsToDeck(userID)}>
+        <Link className='profile__button' to={`rateprofile/${userID}`}>
           Rate Profile
-        </div>
-        <div tabIndex='1' className='profile__button' onClick={() => showRatings(userID)}>
+        </Link>
+        <Link className='profile__button' to={`results/${userID}`}>
           View Rating Results
-        </div>
+        </Link>
       </div>
     </div>
   );
