@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import RatingResultsTableRow from './RatingResultsTableRow';
-import { navigate } from '@reach/router';
+import { Link } from '@reach/router';
 
 const RatingResultsTable = ({ userID }) => {
   const [userContent, setUserContent] = useState([]);
@@ -42,9 +42,9 @@ const RatingResultsTable = ({ userID }) => {
       {userContent}
       <h4 className='table-heading-padding'>Feedback from Raters</h4>
       <ul className='table__feedback-row-container'>{feedback}</ul>
-      <div className='table__dismiss-button' tabIndex='0' onClick={() => navigate('/')}>
+      <Link className='table__dismiss-button' to='/'>
         Return to Browse Profiles
-      </div>
+      </Link>
     </div>
   );
 };

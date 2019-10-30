@@ -1,10 +1,11 @@
 import React from 'react';
+import Button from './GeneralComponents/Button.jsx';
 
 const Nav = props => (
   <nav className='nav-bar'>
-    <div className='nav-bar__menu-button' onClick={props.displayMenu} tabIndex='1'>
+    <Button className='nav-bar__menu-button util__btn' onClick={props.displayMenu}>
       <div className='nav-bar__menu-button__icon' />
-    </div>
+    </Button>
     <h1 className='nav-bar__heading'>Best Foot Forward</h1>
   </nav>
 );

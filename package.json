@@ -13,7 +13,8 @@
     "compile-scss": "node-sass src/client/scss/main.scss dist/index.css",
     "compile-watch": "node-sass src/client/scss/main.scss dist/index.css --watch",
     "schema": "mysql -u root -p < src/db/schema.sql",
-    "seed": "mysql -u root -p < src/db/seed.sql"
+    "seed": "mysql -u root -p < src/db/seed.sql",
+    "votes": "mysql -u root -p < src/db/seed-votes.sql"
   },
   "author": "Amogh Kambale",
   "license": "MIT",
@@ -29,7 +30,9 @@
     "mysql": "^2.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-relay": "^5.0.0"
+    "react-relay": "^5.0.0",
+    "react-spring": "^8.0.27",
+    "react-use-gesture": "^6.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

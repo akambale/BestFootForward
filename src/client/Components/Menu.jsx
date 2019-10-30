@@ -11,6 +11,9 @@ const Menu = ({ hideMenu }) => {
         <Link className='menu__button' to='about' onClick={hideMenu}>
           About
         </Link>
+        <Link className='menu__button' to='deck' onClick={hideMenu}>
+          Deck
+        </Link>
       </div>
       <div className='menu__dismiss' onClick={hideMenu} />
     </div>

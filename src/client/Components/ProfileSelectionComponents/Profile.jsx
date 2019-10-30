@@ -27,10 +27,10 @@ const Profile = ({ userID, name }) => {
       </div>
       <p className='profile__name'>{name}</p>
       <div className='profile__button__container'>
-        <Link className='profile__button' to={`rateprofile/${userID}`}>
+        <Link className='profile__button util__btn' to={`rateprofile/${userID}`}>
           Rate Profile
         </Link>
-        <Link className='profile__button' to={`results/${userID}`}>
+        <Link className='profile__button util__btn' to={`results/${userID}`}>
           View Rating Results
         </Link>
       </div>

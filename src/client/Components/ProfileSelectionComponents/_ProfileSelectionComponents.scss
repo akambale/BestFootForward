@@ -43,10 +43,6 @@
     align-items: center;
     border: 1px solid gray;
 
-    &:focus {
-      border: 3px solid $color-blue;
-    }
-
     &__container {
       height: 70px;
       display: flex;

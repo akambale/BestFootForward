@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from '@reach/router';
 
-const About = ({ changeViewToSelectProfile }) => (
+const About = () => (
   <div className='about'>
     <h4 className='about__heading'>What?</h4>
     <p className='about__paragraph'>
@@ -26,9 +27,9 @@ const About = ({ changeViewToSelectProfile }) => (
       <a href='http://amoghk.com/contact'> Contact him about jobs</a> so he can afford to go on
       dates.
     </p>
-    <div className='table__dismiss-button' tabIndex='1' onClick={changeViewToSelectProfile}>
+    <Link to='/' className='table__dismiss-button'>
       Return to Browse Profiles
-    </div>
+    </Link>
   </div>
 );
 

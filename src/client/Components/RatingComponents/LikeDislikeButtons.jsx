@@ -1,14 +1,14 @@
 import React from 'react';
+import Button from '../GeneralComponents/Button.jsx';
 
 const LikeDislikeButtons = ({ dislikeAction, likeAction, likeMessage, dislikeMessage }) => (
   <div className='vote__container'>
-    <div className='vote__button vote__button__dislike' onClick={dislikeAction} tabIndex='1'>
+    <Button className='vote__button vote__button__dislike' onClick={dislikeAction}>
       {dislikeMessage ? dislikeMessage : <div className='vote__button__x' />}
-    </div>
-    <div className='vote__button vote__button__like' onClick={likeAction} tabIndex='1'>
+    </Button>
+    <Button className='vote__button vote__button__like' onClick={likeAction}>
       {likeMessage ? likeMessage : <div className='vote__button__check' />}
-    </div>
+    </Button>
   </div>
 );
-
 export default LikeDislikeButtons;

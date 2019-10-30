@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import SelectProfile from './ProfileSelectionComponents/SelectProfile.jsx';
 import RateProfile from './RatingComponents/RateProfile.jsx';
 import RatingResultsTable from './ResultsTableComponents/RatingResultsTable.jsx';
-import Feedback from './RatingComponents/Feedback.jsx';
 import Nav from './Nav.jsx';
 import Menu from './Menu.jsx';
 import About from './About.jsx';
-import { Router, Link } from '@reach/router';
+import Deck from './Deck.jsx';
+import { Router } from '@reach/router';
 
 const App = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -24,6 +24,7 @@ const App = () => {
         <RateProfile path='rateprofile/:userID' />
         <RatingResultsTable path='results/:userID' />
         <About path='about' />
+        <Deck path='deck' />
       </Router>
     </div>
   );
