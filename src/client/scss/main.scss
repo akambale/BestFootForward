@@ -1,7 +1,14 @@
+// variables
+@import 'mixins';
+@import 'variables';
+
 // basics
 @import 'base';
 @import 'components';
 @import 'layout';
+
+// component library
+@import '../Components/LibraryComponents/LibraryComponents';
 
 // Third party scripts
 @import 'vendor/simple-grid';

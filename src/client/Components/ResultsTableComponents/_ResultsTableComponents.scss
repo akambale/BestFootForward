@@ -1,75 +1,75 @@
 .table {
-  width: 100%;
   display: flex;
   flex-direction: column;
   text-align: center;
+  width: 100%;
 
   &-heading-padding {
-    padding: 10px;
+    padding: 1rem;
   }
 
   &__feedback-row {
-    padding: 8px 0px;
-    list-style-type: none;
     font-style: italic;
+    list-style-type: none;
+    padding: 0.8rem 0rem;
     text-align: left;
 
     &-container {
-      padding: 0px 30px;
+      padding: 0rem 3rem;
     }
   }
 
   &__row {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     overflow: hidden;
 
     &::after {
-      position: relative;
+      background-color: $color-gray-light;
       content: '';
+      height: 0.1rem;
+      margin: 1rem auto;
+      position: relative;
       width: 85%;
-      height: 1px;
-      background-color: lightgray;
-      margin: 10px auto;
     }
 
     &__blurb {
-      padding: 10px 30px;
-      font-size: 12px;
+      font-size: 1.2rem;
       font-style: italic;
+      padding: 1rem 3rem;
     }
 
     &__image {
       max-width: 100%;
 
       &-container {
+        align-items: center;
+        border-radius: 1rem;
+        border: 0.2rem solid $color-card-border;
         display: flex;
         justify-content: center;
-        align-items: center;
-        max-height: 100px;
-        width: 100px;
+        margin: 1rem 0rem;
+        max-height: 10rem;
         overflow: hidden;
-        border-radius: 10px;
-        border: 2px solid $color-pink;
-        margin: 10px 0px;
+        width: 10rem;
       }
     }
   }
 
   &__dismiss-button {
-    height: 50px;
-    width: 80%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    background-color: $color-pink;
-    border: 1px solid gray;
-    margin: 20px auto;
-    color: white;
+    background-color: $color-button;
+    border: 0.1rem solid $color-gray;
+    color: $color-white;
+    display: flex;
+    height: 5rem;
+    justify-content: center;
+    margin: 2rem auto;
+    width: 80%;
 
     &:focus {
-      border: 2px solid $color-blue;
+      border: 0.2rem solid $color-focus;
     }
   }
 }

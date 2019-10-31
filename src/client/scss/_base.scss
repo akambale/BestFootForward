@@ -1,55 +1,31 @@
 *,
+*::after,
+*::before,
 html,
 body {
   box-sizing: border-box;
   font-family: 'Lato', sans-serif;
   font-weight: 400;
   margin: 0;
-  padding: 0;
   outline: none;
+  padding: 0;
 }
 
-$color-off-white: #eae7dc;
-$color-text: #8e8d8a;
-$color-pink: #e98074;
-$color-pink-light: #fdf6f5;
-$color-poop: #d8c3a5;
-$color-red: #ea584f;
+html {
+  // This defines what 1rem is
+  font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
 
-$color-tan: #efe2ba;
-$color-gold: #d79922;
-$color-blue: #4056a1;
-$color-light-blue: #c5cbe3;
+  // @include respond(tab-land) {
+  //   // width < 1200?
+  //   font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
+  // }
 
-p,
-h3,
-h4,
-h5,
-h6 {
-  color: $color-pink;
-}
+  // @include respond(tab-port) {
+  //   // width < 900?
+  //   font-size: 50%; //1 rem = 8px, 8/16 = 50%
+  // }
 
-.one {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  will-change: transform;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.two {
-  background-color: white;
-  background-size: auto 85%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  width: 45vh;
-  max-width: 300px;
-  height: 85vh;
-  max-height: 570px;
-  will-change: transform;
-  border-radius: 10px;
-  cursor: move;
-  box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3);
+  // @include respond(big-desktop) {
+  //   font-size: 75%; //1rem = 12, 12/16
+  // }
 }

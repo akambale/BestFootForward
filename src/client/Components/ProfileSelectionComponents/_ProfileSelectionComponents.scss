@@ -1,66 +1,65 @@
 .profile {
   &__container {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid $color-red;
-    border-radius: 10px;
-    background-color: $color-pink-light;
-    display: flex;
     align-items: center;
+    background-color: $color-card-background;
+    border-radius: 1rem;
+    border: 0.1rem solid $color-card-border;
+    box-shadow: 0.5rem 0.3rem 0.15rem -0.5rem grey;
+    display: flex;
     flex-direction: column;
-    height: 250px;
-    width: 150px;
+    height: 25rem;
+    margin: 1rem;
+    padding: 1rem;
     text-align: center;
-    box-shadow: 5px 3px 15px -5px grey;
+    width: 15rem;
   }
 
   &__name {
-    font-size: 32px;
-    color: $color-red;
+    color: $color-text-dark;
+    font-size: 3.2rem;
   }
 
   &__photo {
-    max-width: 100px;
+    max-width: 10rem;
 
     &-container {
-      max-height: 100px;
-      max-width: 100px;
-      border-radius: 10px;
+      max-height: 10rem;
+      max-width: 10rem;
+      border-radius: 1rem;
       overflow: hidden;
     }
   }
 
   &__button {
-    background-color: $color-pink;
-    font-size: 10px;
-    padding: 3px;
-    width: 110px;
-    height: 30px;
-    color: white;
-
-    display: flex;
-    justify-content: center;
     align-items: center;
-    border: 1px solid gray;
+    background-color: $color-button;
+    border: 0.1rem solid gray;
+    color: white;
+    display: flex;
+    font-size: 1rem;
+    height: 3rem;
+    justify-content: center;
+    padding: 0.3rem;
+    width: 10rem;
 
     &__container {
-      height: 70px;
-      display: flex;
-      justify-content: space-between;
       align-items: center;
+      display: flex;
       flex-direction: column;
+      height: 7rem;
+      justify-content: space-between;
     }
   }
 }
 
 .select-profile {
-  padding: 10px;
+  padding: 1rem;
   text-align: center;
 
   &__cards {
     display: flex;
     flex-wrap: wrap;
-    width: inherit;
     justify-content: center;
+    width: inherit;
   }
 }

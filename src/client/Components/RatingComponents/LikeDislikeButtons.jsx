@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../GeneralComponents/Button.jsx';
+import Button from '../LibraryComponents/Button.jsx';
 
 const LikeDislikeButtons = ({ dislikeAction, likeAction, likeMessage, dislikeMessage }) => (
   <div className='vote__container'>

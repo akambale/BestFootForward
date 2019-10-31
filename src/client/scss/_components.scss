@@ -1,9 +1,3 @@
 @import '../Components/ProfileSelectionComponents/ProfileSelectionComponents';
 @import '../Components/RatingComponents/RatingComponents';
 @import '../Components/ResultsTableComponents/ResultsTableComponents';
-
-.util {
-  &__btn:focus {
-    border: 3px solid $color-blue;
-  }
-}
