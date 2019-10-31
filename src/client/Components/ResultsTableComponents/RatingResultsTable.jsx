@@ -38,10 +38,10 @@ const RatingResultsTable = ({ userID }) => {
 
   return (
     <div className='table'>
-      <h3 className='table-heading-padding'>Total Votes for Profile Content</h3>
+      <h3 className='table__heading-padding'>Total Votes for Profile Content</h3>
       {userContent}
-      <h4 className='table-heading-padding'>Feedback from Raters</h4>
-      <ul className='table__feedback-row-container'>{feedback}</ul>
+      <h4 className='table__heading-padding'>Feedback from Raters</h4>
+      <ul className='table__feedback-row__container'>{feedback}</ul>
       <Link className='table__dismiss-button' to='/'>
         Return to Browse Profiles
       </Link>

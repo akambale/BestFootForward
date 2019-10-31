@@ -7,14 +7,12 @@ const Feedback = ({ setMessage, message }) => {
 
   return (
     <div className='feedback'>
-      <div className='feedback__textarea-container'>
-        <textarea
-          value={message}
-          onChange={changeMessage}
-          className='feedback__textarea'
-          placeholder='Type here to give constructive feedback (optional) . . .'
-        ></textarea>
-      </div>
+      <textarea
+        value={message}
+        onChange={changeMessage}
+        className='feedback__textarea'
+        placeholder='Type here to give constructive feedback (optional) . . .'
+      ></textarea>
     </div>
   );
 };

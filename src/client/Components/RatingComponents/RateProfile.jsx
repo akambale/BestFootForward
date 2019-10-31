@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
 import axios from 'axios';
 import Blurb from './Blurb.jsx';
-import Picture from './Picture.jsx';
 import Feedback from './Feedback.jsx';
 import LikeDislikeButtons from './LikeDislikeButtons.jsx';
+import Picture from './Picture.jsx';
 import { navigate } from '@reach/router';
+import React, { useState } from 'react';
 
 const RateProfile = ({ userID }) => {
   const [cards, setCards] = useState([]);
@@ -80,11 +80,10 @@ const RateProfile = ({ userID }) => {
 
   return (
     <div>
-      <div className='card-stack__container'>
+      <div className='card-stack'>
         {cards[cardIndex].element}
         <Feedback setMessage={setMessage} message={message} />
       </div>
-      {/* <div className='card-stack__container'>{cards[i + 1].element}</div> */}
       <LikeDislikeButtons
         dislikeAction={cards[cardIndex].dislikeAction}
         dislikeMessage={cards[cardIndex].dislikeMessage}

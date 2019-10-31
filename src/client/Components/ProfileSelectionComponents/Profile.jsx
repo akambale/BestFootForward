@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from '@reach/router';
+import React, { useState } from 'react';
 
 const Profile = ({ userID, name }) => {
   const [pictureURL, setPictureURL] = useState();
@@ -21,8 +21,8 @@ const Profile = ({ userID, name }) => {
   }
 
   return (
-    <div className='profile__container'>
-      <div className='profile__photo-container'>
+    <div className='profile'>
+      <div className='profile__photo__container'>
         <img src={pictureURL} alt='user image here' className='profile__photo' />
       </div>
       <p className='profile__name'>{name}</p>

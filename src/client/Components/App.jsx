@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import SelectProfile from './ProfileSelectionComponents/SelectProfile.jsx';
-import RateProfile from './RatingComponents/RateProfile.jsx';
-import RatingResultsTable from './ResultsTableComponents/RatingResultsTable.jsx';
-import Nav from './Nav.jsx';
-import Menu from './Menu.jsx';
+import { Router } from '@reach/router';
+
 import About from './About.jsx';
 import Deck from './Deck.jsx';
-import { Router } from '@reach/router';
+import Menu from './Menu.jsx';
+import Nav from './Nav.jsx';
+import RateProfile from './RatingComponents/RateProfile.jsx';
+import RatingResultsTable from './ResultsTableComponents/RatingResultsTable.jsx';
+import SelectProfile from './ProfileSelectionComponents/SelectProfile.jsx';
 
 const App = () => {
   const [showMenu, setShowMenu] = useState(false);

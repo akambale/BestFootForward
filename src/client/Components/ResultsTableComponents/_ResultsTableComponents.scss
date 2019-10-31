@@ -4,7 +4,7 @@
   text-align: center;
   width: 100%;
 
-  &-heading-padding {
+  &__heading-padding {
     padding: 1rem;
   }
 
@@ -14,7 +14,7 @@
     padding: 0.8rem 0rem;
     text-align: left;
 
-    &-container {
+    &__container {
       padding: 0rem 3rem;
     }
   }
@@ -58,15 +58,13 @@
   }
 
   &__dismiss-button {
-    align-items: center;
-    background-color: $color-button;
-    border: 0.1rem solid $color-gray;
-    color: $color-white;
-    display: flex;
-    height: 5rem;
-    justify-content: center;
+    border-radius: 0.7rem;
+    border: 0.3rem solid $color-primary;
     margin: 2rem auto;
-    width: 80%;
+    text-decoration: none;
+    color: $color-white;
+    background-color: $color-primary;
+    padding: 1rem 2rem;
 
     &:focus {
       border: 0.2rem solid $color-focus;

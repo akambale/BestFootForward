@@ -1,28 +1,25 @@
 .profile {
-  &__container {
-    align-items: center;
-    background-color: $color-card-background;
-    border-radius: 1rem;
-    border: 0.1rem solid $color-card-border;
-    box-shadow: 0.5rem 0.3rem 0.15rem -0.5rem grey;
-    display: flex;
-    flex-direction: column;
-    height: 25rem;
-    margin: 1rem;
-    padding: 1rem;
-    text-align: center;
-    width: 15rem;
-  }
+  align-items: center;
+  background-color: $color-card-background;
+  border-radius: 1rem;
+  // border: 0.1rem solid $color-card-border;
+  display: flex;
+  flex-direction: column;
+  height: 25rem;
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+  width: 15rem;
 
   &__name {
-    color: $color-text-dark;
+    color: $color-primary;
     font-size: 3.2rem;
   }
 
   &__photo {
     max-width: 10rem;
 
-    &-container {
+    &__container {
       max-height: 10rem;
       max-width: 10rem;
       border-radius: 1rem;
@@ -32,15 +29,27 @@
 
   &__button {
     align-items: center;
-    background-color: $color-button;
-    border: 0.1rem solid gray;
-    color: white;
+    background-color: $color-white;
+    // border: 0.1rem solid $color-primary;
+    color: $color-primary;
     display: flex;
     font-size: 1rem;
     height: 3rem;
     justify-content: center;
     padding: 0.3rem;
     width: 10rem;
+    border-radius: 0.7rem;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: $color-white;
+      background-color: $color-primary;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
 
     &__container {
       align-items: center;

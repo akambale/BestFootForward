@@ -18,7 +18,7 @@
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 25;
 
   &__heading {
     color: $color-text-dark;
@@ -68,7 +68,7 @@
 
   &__button {
     align-items: center;
-    border: 0.2rem solid $color-button;
+    border: 0.2rem solid $color-secondary;
     display: flex;
     padding: 1rem;
     width: 100%;
@@ -80,7 +80,7 @@
   }
 
   &__container {
-    background-color: $color-button;
+    background-color: $color-secondary;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -104,6 +104,12 @@
 
 .about {
   margin: 2rem;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+
   &__paragraph {
     line-height: normal;
   }
@@ -111,5 +117,15 @@
   &__heading {
     padding: 1rem 0rem;
     text-align: center;
+  }
+
+  &__button {
+    border-radius: 0.7rem;
+    border: 0.3rem solid $color-primary;
+    text-decoration: none;
+    color: $color-white;
+    background-color: $color-primary;
+    padding: 1rem 2rem;
+    margin: 2rem 0rem;
   }
 }
