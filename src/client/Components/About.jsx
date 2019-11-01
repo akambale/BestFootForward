@@ -6,9 +6,9 @@ const About = () => (
     <h4 className='about__heading'>What?</h4>
     <p className='about__paragraph'>
       Best Foot is an app where you can experiment with your dating profile content to see what is
-      best (this application is currently in the prototype phase, you can't upload your own content
-      yet). Already taken or just want to help others out? Select a profile and tell other users
-      which parts of their profile you like and dislike. See how your votes stack up!
+      most effective (this application is currently in the prototype phase, you can't upload your
+      own content yet). Already taken or just want to help others out? Select a profile and tell
+      other users which parts of their profile you like and dislike. See how your votes stack up!
     </p>
     <h4 className='about__heading'>Why?</h4>
     <p className='about__paragraph'>

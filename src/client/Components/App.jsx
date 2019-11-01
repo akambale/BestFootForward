@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Router } from '@reach/router';
 
 import About from './About.jsx';
-import Deck from './Deck.jsx';
 import Menu from './Menu.jsx';
 import Nav from './Nav.jsx';
 import RateProfile from './RatingComponents/RateProfile.jsx';
@@ -25,7 +24,6 @@ const App = () => {
         <RateProfile path='rateprofile/:userID' />
         <RatingResultsTable path='results/:userID' />
         <About path='about' />
-        <Deck path='deck' />
       </Router>
     </div>
   );
