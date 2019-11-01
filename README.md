@@ -20,11 +20,11 @@ Building styled components (buttons, modals, etc) similarly saves a significant 
 
 ## Points of interest
 
-The rating results table is page of the application I am very happy with. Most of the work has been done to to make the table responsive. Design is clean and minimal, close to how it will look in version 1 of the application.
+The rating results table is page of the application I am very happy with. Most of the work has been done to to make the table responsive. Design is clean and minimal, close to how it will look in version 1 of the application. This code can be found in `src/client/Components/ResultsTableComponents`.
 
-I am happy with the CSS organization and best practices. The code follows BEM which is easy to read and add on to. About half of the necessary utility classes have been written making long term css development easier and more standardized. The extensive use of color variables makes it easy to test out different designs.
+I am happy with the CSS organization and best practices. The code follows BEM which is easy to read and add on to. About half of the necessary utility classes have been written making long term css development easier and more standardized. The extensive use of color variables makes it easy to test out different designs. This code can be found in `src/client/scss`.
 
-I am happy with the React code organization. The structure of this application is very simple; with good routing in place, changing the view and passing data (mostly the account ID) is seamless and doesn't require complex state management (ie, needing to add redux for the prototype).
+I am happy with the React code organization. The structure of this application is very simple; with good routing in place, changing the view and passing data (mostly the account ID) is seamless and doesn't require complex state management (ie, needing to add redux for the prototype). This code can be found in `src/client/Components/`. Look at App, Menu, and Nav.
 
 ## Points of disinterest
 
