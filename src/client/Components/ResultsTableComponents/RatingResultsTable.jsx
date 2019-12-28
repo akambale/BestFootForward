@@ -29,7 +29,9 @@ const RatingResultsTable = ({ userID }) => {
 
       const feedbackComponents = data.map(({ feedbackText, feedbackID }) => (
         <li key={feedbackID} className='table__feedback-row'>
-          "{feedbackText}"
+          <p>"{feedbackText}"</p>
+          <button>Delete Feedback</button>
+          <button>Flag Feedback</button>
         </li>
       ));
       setFeedback(feedbackComponents);

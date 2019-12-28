@@ -40,6 +40,10 @@ const RatingResultsTableRow = props => {
         </div>
       )}
       <div>{`Total Votes: ${totalVotes} | Average Rating: ${averageRating}%`}</div>
+      <div className='table__row__btn__container'>
+        <button>Reset Votes</button>
+        <button>Delete {blurb ? 'Blurb' : 'Picture'}</button>
+      </div>
     </div>
   );
 };

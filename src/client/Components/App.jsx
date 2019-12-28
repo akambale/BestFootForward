@@ -8,6 +8,9 @@ import Nav from './Nav.jsx';
 import RateProfile from './RatingComponents/RateProfile.jsx';
 import RatingResultsTable from './ResultsTableComponents/RatingResultsTable.jsx';
 import SelectProfile from './ProfileSelectionComponents/SelectProfile.jsx';
+import LogInSignUp from './UserProfileComponents/LogInSignUp.jsx';
+import UserHome from './UserProfileComponents/UserHome.jsx';
+import Crop from './UserProfileComponents/Crop.jsx';
 
 const App = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -24,6 +27,9 @@ const App = () => {
         <RateProfile path='rateprofile/:userID' />
         <RatingResultsTable path='results/:userID' />
         <About path='about' />
+        <LogInSignUp path='login' />
+        <UserHome path='home' />
+        <Crop path='crop' />
       </Router>
     </div>
   );

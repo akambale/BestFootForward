@@ -55,6 +55,10 @@
         width: 10rem;
       }
     }
+
+    &__btn__container {
+      display: flex;
+    }
   }
 
   &__dismiss-button {

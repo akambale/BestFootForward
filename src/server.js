@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 
 const db = require('./db/controller.js');
 
@@ -8,6 +9,12 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(
+  bodyParser.raw({
+    type: 'image/png',
+    limit: '1000mb',
+  }),
+);
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
@@ -107,6 +114,14 @@ app.get('/api/feedback', async (req, res) => {
       res.send({ error: true, data: results });
     }
     res.send({ error: false, data: results });
+  });
+});
+
+app.post('/api/upload', (req, res) => {
+  // console.log(req.body);
+  console.log('this is the BUFF:', req.body.buffer);
+  fs.writeFile('uploaded-img.jpg', req.body.buffer, 'ascii', function(err) {
+    res.status(200).send('it is done');
   });
 });
 
