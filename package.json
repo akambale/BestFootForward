@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "npm start",
-    "compile:all": "concurrently \"npm:build\" \"npm:compile-watch\"",
+    "compile-all": "nconcurrently \"npm:build\" \"npm:compile-watch\"",
     "start-prod": "concurrently \"npm:build-prod\" \"node src/server.js\"",
     "build": "webpack --config webpack.dev.js -d --watch",
     "build-prod": "webpack --config webpack.prod.js",
