@@ -1,17 +1,23 @@
-$color-primary: #00887a;
-$color-secondary: #77a6f7;
-$color-tertiary: #d3e3fc;
+$color-primary: #fa9874;
+$color-secondary: #d86490;
+$color-tertiary: #fb4a25;
+$color-four: #6d99a1;
+
+$color-app-background: #ffffff;
+
+$color-text: #384345;
+$color-heading-text: #111111;
+$color-photo-text: $color-app-background;
 
 $color-text-light: black;
 $color-text-dark: #ffffff;
-$color-app-background: #ffffff;
 $color-card-background: #d3e3fc;
 $color-nav: #77a6f7;
 $color-card-border: #77a6f7;
 
 $color-focus: #00887a;
 
-$color-button: #ea584f;
+$color-button: linear-gradient($color-primary, $color-secondary);
 $color-button-like: #00887a;
 $color-button-dislike: #ea584f;
 $color-white: white;

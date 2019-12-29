@@ -10,15 +10,21 @@
   width: 100%;
 }
 
+.cards {
+  transform: rotate(90deg) rotateX(180deg);
+}
+
 .nav-bar {
   align-items: center;
-  background-color: $color-nav;
+  background-image: $color-button;
   display: flex;
-  height: 4rem;
+  height: 6rem;
   position: sticky;
   top: 0;
+  right: 0;
   width: 100%;
   z-index: 25;
+  justify-content: space-around;
 
   &__heading {
     color: $color-text-dark;
@@ -29,11 +35,9 @@
 
   &__menu-button {
     align-items: center;
-    align-self: flex-start;
     display: flex;
-    height: 4rem;
+    height: 100%;
     justify-content: center;
-    position: absolute;
     width: 8rem;
 
     &:focus {
@@ -44,35 +48,35 @@
       &,
       &::before,
       &::after {
-        background-color: $color-primary;
+        background-color: $color-text-dark;
         content: '';
         display: inline-block;
-        height: 0.2rem;
+        height: 0.4rem;
         width: 3rem;
         z-index: 0;
+        border-radius: 2px;
+      }
+      &::before {
+        transform: translateY(-1.5rem);
       }
       &::after {
-        transform: translateY(-3.25rem);
+        transform: translateY(-0.85rem);
       }
     }
   }
 }
 
 .menu {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
   width: 100%;
   z-index: 100;
 
   &__button {
-    align-items: center;
     border: 0.2rem solid $color-secondary;
-    display: flex;
-    padding: 1rem;
+    text-align: center;
+    padding: 2rem;
     width: 100%;
     text-decoration: none;
+    font-size: 2.5rem;
 
     &:focus {
       border: 0.2rem solid $color-focus;
@@ -83,11 +87,12 @@
     background-color: $color-secondary;
     display: flex;
     flex-direction: column;
-    height: 100%;
     justify-content: flex-start;
+    align-items: center;
     opacity: 1;
     position: absolute;
-    width: 40%;
+    width: 100%;
+    z-index: 10;
   }
 
   &__dismiss {
@@ -97,7 +102,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 60%;
+    width: 100%;
     z-index: 9;
   }
 }

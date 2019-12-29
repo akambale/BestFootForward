@@ -11,11 +11,11 @@ const Menu = ({ hideMenu }) => {
         <Link className='menu__button' to='about' onClick={hideMenu}>
           About
         </Link>
-        <Link className='menu__button' to='deck' onClick={hideMenu}>
-          Deck
-        </Link>
         <Link className='menu__button' to='login' onClick={hideMenu}>
           LogIn/SignUp
+        </Link>
+        <Link className='menu__button' to='home' onClick={hideMenu}>
+          Your Profile
         </Link>
       </div>
       <div className='menu__dismiss' onClick={hideMenu} />

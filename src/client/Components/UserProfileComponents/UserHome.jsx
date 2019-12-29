@@ -37,7 +37,7 @@ const UserHome = () => {
           <input type='button' value='Add Blurb'></input>
         </form>
       </div>
-      <RatingResultsTable userID={1} />
+      <RatingResultsTable userID={1} isOwner={true} />
     </div>
   );
 };

@@ -5,7 +5,7 @@ const RatingResultsTableRow = props => {
   const [totalVotes, setTotalVotes] = useState('');
   const [averageRating, setAverageRating] = useState('');
 
-  const { blurbID, blurb, pictureID, pictureURL } = props.content;
+  const { blurbID, blurb, pictureID, pictureURL, isOwner } = props.content;
   if (blurb) {
     axios.get(`/api/avgRating?blurbID=${blurbID}`).then(response => {
       const { data, err } = response.data;
@@ -41,8 +41,12 @@ const RatingResultsTableRow = props => {
       )}
       <div>{`Total Votes: ${totalVotes} | Average Rating: ${averageRating}%`}</div>
       <div className='table__row__btn__container'>
-        <button>Reset Votes</button>
-        <button>Delete {blurb ? 'Blurb' : 'Picture'}</button>
+        {props.isOwner ? (
+          <div>
+            <button>Reset Votes</button>
+            <button>Delete {blurb ? 'Blurb' : 'Picture'}</button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

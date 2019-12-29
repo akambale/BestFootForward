@@ -3,7 +3,7 @@ import axios from 'axios';
 import RatingResultsTableRow from './RatingResultsTableRow';
 import { Link } from '@reach/router';
 
-const RatingResultsTable = ({ userID }) => {
+const RatingResultsTable = ({ userID, isOwner }) => {
   const [userContent, setUserContent] = useState([]);
   const [feedback, setFeedback] = useState([]);
 
@@ -15,7 +15,13 @@ const RatingResultsTable = ({ userID }) => {
         return;
       }
       const userContentArr = data.map((content, pictureID, blurbID) => {
-        return <RatingResultsTableRow key={pictureID ? pictureID : blurbID} content={content} />;
+        return (
+          <RatingResultsTableRow
+            key={pictureID ? pictureID : blurbID}
+            content={content}
+            isOwner={isOwner}
+          />
+        );
       });
       setUserContent(userContentArr);
     });
@@ -30,7 +36,7 @@ const RatingResultsTable = ({ userID }) => {
       const feedbackComponents = data.map(({ feedbackText, feedbackID }) => (
         <li key={feedbackID} className='table__feedback-row'>
           <p>"{feedbackText}"</p>
-          <button>Delete Feedback</button>
+          {isOwner ? <button>Delete Feedback</button> : null}
           <button>Flag Feedback</button>
         </li>
       ));

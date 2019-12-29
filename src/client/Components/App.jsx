@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from '@reach/router';
 
 import About from './About.jsx';
-import Menu from './Menu.jsx';
 import Nav from './Nav.jsx';
 import RateProfile from './RatingComponents/RateProfile.jsx';
 import RatingResultsTable from './ResultsTableComponents/RatingResultsTable.jsx';
@@ -13,15 +12,9 @@ import UserHome from './UserProfileComponents/UserHome.jsx';
 import Crop from './UserProfileComponents/Crop.jsx';
 
 const App = () => {
-  const [showMenu, setShowMenu] = useState(false);
-
-  const displayMenu = () => setShowMenu(true);
-  const hideMenu = () => setShowMenu(false);
-
   return (
     <div className='app'>
-      {showMenu ? <Menu hideMenu={hideMenu} /> : null}
-      <Nav displayMenu={displayMenu} />
+      <Nav />
       <Router>
         <SelectProfile path='/' />
         <RateProfile path='rateprofile/:userID' />
