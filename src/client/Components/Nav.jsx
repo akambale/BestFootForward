@@ -47,7 +47,6 @@ const Nav = () => {
             viewBox='0 0 24 24'
             height='50%'
             style={{ fill: 'white' }}
-            focusable='false'
             aria-hidden='true'
             role='presentation'
           >
@@ -57,7 +56,7 @@ const Nav = () => {
           </svg>
         </Link>
       </nav>
-      {showMenu ? <Menu hideMenu={toggleMenu} /> : null}
+      <Menu toggleMenu={toggleMenu} showMenu={showMenu} />
     </header>
   );
 };

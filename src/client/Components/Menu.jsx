@@ -1,24 +1,40 @@
 import { Link } from '@reach/router';
 import React from 'react';
+import { useTransition, animated } from 'react-spring';
 
-const Menu = ({ hideMenu }) => {
+const Menu = ({ toggleMenu, showMenu }) => {
+  const menuStyle = useTransition(showMenu, null, {
+    from: { height: '0rem' },
+    enter: { height: '30rem' },
+    leave: { height: '0rem' },
+  });
+  const dismissStyle = useTransition(showMenu, null, {
+    from: { opacity: 0 },
+    enter: { opacity: 0.5 },
+    leave: { opacity: 0 },
+  });
   return (
     <div className='menu'>
-      <div className='menu__container'>
-        <Link className='menu__button' to='/' onClick={hideMenu}>
+      <animated.div className='menu__container' style={menuStyle[0].props} key={menuStyle[0].key}>
+        <Link className='menu__button' to='/' onClick={toggleMenu}>
           Browse Profiles
         </Link>
-        <Link className='menu__button' to='about' onClick={hideMenu}>
+        <Link className='menu__button' to='about' onClick={toggleMenu}>
           About
         </Link>
-        <Link className='menu__button' to='login' onClick={hideMenu}>
+        <Link className='menu__button' to='login' onClick={toggleMenu}>
           LogIn/SignUp
         </Link>
-        <Link className='menu__button' to='home' onClick={hideMenu}>
+        <Link className='menu__button' to='home' onClick={toggleMenu}>
           Your Profile
         </Link>
-      </div>
-      <div className='menu__dismiss' onClick={hideMenu} />
+      </animated.div>
+      <animated.div
+        className='menu__dismiss'
+        onClick={toggleMenu}
+        style={dismissStyle[0].props}
+        key={dismissStyle[0].key}
+      />
     </div>
   );
 };
