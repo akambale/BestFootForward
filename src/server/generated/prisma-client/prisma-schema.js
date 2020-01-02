@@ -3,7 +3,19 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateLink {
+/* GraphQL */ `type AggregateBlurb {
+  count: Int!
+}
+
+type AggregateFeedback {
+  count: Int!
+}
+
+type AggregatePic {
+  count: Int!
+}
+
+type AggregateRating {
   count: Int!
 }
 
@@ -15,64 +27,66 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
-type Link {
+type Blurb {
   id: ID!
-  description: String!
-  createdAt: DateTime!
-  url: String!
-  postedBy: User
+  owner: User!
+  text: String!
+  ratings(where: RatingWhereInput, orderBy: RatingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rating!]
 }
 
-type LinkConnection {
+type BlurbConnection {
   pageInfo: PageInfo!
-  edges: [LinkEdge]!
-  aggregate: AggregateLink!
+  edges: [BlurbEdge]!
+  aggregate: AggregateBlurb!
 }
 
-input LinkCreateInput {
+input BlurbCreateInput {
   id: ID
-  description: String!
-  url: String!
-  postedBy: UserCreateOneWithoutLinksInput
+  owner: UserCreateOneWithoutBlurbsInput!
+  text: String!
+  ratings: RatingCreateManyWithoutBlurbInput
 }
 
-input LinkCreateManyWithoutPostedByInput {
-  create: [LinkCreateWithoutPostedByInput!]
-  connect: [LinkWhereUniqueInput!]
+input BlurbCreateManyWithoutOwnerInput {
+  create: [BlurbCreateWithoutOwnerInput!]
+  connect: [BlurbWhereUniqueInput!]
 }
 
-input LinkCreateWithoutPostedByInput {
+input BlurbCreateOneWithoutRatingsInput {
+  create: BlurbCreateWithoutRatingsInput
+  connect: BlurbWhereUniqueInput
+}
+
+input BlurbCreateWithoutOwnerInput {
   id: ID
-  description: String!
-  url: String!
+  text: String!
+  ratings: RatingCreateManyWithoutBlurbInput
 }
 
-type LinkEdge {
-  node: Link!
+input BlurbCreateWithoutRatingsInput {
+  id: ID
+  owner: UserCreateOneWithoutBlurbsInput!
+  text: String!
+}
+
+type BlurbEdge {
+  node: Blurb!
   cursor: String!
 }
 
-enum LinkOrderByInput {
+enum BlurbOrderByInput {
   id_ASC
   id_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  url_ASC
-  url_DESC
+  text_ASC
+  text_DESC
 }
 
-type LinkPreviousValues {
+type BlurbPreviousValues {
   id: ID!
-  description: String!
-  createdAt: DateTime!
-  url: String!
+  text: String!
 }
 
-input LinkScalarWhereInput {
+input BlurbScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -87,115 +101,110 @@ input LinkScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  AND: [LinkScalarWhereInput!]
-  OR: [LinkScalarWhereInput!]
-  NOT: [LinkScalarWhereInput!]
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  AND: [BlurbScalarWhereInput!]
+  OR: [BlurbScalarWhereInput!]
+  NOT: [BlurbScalarWhereInput!]
 }
 
-type LinkSubscriptionPayload {
+type BlurbSubscriptionPayload {
   mutation: MutationType!
-  node: Link
+  node: Blurb
   updatedFields: [String!]
-  previousValues: LinkPreviousValues
+  previousValues: BlurbPreviousValues
 }
 
-input LinkSubscriptionWhereInput {
+input BlurbSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: LinkWhereInput
-  AND: [LinkSubscriptionWhereInput!]
-  OR: [LinkSubscriptionWhereInput!]
-  NOT: [LinkSubscriptionWhereInput!]
+  node: BlurbWhereInput
+  AND: [BlurbSubscriptionWhereInput!]
+  OR: [BlurbSubscriptionWhereInput!]
+  NOT: [BlurbSubscriptionWhereInput!]
 }
 
-input LinkUpdateInput {
-  description: String
-  url: String
-  postedBy: UserUpdateOneWithoutLinksInput
+input BlurbUpdateInput {
+  owner: UserUpdateOneRequiredWithoutBlurbsInput
+  text: String
+  ratings: RatingUpdateManyWithoutBlurbInput
 }
 
-input LinkUpdateManyDataInput {
-  description: String
-  url: String
+input BlurbUpdateManyDataInput {
+  text: String
 }
 
-input LinkUpdateManyMutationInput {
-  description: String
-  url: String
+input BlurbUpdateManyMutationInput {
+  text: String
 }
 
-input LinkUpdateManyWithoutPostedByInput {
-  create: [LinkCreateWithoutPostedByInput!]
-  delete: [LinkWhereUniqueInput!]
-  connect: [LinkWhereUniqueInput!]
-  set: [LinkWhereUniqueInput!]
-  disconnect: [LinkWhereUniqueInput!]
-  update: [LinkUpdateWithWhereUniqueWithoutPostedByInput!]
-  upsert: [LinkUpsertWithWhereUniqueWithoutPostedByInput!]
-  deleteMany: [LinkScalarWhereInput!]
-  updateMany: [LinkUpdateManyWithWhereNestedInput!]
+input BlurbUpdateManyWithoutOwnerInput {
+  create: [BlurbCreateWithoutOwnerInput!]
+  delete: [BlurbWhereUniqueInput!]
+  connect: [BlurbWhereUniqueInput!]
+  set: [BlurbWhereUniqueInput!]
+  disconnect: [BlurbWhereUniqueInput!]
+  update: [BlurbUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [BlurbUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [BlurbScalarWhereInput!]
+  updateMany: [BlurbUpdateManyWithWhereNestedInput!]
 }
 
-input LinkUpdateManyWithWhereNestedInput {
-  where: LinkScalarWhereInput!
-  data: LinkUpdateManyDataInput!
+input BlurbUpdateManyWithWhereNestedInput {
+  where: BlurbScalarWhereInput!
+  data: BlurbUpdateManyDataInput!
 }
 
-input LinkUpdateWithoutPostedByDataInput {
-  description: String
-  url: String
+input BlurbUpdateOneWithoutRatingsInput {
+  create: BlurbCreateWithoutRatingsInput
+  update: BlurbUpdateWithoutRatingsDataInput
+  upsert: BlurbUpsertWithoutRatingsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: BlurbWhereUniqueInput
 }
 
-input LinkUpdateWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput!
-  data: LinkUpdateWithoutPostedByDataInput!
+input BlurbUpdateWithoutOwnerDataInput {
+  text: String
+  ratings: RatingUpdateManyWithoutBlurbInput
 }
 
-input LinkUpsertWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput!
-  update: LinkUpdateWithoutPostedByDataInput!
-  create: LinkCreateWithoutPostedByInput!
+input BlurbUpdateWithoutRatingsDataInput {
+  owner: UserUpdateOneRequiredWithoutBlurbsInput
+  text: String
 }
 
-input LinkWhereInput {
+input BlurbUpdateWithWhereUniqueWithoutOwnerInput {
+  where: BlurbWhereUniqueInput!
+  data: BlurbUpdateWithoutOwnerDataInput!
+}
+
+input BlurbUpsertWithoutRatingsInput {
+  update: BlurbUpdateWithoutRatingsDataInput!
+  create: BlurbCreateWithoutRatingsInput!
+}
+
+input BlurbUpsertWithWhereUniqueWithoutOwnerInput {
+  where: BlurbWhereUniqueInput!
+  update: BlurbUpdateWithoutOwnerDataInput!
+  create: BlurbCreateWithoutOwnerInput!
+}
+
+input BlurbWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -210,20 +219,133 @@ input LinkWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
+  owner: UserWhereInput
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  ratings_every: RatingWhereInput
+  ratings_some: RatingWhereInput
+  ratings_none: RatingWhereInput
+  AND: [BlurbWhereInput!]
+  OR: [BlurbWhereInput!]
+  NOT: [BlurbWhereInput!]
+}
+
+input BlurbWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
+type Feedback {
+  id: ID!
+  contentOwner: User!
+  feedbackGiver: String!
+  text: String!
+  createdAt: DateTime!
+}
+
+type FeedbackConnection {
+  pageInfo: PageInfo!
+  edges: [FeedbackEdge]!
+  aggregate: AggregateFeedback!
+}
+
+input FeedbackCreateInput {
+  id: ID
+  contentOwner: UserCreateOneWithoutFeedbackInput!
+  feedbackGiver: String!
+  text: String!
+}
+
+input FeedbackCreateManyWithoutContentOwnerInput {
+  create: [FeedbackCreateWithoutContentOwnerInput!]
+  connect: [FeedbackWhereUniqueInput!]
+}
+
+input FeedbackCreateWithoutContentOwnerInput {
+  id: ID
+  feedbackGiver: String!
+  text: String!
+}
+
+type FeedbackEdge {
+  node: Feedback!
+  cursor: String!
+}
+
+enum FeedbackOrderByInput {
+  id_ASC
+  id_DESC
+  feedbackGiver_ASC
+  feedbackGiver_DESC
+  text_ASC
+  text_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FeedbackPreviousValues {
+  id: ID!
+  feedbackGiver: String!
+  text: String!
+  createdAt: DateTime!
+}
+
+input FeedbackScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  feedbackGiver: String
+  feedbackGiver_not: String
+  feedbackGiver_in: [String!]
+  feedbackGiver_not_in: [String!]
+  feedbackGiver_lt: String
+  feedbackGiver_lte: String
+  feedbackGiver_gt: String
+  feedbackGiver_gte: String
+  feedbackGiver_contains: String
+  feedbackGiver_not_contains: String
+  feedbackGiver_starts_with: String
+  feedbackGiver_not_starts_with: String
+  feedbackGiver_ends_with: String
+  feedbackGiver_not_ends_with: String
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -232,39 +354,166 @@ input LinkWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  postedBy: UserWhereInput
-  AND: [LinkWhereInput!]
-  OR: [LinkWhereInput!]
-  NOT: [LinkWhereInput!]
+  AND: [FeedbackScalarWhereInput!]
+  OR: [FeedbackScalarWhereInput!]
+  NOT: [FeedbackScalarWhereInput!]
 }
 
-input LinkWhereUniqueInput {
+type FeedbackSubscriptionPayload {
+  mutation: MutationType!
+  node: Feedback
+  updatedFields: [String!]
+  previousValues: FeedbackPreviousValues
+}
+
+input FeedbackSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: FeedbackWhereInput
+  AND: [FeedbackSubscriptionWhereInput!]
+  OR: [FeedbackSubscriptionWhereInput!]
+  NOT: [FeedbackSubscriptionWhereInput!]
+}
+
+input FeedbackUpdateInput {
+  contentOwner: UserUpdateOneRequiredWithoutFeedbackInput
+  feedbackGiver: String
+  text: String
+}
+
+input FeedbackUpdateManyDataInput {
+  feedbackGiver: String
+  text: String
+}
+
+input FeedbackUpdateManyMutationInput {
+  feedbackGiver: String
+  text: String
+}
+
+input FeedbackUpdateManyWithoutContentOwnerInput {
+  create: [FeedbackCreateWithoutContentOwnerInput!]
+  delete: [FeedbackWhereUniqueInput!]
+  connect: [FeedbackWhereUniqueInput!]
+  set: [FeedbackWhereUniqueInput!]
+  disconnect: [FeedbackWhereUniqueInput!]
+  update: [FeedbackUpdateWithWhereUniqueWithoutContentOwnerInput!]
+  upsert: [FeedbackUpsertWithWhereUniqueWithoutContentOwnerInput!]
+  deleteMany: [FeedbackScalarWhereInput!]
+  updateMany: [FeedbackUpdateManyWithWhereNestedInput!]
+}
+
+input FeedbackUpdateManyWithWhereNestedInput {
+  where: FeedbackScalarWhereInput!
+  data: FeedbackUpdateManyDataInput!
+}
+
+input FeedbackUpdateWithoutContentOwnerDataInput {
+  feedbackGiver: String
+  text: String
+}
+
+input FeedbackUpdateWithWhereUniqueWithoutContentOwnerInput {
+  where: FeedbackWhereUniqueInput!
+  data: FeedbackUpdateWithoutContentOwnerDataInput!
+}
+
+input FeedbackUpsertWithWhereUniqueWithoutContentOwnerInput {
+  where: FeedbackWhereUniqueInput!
+  update: FeedbackUpdateWithoutContentOwnerDataInput!
+  create: FeedbackCreateWithoutContentOwnerInput!
+}
+
+input FeedbackWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  contentOwner: UserWhereInput
+  feedbackGiver: String
+  feedbackGiver_not: String
+  feedbackGiver_in: [String!]
+  feedbackGiver_not_in: [String!]
+  feedbackGiver_lt: String
+  feedbackGiver_lte: String
+  feedbackGiver_gt: String
+  feedbackGiver_gte: String
+  feedbackGiver_contains: String
+  feedbackGiver_not_contains: String
+  feedbackGiver_starts_with: String
+  feedbackGiver_not_starts_with: String
+  feedbackGiver_ends_with: String
+  feedbackGiver_not_ends_with: String
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [FeedbackWhereInput!]
+  OR: [FeedbackWhereInput!]
+  NOT: [FeedbackWhereInput!]
+}
+
+input FeedbackWhereUniqueInput {
   id: ID
 }
 
 scalar Long
 
 type Mutation {
-  createLink(data: LinkCreateInput!): Link!
-  updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
-  updateManyLinks(data: LinkUpdateManyMutationInput!, where: LinkWhereInput): BatchPayload!
-  upsertLink(where: LinkWhereUniqueInput!, create: LinkCreateInput!, update: LinkUpdateInput!): Link!
-  deleteLink(where: LinkWhereUniqueInput!): Link
-  deleteManyLinks(where: LinkWhereInput): BatchPayload!
+  createBlurb(data: BlurbCreateInput!): Blurb!
+  updateBlurb(data: BlurbUpdateInput!, where: BlurbWhereUniqueInput!): Blurb
+  updateManyBlurbs(data: BlurbUpdateManyMutationInput!, where: BlurbWhereInput): BatchPayload!
+  upsertBlurb(where: BlurbWhereUniqueInput!, create: BlurbCreateInput!, update: BlurbUpdateInput!): Blurb!
+  deleteBlurb(where: BlurbWhereUniqueInput!): Blurb
+  deleteManyBlurbs(where: BlurbWhereInput): BatchPayload!
+  createFeedback(data: FeedbackCreateInput!): Feedback!
+  updateFeedback(data: FeedbackUpdateInput!, where: FeedbackWhereUniqueInput!): Feedback
+  updateManyFeedbacks(data: FeedbackUpdateManyMutationInput!, where: FeedbackWhereInput): BatchPayload!
+  upsertFeedback(where: FeedbackWhereUniqueInput!, create: FeedbackCreateInput!, update: FeedbackUpdateInput!): Feedback!
+  deleteFeedback(where: FeedbackWhereUniqueInput!): Feedback
+  deleteManyFeedbacks(where: FeedbackWhereInput): BatchPayload!
+  createPic(data: PicCreateInput!): Pic!
+  updatePic(data: PicUpdateInput!, where: PicWhereUniqueInput!): Pic
+  updateManyPics(data: PicUpdateManyMutationInput!, where: PicWhereInput): BatchPayload!
+  upsertPic(where: PicWhereUniqueInput!, create: PicCreateInput!, update: PicUpdateInput!): Pic!
+  deletePic(where: PicWhereUniqueInput!): Pic
+  deleteManyPics(where: PicWhereInput): BatchPayload!
+  createRating(data: RatingCreateInput!): Rating!
+  updateRating(data: RatingUpdateInput!, where: RatingWhereUniqueInput!): Rating
+  updateManyRatings(data: RatingUpdateManyMutationInput!, where: RatingWhereInput): BatchPayload!
+  upsertRating(where: RatingWhereUniqueInput!, create: RatingCreateInput!, update: RatingUpdateInput!): Rating!
+  deleteRating(where: RatingWhereUniqueInput!): Rating
+  deleteManyRatings(where: RatingWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -290,27 +539,475 @@ type PageInfo {
   endCursor: String
 }
 
+type Pic {
+  id: ID!
+  owner: User!
+  url: String!
+  ratings(where: RatingWhereInput, orderBy: RatingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rating!]
+}
+
+type PicConnection {
+  pageInfo: PageInfo!
+  edges: [PicEdge]!
+  aggregate: AggregatePic!
+}
+
+input PicCreateInput {
+  id: ID
+  owner: UserCreateOneWithoutPicsInput!
+  url: String!
+  ratings: RatingCreateManyWithoutPicInput
+}
+
+input PicCreateManyWithoutOwnerInput {
+  create: [PicCreateWithoutOwnerInput!]
+  connect: [PicWhereUniqueInput!]
+}
+
+input PicCreateOneWithoutRatingsInput {
+  create: PicCreateWithoutRatingsInput
+  connect: PicWhereUniqueInput
+}
+
+input PicCreateWithoutOwnerInput {
+  id: ID
+  url: String!
+  ratings: RatingCreateManyWithoutPicInput
+}
+
+input PicCreateWithoutRatingsInput {
+  id: ID
+  owner: UserCreateOneWithoutPicsInput!
+  url: String!
+}
+
+type PicEdge {
+  node: Pic!
+  cursor: String!
+}
+
+enum PicOrderByInput {
+  id_ASC
+  id_DESC
+  url_ASC
+  url_DESC
+}
+
+type PicPreviousValues {
+  id: ID!
+  url: String!
+}
+
+input PicScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  AND: [PicScalarWhereInput!]
+  OR: [PicScalarWhereInput!]
+  NOT: [PicScalarWhereInput!]
+}
+
+type PicSubscriptionPayload {
+  mutation: MutationType!
+  node: Pic
+  updatedFields: [String!]
+  previousValues: PicPreviousValues
+}
+
+input PicSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PicWhereInput
+  AND: [PicSubscriptionWhereInput!]
+  OR: [PicSubscriptionWhereInput!]
+  NOT: [PicSubscriptionWhereInput!]
+}
+
+input PicUpdateInput {
+  owner: UserUpdateOneRequiredWithoutPicsInput
+  url: String
+  ratings: RatingUpdateManyWithoutPicInput
+}
+
+input PicUpdateManyDataInput {
+  url: String
+}
+
+input PicUpdateManyMutationInput {
+  url: String
+}
+
+input PicUpdateManyWithoutOwnerInput {
+  create: [PicCreateWithoutOwnerInput!]
+  delete: [PicWhereUniqueInput!]
+  connect: [PicWhereUniqueInput!]
+  set: [PicWhereUniqueInput!]
+  disconnect: [PicWhereUniqueInput!]
+  update: [PicUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [PicUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [PicScalarWhereInput!]
+  updateMany: [PicUpdateManyWithWhereNestedInput!]
+}
+
+input PicUpdateManyWithWhereNestedInput {
+  where: PicScalarWhereInput!
+  data: PicUpdateManyDataInput!
+}
+
+input PicUpdateOneWithoutRatingsInput {
+  create: PicCreateWithoutRatingsInput
+  update: PicUpdateWithoutRatingsDataInput
+  upsert: PicUpsertWithoutRatingsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PicWhereUniqueInput
+}
+
+input PicUpdateWithoutOwnerDataInput {
+  url: String
+  ratings: RatingUpdateManyWithoutPicInput
+}
+
+input PicUpdateWithoutRatingsDataInput {
+  owner: UserUpdateOneRequiredWithoutPicsInput
+  url: String
+}
+
+input PicUpdateWithWhereUniqueWithoutOwnerInput {
+  where: PicWhereUniqueInput!
+  data: PicUpdateWithoutOwnerDataInput!
+}
+
+input PicUpsertWithoutRatingsInput {
+  update: PicUpdateWithoutRatingsDataInput!
+  create: PicCreateWithoutRatingsInput!
+}
+
+input PicUpsertWithWhereUniqueWithoutOwnerInput {
+  where: PicWhereUniqueInput!
+  update: PicUpdateWithoutOwnerDataInput!
+  create: PicCreateWithoutOwnerInput!
+}
+
+input PicWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  owner: UserWhereInput
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  ratings_every: RatingWhereInput
+  ratings_some: RatingWhereInput
+  ratings_none: RatingWhereInput
+  AND: [PicWhereInput!]
+  OR: [PicWhereInput!]
+  NOT: [PicWhereInput!]
+}
+
+input PicWhereUniqueInput {
+  id: ID
+}
+
 type Query {
-  link(where: LinkWhereUniqueInput!): Link
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
-  linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
+  blurb(where: BlurbWhereUniqueInput!): Blurb
+  blurbs(where: BlurbWhereInput, orderBy: BlurbOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blurb]!
+  blurbsConnection(where: BlurbWhereInput, orderBy: BlurbOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlurbConnection!
+  feedback(where: FeedbackWhereUniqueInput!): Feedback
+  feedbacks(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback]!
+  feedbacksConnection(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedbackConnection!
+  pic(where: PicWhereUniqueInput!): Pic
+  pics(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pic]!
+  picsConnection(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PicConnection!
+  rating(where: RatingWhereUniqueInput!): Rating
+  ratings(where: RatingWhereInput, orderBy: RatingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rating]!
+  ratingsConnection(where: RatingWhereInput, orderBy: RatingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RatingConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Rating {
+  id: ID!
+  pic: Pic
+  blurb: Blurb
+  score: Int!
+}
+
+type RatingConnection {
+  pageInfo: PageInfo!
+  edges: [RatingEdge]!
+  aggregate: AggregateRating!
+}
+
+input RatingCreateInput {
+  id: ID
+  pic: PicCreateOneWithoutRatingsInput
+  blurb: BlurbCreateOneWithoutRatingsInput
+  score: Int!
+}
+
+input RatingCreateManyWithoutBlurbInput {
+  create: [RatingCreateWithoutBlurbInput!]
+  connect: [RatingWhereUniqueInput!]
+}
+
+input RatingCreateManyWithoutPicInput {
+  create: [RatingCreateWithoutPicInput!]
+  connect: [RatingWhereUniqueInput!]
+}
+
+input RatingCreateWithoutBlurbInput {
+  id: ID
+  pic: PicCreateOneWithoutRatingsInput
+  score: Int!
+}
+
+input RatingCreateWithoutPicInput {
+  id: ID
+  blurb: BlurbCreateOneWithoutRatingsInput
+  score: Int!
+}
+
+type RatingEdge {
+  node: Rating!
+  cursor: String!
+}
+
+enum RatingOrderByInput {
+  id_ASC
+  id_DESC
+  score_ASC
+  score_DESC
+}
+
+type RatingPreviousValues {
+  id: ID!
+  score: Int!
+}
+
+input RatingScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  score: Int
+  score_not: Int
+  score_in: [Int!]
+  score_not_in: [Int!]
+  score_lt: Int
+  score_lte: Int
+  score_gt: Int
+  score_gte: Int
+  AND: [RatingScalarWhereInput!]
+  OR: [RatingScalarWhereInput!]
+  NOT: [RatingScalarWhereInput!]
+}
+
+type RatingSubscriptionPayload {
+  mutation: MutationType!
+  node: Rating
+  updatedFields: [String!]
+  previousValues: RatingPreviousValues
+}
+
+input RatingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RatingWhereInput
+  AND: [RatingSubscriptionWhereInput!]
+  OR: [RatingSubscriptionWhereInput!]
+  NOT: [RatingSubscriptionWhereInput!]
+}
+
+input RatingUpdateInput {
+  pic: PicUpdateOneWithoutRatingsInput
+  blurb: BlurbUpdateOneWithoutRatingsInput
+  score: Int
+}
+
+input RatingUpdateManyDataInput {
+  score: Int
+}
+
+input RatingUpdateManyMutationInput {
+  score: Int
+}
+
+input RatingUpdateManyWithoutBlurbInput {
+  create: [RatingCreateWithoutBlurbInput!]
+  delete: [RatingWhereUniqueInput!]
+  connect: [RatingWhereUniqueInput!]
+  set: [RatingWhereUniqueInput!]
+  disconnect: [RatingWhereUniqueInput!]
+  update: [RatingUpdateWithWhereUniqueWithoutBlurbInput!]
+  upsert: [RatingUpsertWithWhereUniqueWithoutBlurbInput!]
+  deleteMany: [RatingScalarWhereInput!]
+  updateMany: [RatingUpdateManyWithWhereNestedInput!]
+}
+
+input RatingUpdateManyWithoutPicInput {
+  create: [RatingCreateWithoutPicInput!]
+  delete: [RatingWhereUniqueInput!]
+  connect: [RatingWhereUniqueInput!]
+  set: [RatingWhereUniqueInput!]
+  disconnect: [RatingWhereUniqueInput!]
+  update: [RatingUpdateWithWhereUniqueWithoutPicInput!]
+  upsert: [RatingUpsertWithWhereUniqueWithoutPicInput!]
+  deleteMany: [RatingScalarWhereInput!]
+  updateMany: [RatingUpdateManyWithWhereNestedInput!]
+}
+
+input RatingUpdateManyWithWhereNestedInput {
+  where: RatingScalarWhereInput!
+  data: RatingUpdateManyDataInput!
+}
+
+input RatingUpdateWithoutBlurbDataInput {
+  pic: PicUpdateOneWithoutRatingsInput
+  score: Int
+}
+
+input RatingUpdateWithoutPicDataInput {
+  blurb: BlurbUpdateOneWithoutRatingsInput
+  score: Int
+}
+
+input RatingUpdateWithWhereUniqueWithoutBlurbInput {
+  where: RatingWhereUniqueInput!
+  data: RatingUpdateWithoutBlurbDataInput!
+}
+
+input RatingUpdateWithWhereUniqueWithoutPicInput {
+  where: RatingWhereUniqueInput!
+  data: RatingUpdateWithoutPicDataInput!
+}
+
+input RatingUpsertWithWhereUniqueWithoutBlurbInput {
+  where: RatingWhereUniqueInput!
+  update: RatingUpdateWithoutBlurbDataInput!
+  create: RatingCreateWithoutBlurbInput!
+}
+
+input RatingUpsertWithWhereUniqueWithoutPicInput {
+  where: RatingWhereUniqueInput!
+  update: RatingUpdateWithoutPicDataInput!
+  create: RatingCreateWithoutPicInput!
+}
+
+input RatingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  pic: PicWhereInput
+  blurb: BlurbWhereInput
+  score: Int
+  score_not: Int
+  score_in: [Int!]
+  score_not_in: [Int!]
+  score_lt: Int
+  score_lte: Int
+  score_gt: Int
+  score_gte: Int
+  AND: [RatingWhereInput!]
+  OR: [RatingWhereInput!]
+  NOT: [RatingWhereInput!]
+}
+
+input RatingWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
-  link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
+  blurb(where: BlurbSubscriptionWhereInput): BlurbSubscriptionPayload
+  feedback(where: FeedbackSubscriptionWhereInput): FeedbackSubscriptionPayload
+  pic(where: PicSubscriptionWhereInput): PicSubscriptionPayload
+  rating(where: RatingSubscriptionWhereInput): RatingSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User {
   id: ID!
   name: String!
+  birthMonth: String!
   email: String!
   password: String!
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
+  blurbs(where: BlurbWhereInput, orderBy: BlurbOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blurb!]
+  pics(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pic!]
+  feedback(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
 }
 
 type UserConnection {
@@ -322,21 +1019,57 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   name: String!
+  birthMonth: String!
   email: String!
   password: String!
-  links: LinkCreateManyWithoutPostedByInput
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  pics: PicCreateManyWithoutOwnerInput
+  feedback: FeedbackCreateManyWithoutContentOwnerInput
 }
 
-input UserCreateOneWithoutLinksInput {
-  create: UserCreateWithoutLinksInput
+input UserCreateOneWithoutBlurbsInput {
+  create: UserCreateWithoutBlurbsInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutLinksInput {
+input UserCreateOneWithoutFeedbackInput {
+  create: UserCreateWithoutFeedbackInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutPicsInput {
+  create: UserCreateWithoutPicsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutBlurbsInput {
   id: ID
   name: String!
+  birthMonth: String!
   email: String!
   password: String!
+  pics: PicCreateManyWithoutOwnerInput
+  feedback: FeedbackCreateManyWithoutContentOwnerInput
+}
+
+input UserCreateWithoutFeedbackInput {
+  id: ID
+  name: String!
+  birthMonth: String!
+  email: String!
+  password: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  pics: PicCreateManyWithoutOwnerInput
+}
+
+input UserCreateWithoutPicsInput {
+  id: ID
+  name: String!
+  birthMonth: String!
+  email: String!
+  password: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  feedback: FeedbackCreateManyWithoutContentOwnerInput
 }
 
 type UserEdge {
@@ -349,6 +1082,8 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  birthMonth_ASC
+  birthMonth_DESC
   email_ASC
   email_DESC
   password_ASC
@@ -358,6 +1093,7 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   name: String!
+  birthMonth: String!
   email: String!
   password: String!
 }
@@ -382,35 +1118,82 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  birthMonth: String
   email: String
   password: String
-  links: LinkUpdateManyWithoutPostedByInput
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  pics: PicUpdateManyWithoutOwnerInput
+  feedback: FeedbackUpdateManyWithoutContentOwnerInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
+  birthMonth: String
   email: String
   password: String
 }
 
-input UserUpdateOneWithoutLinksInput {
-  create: UserCreateWithoutLinksInput
-  update: UserUpdateWithoutLinksDataInput
-  upsert: UserUpsertWithoutLinksInput
-  delete: Boolean
-  disconnect: Boolean
+input UserUpdateOneRequiredWithoutBlurbsInput {
+  create: UserCreateWithoutBlurbsInput
+  update: UserUpdateWithoutBlurbsDataInput
+  upsert: UserUpsertWithoutBlurbsInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutLinksDataInput {
-  name: String
-  email: String
-  password: String
+input UserUpdateOneRequiredWithoutFeedbackInput {
+  create: UserCreateWithoutFeedbackInput
+  update: UserUpdateWithoutFeedbackDataInput
+  upsert: UserUpsertWithoutFeedbackInput
+  connect: UserWhereUniqueInput
 }
 
-input UserUpsertWithoutLinksInput {
-  update: UserUpdateWithoutLinksDataInput!
-  create: UserCreateWithoutLinksInput!
+input UserUpdateOneRequiredWithoutPicsInput {
+  create: UserCreateWithoutPicsInput
+  update: UserUpdateWithoutPicsDataInput
+  upsert: UserUpsertWithoutPicsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutBlurbsDataInput {
+  name: String
+  birthMonth: String
+  email: String
+  password: String
+  pics: PicUpdateManyWithoutOwnerInput
+  feedback: FeedbackUpdateManyWithoutContentOwnerInput
+}
+
+input UserUpdateWithoutFeedbackDataInput {
+  name: String
+  birthMonth: String
+  email: String
+  password: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  pics: PicUpdateManyWithoutOwnerInput
+}
+
+input UserUpdateWithoutPicsDataInput {
+  name: String
+  birthMonth: String
+  email: String
+  password: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  feedback: FeedbackUpdateManyWithoutContentOwnerInput
+}
+
+input UserUpsertWithoutBlurbsInput {
+  update: UserUpdateWithoutBlurbsDataInput!
+  create: UserCreateWithoutBlurbsInput!
+}
+
+input UserUpsertWithoutFeedbackInput {
+  update: UserUpdateWithoutFeedbackDataInput!
+  create: UserCreateWithoutFeedbackInput!
+}
+
+input UserUpsertWithoutPicsInput {
+  update: UserUpdateWithoutPicsDataInput!
+  create: UserCreateWithoutPicsInput!
 }
 
 input UserWhereInput {
@@ -442,6 +1225,20 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  birthMonth: String
+  birthMonth_not: String
+  birthMonth_in: [String!]
+  birthMonth_not_in: [String!]
+  birthMonth_lt: String
+  birthMonth_lte: String
+  birthMonth_gt: String
+  birthMonth_gte: String
+  birthMonth_contains: String
+  birthMonth_not_contains: String
+  birthMonth_starts_with: String
+  birthMonth_not_starts_with: String
+  birthMonth_ends_with: String
+  birthMonth_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -470,9 +1267,15 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  links_every: LinkWhereInput
-  links_some: LinkWhereInput
-  links_none: LinkWhereInput
+  blurbs_every: BlurbWhereInput
+  blurbs_some: BlurbWhereInput
+  blurbs_none: BlurbWhereInput
+  pics_every: PicWhereInput
+  pics_some: PicWhereInput
+  pics_none: PicWhereInput
+  feedback_every: FeedbackWhereInput
+  feedback_some: FeedbackWhereInput
+  feedback_none: FeedbackWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

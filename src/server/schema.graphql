@@ -1,14 +1,14 @@
 type Query {
-  info: String!
-  feed: [Link!]!
-  name: [Name]!
-  link(id: ID!): Link
+  users: [User!]!
 }
 
 type Mutation {
-  post(url: String!, description: String!): Link!
-  signup(email: String!, password: String!, name: String!): AuthPayload
+  signup(email: String!, password: String!, name: String!, birthMonth: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  addBlurb(text: String!): Blurb!
+  addPic(url: String!): Pic!
+  rate(blurbID: String, picID: String, score: Int!): Rating!
+  giveFeedback(text: String!, ownerID: String!): Feedback!
 }
 
 type AuthPayload {
@@ -19,6 +19,7 @@ type AuthPayload {
 type User {
   id: ID!
   name: String!
+  password: String!
   birthMonth: String!
   email: String!
   blurbs: [Blurb!]!

@@ -16,7 +16,10 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  link: (where?: LinkWhereInput) => Promise<boolean>;
+  blurb: (where?: BlurbWhereInput) => Promise<boolean>;
+  feedback: (where?: FeedbackWhereInput) => Promise<boolean>;
+  pic: (where?: PicWhereInput) => Promise<boolean>;
+  rating: (where?: RatingWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -39,25 +42,82 @@ export interface Prisma {
    * Queries
    */
 
-  link: (where: LinkWhereUniqueInput) => LinkNullablePromise;
-  links: (args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  blurb: (where: BlurbWhereUniqueInput) => BlurbNullablePromise;
+  blurbs: (args?: {
+    where?: BlurbWhereInput;
+    orderBy?: BlurbOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Link>;
-  linksConnection: (args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  }) => FragmentableArray<Blurb>;
+  blurbsConnection: (args?: {
+    where?: BlurbWhereInput;
+    orderBy?: BlurbOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => LinkConnectionPromise;
+  }) => BlurbConnectionPromise;
+  feedback: (where: FeedbackWhereUniqueInput) => FeedbackNullablePromise;
+  feedbacks: (args?: {
+    where?: FeedbackWhereInput;
+    orderBy?: FeedbackOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Feedback>;
+  feedbacksConnection: (args?: {
+    where?: FeedbackWhereInput;
+    orderBy?: FeedbackOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FeedbackConnectionPromise;
+  pic: (where: PicWhereUniqueInput) => PicNullablePromise;
+  pics: (args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Pic>;
+  picsConnection: (args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => PicConnectionPromise;
+  rating: (where: RatingWhereUniqueInput) => RatingNullablePromise;
+  ratings: (args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Rating>;
+  ratingsConnection: (args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => RatingConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -83,22 +143,70 @@ export interface Prisma {
    * Mutations
    */
 
-  createLink: (data: LinkCreateInput) => LinkPromise;
-  updateLink: (args: {
-    data: LinkUpdateInput;
-    where: LinkWhereUniqueInput;
-  }) => LinkPromise;
-  updateManyLinks: (args: {
-    data: LinkUpdateManyMutationInput;
-    where?: LinkWhereInput;
+  createBlurb: (data: BlurbCreateInput) => BlurbPromise;
+  updateBlurb: (args: {
+    data: BlurbUpdateInput;
+    where: BlurbWhereUniqueInput;
+  }) => BlurbPromise;
+  updateManyBlurbs: (args: {
+    data: BlurbUpdateManyMutationInput;
+    where?: BlurbWhereInput;
   }) => BatchPayloadPromise;
-  upsertLink: (args: {
-    where: LinkWhereUniqueInput;
-    create: LinkCreateInput;
-    update: LinkUpdateInput;
-  }) => LinkPromise;
-  deleteLink: (where: LinkWhereUniqueInput) => LinkPromise;
-  deleteManyLinks: (where?: LinkWhereInput) => BatchPayloadPromise;
+  upsertBlurb: (args: {
+    where: BlurbWhereUniqueInput;
+    create: BlurbCreateInput;
+    update: BlurbUpdateInput;
+  }) => BlurbPromise;
+  deleteBlurb: (where: BlurbWhereUniqueInput) => BlurbPromise;
+  deleteManyBlurbs: (where?: BlurbWhereInput) => BatchPayloadPromise;
+  createFeedback: (data: FeedbackCreateInput) => FeedbackPromise;
+  updateFeedback: (args: {
+    data: FeedbackUpdateInput;
+    where: FeedbackWhereUniqueInput;
+  }) => FeedbackPromise;
+  updateManyFeedbacks: (args: {
+    data: FeedbackUpdateManyMutationInput;
+    where?: FeedbackWhereInput;
+  }) => BatchPayloadPromise;
+  upsertFeedback: (args: {
+    where: FeedbackWhereUniqueInput;
+    create: FeedbackCreateInput;
+    update: FeedbackUpdateInput;
+  }) => FeedbackPromise;
+  deleteFeedback: (where: FeedbackWhereUniqueInput) => FeedbackPromise;
+  deleteManyFeedbacks: (where?: FeedbackWhereInput) => BatchPayloadPromise;
+  createPic: (data: PicCreateInput) => PicPromise;
+  updatePic: (args: {
+    data: PicUpdateInput;
+    where: PicWhereUniqueInput;
+  }) => PicPromise;
+  updateManyPics: (args: {
+    data: PicUpdateManyMutationInput;
+    where?: PicWhereInput;
+  }) => BatchPayloadPromise;
+  upsertPic: (args: {
+    where: PicWhereUniqueInput;
+    create: PicCreateInput;
+    update: PicUpdateInput;
+  }) => PicPromise;
+  deletePic: (where: PicWhereUniqueInput) => PicPromise;
+  deleteManyPics: (where?: PicWhereInput) => BatchPayloadPromise;
+  createRating: (data: RatingCreateInput) => RatingPromise;
+  updateRating: (args: {
+    data: RatingUpdateInput;
+    where: RatingWhereUniqueInput;
+  }) => RatingPromise;
+  updateManyRatings: (args: {
+    data: RatingUpdateManyMutationInput;
+    where?: RatingWhereInput;
+  }) => BatchPayloadPromise;
+  upsertRating: (args: {
+    where: RatingWhereUniqueInput;
+    create: RatingCreateInput;
+    update: RatingUpdateInput;
+  }) => RatingPromise;
+  deleteRating: (where: RatingWhereUniqueInput) => RatingPromise;
+  deleteManyRatings: (where?: RatingWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -124,9 +232,18 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  link: (
-    where?: LinkSubscriptionWhereInput
-  ) => LinkSubscriptionPayloadSubscription;
+  blurb: (
+    where?: BlurbSubscriptionWhereInput
+  ) => BlurbSubscriptionPayloadSubscription;
+  feedback: (
+    where?: FeedbackSubscriptionWhereInput
+  ) => FeedbackSubscriptionPayloadSubscription;
+  pic: (
+    where?: PicSubscriptionWhereInput
+  ) => PicSubscriptionPayloadSubscription;
+  rating: (
+    where?: RatingSubscriptionWhereInput
+  ) => RatingSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -140,21 +257,33 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type LinkOrderByInput =
+export type BlurbOrderByInput = "id_ASC" | "id_DESC" | "text_ASC" | "text_DESC";
+
+export type PicOrderByInput = "id_ASC" | "id_DESC" | "url_ASC" | "url_DESC";
+
+export type RatingOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "description_ASC"
-  | "description_DESC"
+  | "score_ASC"
+  | "score_DESC";
+
+export type FeedbackOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "feedbackGiver_ASC"
+  | "feedbackGiver_DESC"
+  | "text_ASC"
+  | "text_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "url_ASC"
-  | "url_DESC";
+  | "createdAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "birthMonth_ASC"
+  | "birthMonth_DESC"
   | "email_ASC"
   | "email_DESC"
   | "password_ASC"
@@ -162,11 +291,11 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type LinkWhereUniqueInput = AtLeastOne<{
+export type BlurbWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface LinkWhereInput {
+export interface BlurbWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -181,46 +310,27 @@ export interface LinkWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  postedBy?: Maybe<UserWhereInput>;
-  AND?: Maybe<LinkWhereInput[] | LinkWhereInput>;
-  OR?: Maybe<LinkWhereInput[] | LinkWhereInput>;
-  NOT?: Maybe<LinkWhereInput[] | LinkWhereInput>;
+  owner?: Maybe<UserWhereInput>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  ratings_every?: Maybe<RatingWhereInput>;
+  ratings_some?: Maybe<RatingWhereInput>;
+  ratings_none?: Maybe<RatingWhereInput>;
+  AND?: Maybe<BlurbWhereInput[] | BlurbWhereInput>;
+  OR?: Maybe<BlurbWhereInput[] | BlurbWhereInput>;
+  NOT?: Maybe<BlurbWhereInput[] | BlurbWhereInput>;
 }
 
 export interface UserWhereInput {
@@ -252,6 +362,20 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  birthMonth?: Maybe<String>;
+  birthMonth_not?: Maybe<String>;
+  birthMonth_in?: Maybe<String[] | String>;
+  birthMonth_not_in?: Maybe<String[] | String>;
+  birthMonth_lt?: Maybe<String>;
+  birthMonth_lte?: Maybe<String>;
+  birthMonth_gt?: Maybe<String>;
+  birthMonth_gte?: Maybe<String>;
+  birthMonth_contains?: Maybe<String>;
+  birthMonth_not_contains?: Maybe<String>;
+  birthMonth_starts_with?: Maybe<String>;
+  birthMonth_not_starts_with?: Maybe<String>;
+  birthMonth_ends_with?: Maybe<String>;
+  birthMonth_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
   email_not?: Maybe<String>;
   email_in?: Maybe<String[] | String>;
@@ -280,136 +404,21 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  links_every?: Maybe<LinkWhereInput>;
-  links_some?: Maybe<LinkWhereInput>;
-  links_none?: Maybe<LinkWhereInput>;
+  blurbs_every?: Maybe<BlurbWhereInput>;
+  blurbs_some?: Maybe<BlurbWhereInput>;
+  blurbs_none?: Maybe<BlurbWhereInput>;
+  pics_every?: Maybe<PicWhereInput>;
+  pics_some?: Maybe<PicWhereInput>;
+  pics_none?: Maybe<PicWhereInput>;
+  feedback_every?: Maybe<FeedbackWhereInput>;
+  feedback_some?: Maybe<FeedbackWhereInput>;
+  feedback_none?: Maybe<FeedbackWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface LinkCreateInput {
-  id?: Maybe<ID_Input>;
-  description: String;
-  url: String;
-  postedBy?: Maybe<UserCreateOneWithoutLinksInput>;
-}
-
-export interface UserCreateOneWithoutLinksInput {
-  create?: Maybe<UserCreateWithoutLinksInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutLinksInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-}
-
-export interface LinkUpdateInput {
-  description?: Maybe<String>;
-  url?: Maybe<String>;
-  postedBy?: Maybe<UserUpdateOneWithoutLinksInput>;
-}
-
-export interface UserUpdateOneWithoutLinksInput {
-  create?: Maybe<UserCreateWithoutLinksInput>;
-  update?: Maybe<UserUpdateWithoutLinksDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLinksInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutLinksDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutLinksInput {
-  update: UserUpdateWithoutLinksDataInput;
-  create: UserCreateWithoutLinksInput;
-}
-
-export interface LinkUpdateManyMutationInput {
-  description?: Maybe<String>;
-  url?: Maybe<String>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  links?: Maybe<LinkCreateManyWithoutPostedByInput>;
-}
-
-export interface LinkCreateManyWithoutPostedByInput {
-  create?: Maybe<
-    LinkCreateWithoutPostedByInput[] | LinkCreateWithoutPostedByInput
-  >;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-}
-
-export interface LinkCreateWithoutPostedByInput {
-  id?: Maybe<ID_Input>;
-  description: String;
-  url: String;
-}
-
-export interface UserUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  links?: Maybe<LinkUpdateManyWithoutPostedByInput>;
-}
-
-export interface LinkUpdateManyWithoutPostedByInput {
-  create?: Maybe<
-    LinkCreateWithoutPostedByInput[] | LinkCreateWithoutPostedByInput
-  >;
-  delete?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  set?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  disconnect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  update?: Maybe<
-    | LinkUpdateWithWhereUniqueWithoutPostedByInput[]
-    | LinkUpdateWithWhereUniqueWithoutPostedByInput
-  >;
-  upsert?: Maybe<
-    | LinkUpsertWithWhereUniqueWithoutPostedByInput[]
-    | LinkUpsertWithWhereUniqueWithoutPostedByInput
-  >;
-  deleteMany?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  updateMany?: Maybe<
-    LinkUpdateManyWithWhereNestedInput[] | LinkUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface LinkUpdateWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput;
-  data: LinkUpdateWithoutPostedByDataInput;
-}
-
-export interface LinkUpdateWithoutPostedByDataInput {
-  description?: Maybe<String>;
-  url?: Maybe<String>;
-}
-
-export interface LinkUpsertWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput;
-  update: LinkUpdateWithoutPostedByDataInput;
-  create: LinkCreateWithoutPostedByInput;
-}
-
-export interface LinkScalarWhereInput {
+export interface PicWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -424,28 +433,7 @@ export interface LinkScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
+  owner?: Maybe<UserWhereInput>;
   url?: Maybe<String>;
   url_not?: Maybe<String>;
   url_in?: Maybe<String[] | String>;
@@ -460,36 +448,866 @@ export interface LinkScalarWhereInput {
   url_not_starts_with?: Maybe<String>;
   url_ends_with?: Maybe<String>;
   url_not_ends_with?: Maybe<String>;
-  AND?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  OR?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  NOT?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  ratings_every?: Maybe<RatingWhereInput>;
+  ratings_some?: Maybe<RatingWhereInput>;
+  ratings_none?: Maybe<RatingWhereInput>;
+  AND?: Maybe<PicWhereInput[] | PicWhereInput>;
+  OR?: Maybe<PicWhereInput[] | PicWhereInput>;
+  NOT?: Maybe<PicWhereInput[] | PicWhereInput>;
 }
 
-export interface LinkUpdateManyWithWhereNestedInput {
-  where: LinkScalarWhereInput;
-  data: LinkUpdateManyDataInput;
+export interface RatingWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  pic?: Maybe<PicWhereInput>;
+  blurb?: Maybe<BlurbWhereInput>;
+  score?: Maybe<Int>;
+  score_not?: Maybe<Int>;
+  score_in?: Maybe<Int[] | Int>;
+  score_not_in?: Maybe<Int[] | Int>;
+  score_lt?: Maybe<Int>;
+  score_lte?: Maybe<Int>;
+  score_gt?: Maybe<Int>;
+  score_gte?: Maybe<Int>;
+  AND?: Maybe<RatingWhereInput[] | RatingWhereInput>;
+  OR?: Maybe<RatingWhereInput[] | RatingWhereInput>;
+  NOT?: Maybe<RatingWhereInput[] | RatingWhereInput>;
 }
 
-export interface LinkUpdateManyDataInput {
-  description?: Maybe<String>;
+export interface FeedbackWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  contentOwner?: Maybe<UserWhereInput>;
+  feedbackGiver?: Maybe<String>;
+  feedbackGiver_not?: Maybe<String>;
+  feedbackGiver_in?: Maybe<String[] | String>;
+  feedbackGiver_not_in?: Maybe<String[] | String>;
+  feedbackGiver_lt?: Maybe<String>;
+  feedbackGiver_lte?: Maybe<String>;
+  feedbackGiver_gt?: Maybe<String>;
+  feedbackGiver_gte?: Maybe<String>;
+  feedbackGiver_contains?: Maybe<String>;
+  feedbackGiver_not_contains?: Maybe<String>;
+  feedbackGiver_starts_with?: Maybe<String>;
+  feedbackGiver_not_starts_with?: Maybe<String>;
+  feedbackGiver_ends_with?: Maybe<String>;
+  feedbackGiver_not_ends_with?: Maybe<String>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
+  OR?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
+  NOT?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
+}
+
+export type FeedbackWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type PicWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type RatingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface BlurbCreateInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneWithoutBlurbsInput;
+  text: String;
+  ratings?: Maybe<RatingCreateManyWithoutBlurbInput>;
+}
+
+export interface UserCreateOneWithoutBlurbsInput {
+  create?: Maybe<UserCreateWithoutBlurbsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutBlurbsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  birthMonth: String;
+  email: String;
+  password: String;
+  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
+  feedback?: Maybe<FeedbackCreateManyWithoutContentOwnerInput>;
+}
+
+export interface PicCreateManyWithoutOwnerInput {
+  create?: Maybe<PicCreateWithoutOwnerInput[] | PicCreateWithoutOwnerInput>;
+  connect?: Maybe<PicWhereUniqueInput[] | PicWhereUniqueInput>;
+}
+
+export interface PicCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
+  url: String;
+  ratings?: Maybe<RatingCreateManyWithoutPicInput>;
+}
+
+export interface RatingCreateManyWithoutPicInput {
+  create?: Maybe<RatingCreateWithoutPicInput[] | RatingCreateWithoutPicInput>;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+}
+
+export interface RatingCreateWithoutPicInput {
+  id?: Maybe<ID_Input>;
+  blurb?: Maybe<BlurbCreateOneWithoutRatingsInput>;
+  score: Int;
+}
+
+export interface BlurbCreateOneWithoutRatingsInput {
+  create?: Maybe<BlurbCreateWithoutRatingsInput>;
+  connect?: Maybe<BlurbWhereUniqueInput>;
+}
+
+export interface BlurbCreateWithoutRatingsInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneWithoutBlurbsInput;
+  text: String;
+}
+
+export interface FeedbackCreateManyWithoutContentOwnerInput {
+  create?: Maybe<
+    | FeedbackCreateWithoutContentOwnerInput[]
+    | FeedbackCreateWithoutContentOwnerInput
+  >;
+  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+}
+
+export interface FeedbackCreateWithoutContentOwnerInput {
+  id?: Maybe<ID_Input>;
+  feedbackGiver: String;
+  text: String;
+}
+
+export interface RatingCreateManyWithoutBlurbInput {
+  create?: Maybe<
+    RatingCreateWithoutBlurbInput[] | RatingCreateWithoutBlurbInput
+  >;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+}
+
+export interface RatingCreateWithoutBlurbInput {
+  id?: Maybe<ID_Input>;
+  pic?: Maybe<PicCreateOneWithoutRatingsInput>;
+  score: Int;
+}
+
+export interface PicCreateOneWithoutRatingsInput {
+  create?: Maybe<PicCreateWithoutRatingsInput>;
+  connect?: Maybe<PicWhereUniqueInput>;
+}
+
+export interface PicCreateWithoutRatingsInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneWithoutPicsInput;
+  url: String;
+}
+
+export interface UserCreateOneWithoutPicsInput {
+  create?: Maybe<UserCreateWithoutPicsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutPicsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  birthMonth: String;
+  email: String;
+  password: String;
+  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
+  feedback?: Maybe<FeedbackCreateManyWithoutContentOwnerInput>;
+}
+
+export interface BlurbCreateManyWithoutOwnerInput {
+  create?: Maybe<BlurbCreateWithoutOwnerInput[] | BlurbCreateWithoutOwnerInput>;
+  connect?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+}
+
+export interface BlurbCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  ratings?: Maybe<RatingCreateManyWithoutBlurbInput>;
+}
+
+export interface BlurbUpdateInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutBlurbsInput>;
+  text?: Maybe<String>;
+  ratings?: Maybe<RatingUpdateManyWithoutBlurbInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutBlurbsInput {
+  create?: Maybe<UserCreateWithoutBlurbsInput>;
+  update?: Maybe<UserUpdateWithoutBlurbsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutBlurbsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutBlurbsDataInput {
+  name?: Maybe<String>;
+  birthMonth?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
+  feedback?: Maybe<FeedbackUpdateManyWithoutContentOwnerInput>;
+}
+
+export interface PicUpdateManyWithoutOwnerInput {
+  create?: Maybe<PicCreateWithoutOwnerInput[] | PicCreateWithoutOwnerInput>;
+  delete?: Maybe<PicWhereUniqueInput[] | PicWhereUniqueInput>;
+  connect?: Maybe<PicWhereUniqueInput[] | PicWhereUniqueInput>;
+  set?: Maybe<PicWhereUniqueInput[] | PicWhereUniqueInput>;
+  disconnect?: Maybe<PicWhereUniqueInput[] | PicWhereUniqueInput>;
+  update?: Maybe<
+    | PicUpdateWithWhereUniqueWithoutOwnerInput[]
+    | PicUpdateWithWhereUniqueWithoutOwnerInput
+  >;
+  upsert?: Maybe<
+    | PicUpsertWithWhereUniqueWithoutOwnerInput[]
+    | PicUpsertWithWhereUniqueWithoutOwnerInput
+  >;
+  deleteMany?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
+  updateMany?: Maybe<
+    PicUpdateManyWithWhereNestedInput[] | PicUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PicUpdateWithWhereUniqueWithoutOwnerInput {
+  where: PicWhereUniqueInput;
+  data: PicUpdateWithoutOwnerDataInput;
+}
+
+export interface PicUpdateWithoutOwnerDataInput {
   url?: Maybe<String>;
+  ratings?: Maybe<RatingUpdateManyWithoutPicInput>;
+}
+
+export interface RatingUpdateManyWithoutPicInput {
+  create?: Maybe<RatingCreateWithoutPicInput[] | RatingCreateWithoutPicInput>;
+  delete?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  set?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  disconnect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  update?: Maybe<
+    | RatingUpdateWithWhereUniqueWithoutPicInput[]
+    | RatingUpdateWithWhereUniqueWithoutPicInput
+  >;
+  upsert?: Maybe<
+    | RatingUpsertWithWhereUniqueWithoutPicInput[]
+    | RatingUpsertWithWhereUniqueWithoutPicInput
+  >;
+  deleteMany?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  updateMany?: Maybe<
+    | RatingUpdateManyWithWhereNestedInput[]
+    | RatingUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RatingUpdateWithWhereUniqueWithoutPicInput {
+  where: RatingWhereUniqueInput;
+  data: RatingUpdateWithoutPicDataInput;
+}
+
+export interface RatingUpdateWithoutPicDataInput {
+  blurb?: Maybe<BlurbUpdateOneWithoutRatingsInput>;
+  score?: Maybe<Int>;
+}
+
+export interface BlurbUpdateOneWithoutRatingsInput {
+  create?: Maybe<BlurbCreateWithoutRatingsInput>;
+  update?: Maybe<BlurbUpdateWithoutRatingsDataInput>;
+  upsert?: Maybe<BlurbUpsertWithoutRatingsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<BlurbWhereUniqueInput>;
+}
+
+export interface BlurbUpdateWithoutRatingsDataInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutBlurbsInput>;
+  text?: Maybe<String>;
+}
+
+export interface BlurbUpsertWithoutRatingsInput {
+  update: BlurbUpdateWithoutRatingsDataInput;
+  create: BlurbCreateWithoutRatingsInput;
+}
+
+export interface RatingUpsertWithWhereUniqueWithoutPicInput {
+  where: RatingWhereUniqueInput;
+  update: RatingUpdateWithoutPicDataInput;
+  create: RatingCreateWithoutPicInput;
+}
+
+export interface RatingScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  score?: Maybe<Int>;
+  score_not?: Maybe<Int>;
+  score_in?: Maybe<Int[] | Int>;
+  score_not_in?: Maybe<Int[] | Int>;
+  score_lt?: Maybe<Int>;
+  score_lte?: Maybe<Int>;
+  score_gt?: Maybe<Int>;
+  score_gte?: Maybe<Int>;
+  AND?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  OR?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  NOT?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+}
+
+export interface RatingUpdateManyWithWhereNestedInput {
+  where: RatingScalarWhereInput;
+  data: RatingUpdateManyDataInput;
+}
+
+export interface RatingUpdateManyDataInput {
+  score?: Maybe<Int>;
+}
+
+export interface PicUpsertWithWhereUniqueWithoutOwnerInput {
+  where: PicWhereUniqueInput;
+  update: PicUpdateWithoutOwnerDataInput;
+  create: PicCreateWithoutOwnerInput;
+}
+
+export interface PicScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  url?: Maybe<String>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  AND?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
+  OR?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
+  NOT?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
+}
+
+export interface PicUpdateManyWithWhereNestedInput {
+  where: PicScalarWhereInput;
+  data: PicUpdateManyDataInput;
+}
+
+export interface PicUpdateManyDataInput {
+  url?: Maybe<String>;
+}
+
+export interface FeedbackUpdateManyWithoutContentOwnerInput {
+  create?: Maybe<
+    | FeedbackCreateWithoutContentOwnerInput[]
+    | FeedbackCreateWithoutContentOwnerInput
+  >;
+  delete?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  set?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  disconnect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  update?: Maybe<
+    | FeedbackUpdateWithWhereUniqueWithoutContentOwnerInput[]
+    | FeedbackUpdateWithWhereUniqueWithoutContentOwnerInput
+  >;
+  upsert?: Maybe<
+    | FeedbackUpsertWithWhereUniqueWithoutContentOwnerInput[]
+    | FeedbackUpsertWithWhereUniqueWithoutContentOwnerInput
+  >;
+  deleteMany?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
+  updateMany?: Maybe<
+    | FeedbackUpdateManyWithWhereNestedInput[]
+    | FeedbackUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface FeedbackUpdateWithWhereUniqueWithoutContentOwnerInput {
+  where: FeedbackWhereUniqueInput;
+  data: FeedbackUpdateWithoutContentOwnerDataInput;
+}
+
+export interface FeedbackUpdateWithoutContentOwnerDataInput {
+  feedbackGiver?: Maybe<String>;
+  text?: Maybe<String>;
+}
+
+export interface FeedbackUpsertWithWhereUniqueWithoutContentOwnerInput {
+  where: FeedbackWhereUniqueInput;
+  update: FeedbackUpdateWithoutContentOwnerDataInput;
+  create: FeedbackCreateWithoutContentOwnerInput;
+}
+
+export interface FeedbackScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  feedbackGiver?: Maybe<String>;
+  feedbackGiver_not?: Maybe<String>;
+  feedbackGiver_in?: Maybe<String[] | String>;
+  feedbackGiver_not_in?: Maybe<String[] | String>;
+  feedbackGiver_lt?: Maybe<String>;
+  feedbackGiver_lte?: Maybe<String>;
+  feedbackGiver_gt?: Maybe<String>;
+  feedbackGiver_gte?: Maybe<String>;
+  feedbackGiver_contains?: Maybe<String>;
+  feedbackGiver_not_contains?: Maybe<String>;
+  feedbackGiver_starts_with?: Maybe<String>;
+  feedbackGiver_not_starts_with?: Maybe<String>;
+  feedbackGiver_ends_with?: Maybe<String>;
+  feedbackGiver_not_ends_with?: Maybe<String>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
+  OR?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
+  NOT?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
+}
+
+export interface FeedbackUpdateManyWithWhereNestedInput {
+  where: FeedbackScalarWhereInput;
+  data: FeedbackUpdateManyDataInput;
+}
+
+export interface FeedbackUpdateManyDataInput {
+  feedbackGiver?: Maybe<String>;
+  text?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutBlurbsInput {
+  update: UserUpdateWithoutBlurbsDataInput;
+  create: UserCreateWithoutBlurbsInput;
+}
+
+export interface RatingUpdateManyWithoutBlurbInput {
+  create?: Maybe<
+    RatingCreateWithoutBlurbInput[] | RatingCreateWithoutBlurbInput
+  >;
+  delete?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  set?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  disconnect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  update?: Maybe<
+    | RatingUpdateWithWhereUniqueWithoutBlurbInput[]
+    | RatingUpdateWithWhereUniqueWithoutBlurbInput
+  >;
+  upsert?: Maybe<
+    | RatingUpsertWithWhereUniqueWithoutBlurbInput[]
+    | RatingUpsertWithWhereUniqueWithoutBlurbInput
+  >;
+  deleteMany?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  updateMany?: Maybe<
+    | RatingUpdateManyWithWhereNestedInput[]
+    | RatingUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RatingUpdateWithWhereUniqueWithoutBlurbInput {
+  where: RatingWhereUniqueInput;
+  data: RatingUpdateWithoutBlurbDataInput;
+}
+
+export interface RatingUpdateWithoutBlurbDataInput {
+  pic?: Maybe<PicUpdateOneWithoutRatingsInput>;
+  score?: Maybe<Int>;
+}
+
+export interface PicUpdateOneWithoutRatingsInput {
+  create?: Maybe<PicCreateWithoutRatingsInput>;
+  update?: Maybe<PicUpdateWithoutRatingsDataInput>;
+  upsert?: Maybe<PicUpsertWithoutRatingsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PicWhereUniqueInput>;
+}
+
+export interface PicUpdateWithoutRatingsDataInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutPicsInput>;
+  url?: Maybe<String>;
+}
+
+export interface UserUpdateOneRequiredWithoutPicsInput {
+  create?: Maybe<UserCreateWithoutPicsInput>;
+  update?: Maybe<UserUpdateWithoutPicsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPicsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutPicsDataInput {
+  name?: Maybe<String>;
+  birthMonth?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  feedback?: Maybe<FeedbackUpdateManyWithoutContentOwnerInput>;
+}
+
+export interface BlurbUpdateManyWithoutOwnerInput {
+  create?: Maybe<BlurbCreateWithoutOwnerInput[] | BlurbCreateWithoutOwnerInput>;
+  delete?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  connect?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  set?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  disconnect?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  update?: Maybe<
+    | BlurbUpdateWithWhereUniqueWithoutOwnerInput[]
+    | BlurbUpdateWithWhereUniqueWithoutOwnerInput
+  >;
+  upsert?: Maybe<
+    | BlurbUpsertWithWhereUniqueWithoutOwnerInput[]
+    | BlurbUpsertWithWhereUniqueWithoutOwnerInput
+  >;
+  deleteMany?: Maybe<BlurbScalarWhereInput[] | BlurbScalarWhereInput>;
+  updateMany?: Maybe<
+    BlurbUpdateManyWithWhereNestedInput[] | BlurbUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface BlurbUpdateWithWhereUniqueWithoutOwnerInput {
+  where: BlurbWhereUniqueInput;
+  data: BlurbUpdateWithoutOwnerDataInput;
+}
+
+export interface BlurbUpdateWithoutOwnerDataInput {
+  text?: Maybe<String>;
+  ratings?: Maybe<RatingUpdateManyWithoutBlurbInput>;
+}
+
+export interface BlurbUpsertWithWhereUniqueWithoutOwnerInput {
+  where: BlurbWhereUniqueInput;
+  update: BlurbUpdateWithoutOwnerDataInput;
+  create: BlurbCreateWithoutOwnerInput;
+}
+
+export interface BlurbScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<BlurbScalarWhereInput[] | BlurbScalarWhereInput>;
+  OR?: Maybe<BlurbScalarWhereInput[] | BlurbScalarWhereInput>;
+  NOT?: Maybe<BlurbScalarWhereInput[] | BlurbScalarWhereInput>;
+}
+
+export interface BlurbUpdateManyWithWhereNestedInput {
+  where: BlurbScalarWhereInput;
+  data: BlurbUpdateManyDataInput;
+}
+
+export interface BlurbUpdateManyDataInput {
+  text?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutPicsInput {
+  update: UserUpdateWithoutPicsDataInput;
+  create: UserCreateWithoutPicsInput;
+}
+
+export interface PicUpsertWithoutRatingsInput {
+  update: PicUpdateWithoutRatingsDataInput;
+  create: PicCreateWithoutRatingsInput;
+}
+
+export interface RatingUpsertWithWhereUniqueWithoutBlurbInput {
+  where: RatingWhereUniqueInput;
+  update: RatingUpdateWithoutBlurbDataInput;
+  create: RatingCreateWithoutBlurbInput;
+}
+
+export interface BlurbUpdateManyMutationInput {
+  text?: Maybe<String>;
+}
+
+export interface FeedbackCreateInput {
+  id?: Maybe<ID_Input>;
+  contentOwner: UserCreateOneWithoutFeedbackInput;
+  feedbackGiver: String;
+  text: String;
+}
+
+export interface UserCreateOneWithoutFeedbackInput {
+  create?: Maybe<UserCreateWithoutFeedbackInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutFeedbackInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  birthMonth: String;
+  email: String;
+  password: String;
+  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
+  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
+}
+
+export interface FeedbackUpdateInput {
+  contentOwner?: Maybe<UserUpdateOneRequiredWithoutFeedbackInput>;
+  feedbackGiver?: Maybe<String>;
+  text?: Maybe<String>;
+}
+
+export interface UserUpdateOneRequiredWithoutFeedbackInput {
+  create?: Maybe<UserCreateWithoutFeedbackInput>;
+  update?: Maybe<UserUpdateWithoutFeedbackDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFeedbackInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutFeedbackDataInput {
+  name?: Maybe<String>;
+  birthMonth?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
+}
+
+export interface UserUpsertWithoutFeedbackInput {
+  update: UserUpdateWithoutFeedbackDataInput;
+  create: UserCreateWithoutFeedbackInput;
+}
+
+export interface FeedbackUpdateManyMutationInput {
+  feedbackGiver?: Maybe<String>;
+  text?: Maybe<String>;
+}
+
+export interface PicCreateInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneWithoutPicsInput;
+  url: String;
+  ratings?: Maybe<RatingCreateManyWithoutPicInput>;
+}
+
+export interface PicUpdateInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutPicsInput>;
+  url?: Maybe<String>;
+  ratings?: Maybe<RatingUpdateManyWithoutPicInput>;
+}
+
+export interface PicUpdateManyMutationInput {
+  url?: Maybe<String>;
+}
+
+export interface RatingCreateInput {
+  id?: Maybe<ID_Input>;
+  pic?: Maybe<PicCreateOneWithoutRatingsInput>;
+  blurb?: Maybe<BlurbCreateOneWithoutRatingsInput>;
+  score: Int;
+}
+
+export interface RatingUpdateInput {
+  pic?: Maybe<PicUpdateOneWithoutRatingsInput>;
+  blurb?: Maybe<BlurbUpdateOneWithoutRatingsInput>;
+  score?: Maybe<Int>;
+}
+
+export interface RatingUpdateManyMutationInput {
+  score?: Maybe<Int>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  birthMonth: String;
+  email: String;
+  password: String;
+  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
+  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
+  feedback?: Maybe<FeedbackCreateManyWithoutContentOwnerInput>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  birthMonth?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
+  feedback?: Maybe<FeedbackUpdateManyWithoutContentOwnerInput>;
 }
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
+  birthMonth?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
 }
 
-export interface LinkSubscriptionWhereInput {
+export interface BlurbSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LinkWhereInput>;
-  AND?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  OR?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  NOT?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
+  node?: Maybe<BlurbWhereInput>;
+  AND?: Maybe<BlurbSubscriptionWhereInput[] | BlurbSubscriptionWhereInput>;
+  OR?: Maybe<BlurbSubscriptionWhereInput[] | BlurbSubscriptionWhereInput>;
+  NOT?: Maybe<BlurbSubscriptionWhereInput[] | BlurbSubscriptionWhereInput>;
+}
+
+export interface FeedbackSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<FeedbackWhereInput>;
+  AND?: Maybe<
+    FeedbackSubscriptionWhereInput[] | FeedbackSubscriptionWhereInput
+  >;
+  OR?: Maybe<FeedbackSubscriptionWhereInput[] | FeedbackSubscriptionWhereInput>;
+  NOT?: Maybe<
+    FeedbackSubscriptionWhereInput[] | FeedbackSubscriptionWhereInput
+  >;
+}
+
+export interface PicSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PicWhereInput>;
+  AND?: Maybe<PicSubscriptionWhereInput[] | PicSubscriptionWhereInput>;
+  OR?: Maybe<PicSubscriptionWhereInput[] | PicSubscriptionWhereInput>;
+  NOT?: Maybe<PicSubscriptionWhereInput[] | PicSubscriptionWhereInput>;
+}
+
+export interface RatingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<RatingWhereInput>;
+  AND?: Maybe<RatingSubscriptionWhereInput[] | RatingSubscriptionWhereInput>;
+  OR?: Maybe<RatingSubscriptionWhereInput[] | RatingSubscriptionWhereInput>;
+  NOT?: Maybe<RatingSubscriptionWhereInput[] | RatingSubscriptionWhereInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -507,44 +1325,64 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Link {
+export interface Blurb {
   id: ID_Output;
-  description: String;
-  createdAt: DateTimeOutput;
-  url: String;
+  text: String;
 }
 
-export interface LinkPromise extends Promise<Link>, Fragmentable {
+export interface BlurbPromise extends Promise<Blurb>, Fragmentable {
   id: () => Promise<ID_Output>;
-  description: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  url: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
+  owner: <T = UserPromise>() => T;
+  text: () => Promise<String>;
+  ratings: <T = FragmentableArray<Rating>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface LinkSubscription
-  extends Promise<AsyncIterator<Link>>,
+export interface BlurbSubscription
+  extends Promise<AsyncIterator<Blurb>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  description: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  url: () => Promise<AsyncIterator<String>>;
-  postedBy: <T = UserSubscription>() => T;
+  owner: <T = UserSubscription>() => T;
+  text: () => Promise<AsyncIterator<String>>;
+  ratings: <T = Promise<AsyncIterator<RatingSubscription>>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface LinkNullablePromise
-  extends Promise<Link | null>,
+export interface BlurbNullablePromise
+  extends Promise<Blurb | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  description: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  url: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
+  owner: <T = UserPromise>() => T;
+  text: () => Promise<String>;
+  ratings: <T = FragmentableArray<Rating>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface User {
   id: ID_Output;
   name: String;
+  birthMonth: String;
   email: String;
   password: String;
 }
@@ -552,11 +1390,30 @@ export interface User {
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  birthMonth: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  links: <T = FragmentableArray<Link>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  blurbs: <T = FragmentableArray<Blurb>>(args?: {
+    where?: BlurbWhereInput;
+    orderBy?: BlurbOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  pics: <T = FragmentableArray<Pic>>(args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  feedback: <T = FragmentableArray<Feedback>>(args?: {
+    where?: FeedbackWhereInput;
+    orderBy?: FeedbackOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -570,11 +1427,30 @@ export interface UserSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  birthMonth: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  links: <T = Promise<AsyncIterator<LinkSubscription>>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  blurbs: <T = Promise<AsyncIterator<BlurbSubscription>>>(args?: {
+    where?: BlurbWhereInput;
+    orderBy?: BlurbOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  pics: <T = Promise<AsyncIterator<PicSubscription>>>(args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  feedback: <T = Promise<AsyncIterator<FeedbackSubscription>>>(args?: {
+    where?: FeedbackWhereInput;
+    orderBy?: FeedbackOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -588,11 +1464,30 @@ export interface UserNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  birthMonth: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  links: <T = FragmentableArray<Link>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  blurbs: <T = FragmentableArray<Blurb>>(args?: {
+    where?: BlurbWhereInput;
+    orderBy?: BlurbOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  pics: <T = FragmentableArray<Pic>>(args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  feedback: <T = FragmentableArray<Feedback>>(args?: {
+    where?: FeedbackWhereInput;
+    orderBy?: FeedbackOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -601,25 +1496,142 @@ export interface UserNullablePromise
   }) => T;
 }
 
-export interface LinkConnection {
-  pageInfo: PageInfo;
-  edges: LinkEdge[];
+export interface Pic {
+  id: ID_Output;
+  url: String;
 }
 
-export interface LinkConnectionPromise
-  extends Promise<LinkConnection>,
+export interface PicPromise extends Promise<Pic>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  owner: <T = UserPromise>() => T;
+  url: () => Promise<String>;
+  ratings: <T = FragmentableArray<Rating>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PicSubscription
+  extends Promise<AsyncIterator<Pic>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  owner: <T = UserSubscription>() => T;
+  url: () => Promise<AsyncIterator<String>>;
+  ratings: <T = Promise<AsyncIterator<RatingSubscription>>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PicNullablePromise extends Promise<Pic | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  owner: <T = UserPromise>() => T;
+  url: () => Promise<String>;
+  ratings: <T = FragmentableArray<Rating>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Rating {
+  id: ID_Output;
+  score: Int;
+}
+
+export interface RatingPromise extends Promise<Rating>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  pic: <T = PicPromise>() => T;
+  blurb: <T = BlurbPromise>() => T;
+  score: () => Promise<Int>;
+}
+
+export interface RatingSubscription
+  extends Promise<AsyncIterator<Rating>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  pic: <T = PicSubscription>() => T;
+  blurb: <T = BlurbSubscription>() => T;
+  score: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface RatingNullablePromise
+  extends Promise<Rating | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  pic: <T = PicPromise>() => T;
+  blurb: <T = BlurbPromise>() => T;
+  score: () => Promise<Int>;
+}
+
+export interface Feedback {
+  id: ID_Output;
+  feedbackGiver: String;
+  text: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface FeedbackPromise extends Promise<Feedback>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  contentOwner: <T = UserPromise>() => T;
+  feedbackGiver: () => Promise<String>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface FeedbackSubscription
+  extends Promise<AsyncIterator<Feedback>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  contentOwner: <T = UserSubscription>() => T;
+  feedbackGiver: () => Promise<AsyncIterator<String>>;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface FeedbackNullablePromise
+  extends Promise<Feedback | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  contentOwner: <T = UserPromise>() => T;
+  feedbackGiver: () => Promise<String>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface BlurbConnection {
+  pageInfo: PageInfo;
+  edges: BlurbEdge[];
+}
+
+export interface BlurbConnectionPromise
+  extends Promise<BlurbConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LinkEdge>>() => T;
-  aggregate: <T = AggregateLinkPromise>() => T;
+  edges: <T = FragmentableArray<BlurbEdge>>() => T;
+  aggregate: <T = AggregateBlurbPromise>() => T;
 }
 
-export interface LinkConnectionSubscription
-  extends Promise<AsyncIterator<LinkConnection>>,
+export interface BlurbConnectionSubscription
+  extends Promise<AsyncIterator<BlurbConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LinkEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLinkSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BlurbEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBlurbSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -645,35 +1657,199 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface LinkEdge {
-  node: Link;
+export interface BlurbEdge {
+  node: Blurb;
   cursor: String;
 }
 
-export interface LinkEdgePromise extends Promise<LinkEdge>, Fragmentable {
-  node: <T = LinkPromise>() => T;
+export interface BlurbEdgePromise extends Promise<BlurbEdge>, Fragmentable {
+  node: <T = BlurbPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface LinkEdgeSubscription
-  extends Promise<AsyncIterator<LinkEdge>>,
+export interface BlurbEdgeSubscription
+  extends Promise<AsyncIterator<BlurbEdge>>,
     Fragmentable {
-  node: <T = LinkSubscription>() => T;
+  node: <T = BlurbSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateLink {
+export interface AggregateBlurb {
   count: Int;
 }
 
-export interface AggregateLinkPromise
-  extends Promise<AggregateLink>,
+export interface AggregateBlurbPromise
+  extends Promise<AggregateBlurb>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateLinkSubscription
-  extends Promise<AsyncIterator<AggregateLink>>,
+export interface AggregateBlurbSubscription
+  extends Promise<AsyncIterator<AggregateBlurb>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface FeedbackConnection {
+  pageInfo: PageInfo;
+  edges: FeedbackEdge[];
+}
+
+export interface FeedbackConnectionPromise
+  extends Promise<FeedbackConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<FeedbackEdge>>() => T;
+  aggregate: <T = AggregateFeedbackPromise>() => T;
+}
+
+export interface FeedbackConnectionSubscription
+  extends Promise<AsyncIterator<FeedbackConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FeedbackEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFeedbackSubscription>() => T;
+}
+
+export interface FeedbackEdge {
+  node: Feedback;
+  cursor: String;
+}
+
+export interface FeedbackEdgePromise
+  extends Promise<FeedbackEdge>,
+    Fragmentable {
+  node: <T = FeedbackPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FeedbackEdgeSubscription
+  extends Promise<AsyncIterator<FeedbackEdge>>,
+    Fragmentable {
+  node: <T = FeedbackSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateFeedback {
+  count: Int;
+}
+
+export interface AggregateFeedbackPromise
+  extends Promise<AggregateFeedback>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateFeedbackSubscription
+  extends Promise<AsyncIterator<AggregateFeedback>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PicConnection {
+  pageInfo: PageInfo;
+  edges: PicEdge[];
+}
+
+export interface PicConnectionPromise
+  extends Promise<PicConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PicEdge>>() => T;
+  aggregate: <T = AggregatePicPromise>() => T;
+}
+
+export interface PicConnectionSubscription
+  extends Promise<AsyncIterator<PicConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PicEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePicSubscription>() => T;
+}
+
+export interface PicEdge {
+  node: Pic;
+  cursor: String;
+}
+
+export interface PicEdgePromise extends Promise<PicEdge>, Fragmentable {
+  node: <T = PicPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PicEdgeSubscription
+  extends Promise<AsyncIterator<PicEdge>>,
+    Fragmentable {
+  node: <T = PicSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePic {
+  count: Int;
+}
+
+export interface AggregatePicPromise
+  extends Promise<AggregatePic>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePicSubscription
+  extends Promise<AsyncIterator<AggregatePic>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface RatingConnection {
+  pageInfo: PageInfo;
+  edges: RatingEdge[];
+}
+
+export interface RatingConnectionPromise
+  extends Promise<RatingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<RatingEdge>>() => T;
+  aggregate: <T = AggregateRatingPromise>() => T;
+}
+
+export interface RatingConnectionSubscription
+  extends Promise<AsyncIterator<RatingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<RatingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateRatingSubscription>() => T;
+}
+
+export interface RatingEdge {
+  node: Rating;
+  cursor: String;
+}
+
+export interface RatingEdgePromise extends Promise<RatingEdge>, Fragmentable {
+  node: <T = RatingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface RatingEdgeSubscription
+  extends Promise<AsyncIterator<RatingEdge>>,
+    Fragmentable {
+  node: <T = RatingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateRating {
+  count: Int;
+}
+
+export interface AggregateRatingPromise
+  extends Promise<AggregateRating>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRatingSubscription
+  extends Promise<AsyncIterator<AggregateRating>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -748,54 +1924,186 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface LinkSubscriptionPayload {
+export interface BlurbSubscriptionPayload {
   mutation: MutationType;
-  node: Link;
+  node: Blurb;
   updatedFields: String[];
-  previousValues: LinkPreviousValues;
+  previousValues: BlurbPreviousValues;
 }
 
-export interface LinkSubscriptionPayloadPromise
-  extends Promise<LinkSubscriptionPayload>,
+export interface BlurbSubscriptionPayloadPromise
+  extends Promise<BlurbSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = LinkPromise>() => T;
+  node: <T = BlurbPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = LinkPreviousValuesPromise>() => T;
+  previousValues: <T = BlurbPreviousValuesPromise>() => T;
 }
 
-export interface LinkSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LinkSubscriptionPayload>>,
+export interface BlurbSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BlurbSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LinkSubscription>() => T;
+  node: <T = BlurbSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LinkPreviousValuesSubscription>() => T;
+  previousValues: <T = BlurbPreviousValuesSubscription>() => T;
 }
 
-export interface LinkPreviousValues {
+export interface BlurbPreviousValues {
   id: ID_Output;
-  description: String;
+  text: String;
+}
+
+export interface BlurbPreviousValuesPromise
+  extends Promise<BlurbPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+}
+
+export interface BlurbPreviousValuesSubscription
+  extends Promise<AsyncIterator<BlurbPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+}
+
+export interface FeedbackSubscriptionPayload {
+  mutation: MutationType;
+  node: Feedback;
+  updatedFields: String[];
+  previousValues: FeedbackPreviousValues;
+}
+
+export interface FeedbackSubscriptionPayloadPromise
+  extends Promise<FeedbackSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = FeedbackPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = FeedbackPreviousValuesPromise>() => T;
+}
+
+export interface FeedbackSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<FeedbackSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = FeedbackSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = FeedbackPreviousValuesSubscription>() => T;
+}
+
+export interface FeedbackPreviousValues {
+  id: ID_Output;
+  feedbackGiver: String;
+  text: String;
   createdAt: DateTimeOutput;
+}
+
+export interface FeedbackPreviousValuesPromise
+  extends Promise<FeedbackPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  feedbackGiver: () => Promise<String>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface FeedbackPreviousValuesSubscription
+  extends Promise<AsyncIterator<FeedbackPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  feedbackGiver: () => Promise<AsyncIterator<String>>;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PicSubscriptionPayload {
+  mutation: MutationType;
+  node: Pic;
+  updatedFields: String[];
+  previousValues: PicPreviousValues;
+}
+
+export interface PicSubscriptionPayloadPromise
+  extends Promise<PicSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PicPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PicPreviousValuesPromise>() => T;
+}
+
+export interface PicSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PicSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PicSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PicPreviousValuesSubscription>() => T;
+}
+
+export interface PicPreviousValues {
+  id: ID_Output;
   url: String;
 }
 
-export interface LinkPreviousValuesPromise
-  extends Promise<LinkPreviousValues>,
+export interface PicPreviousValuesPromise
+  extends Promise<PicPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  description: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
   url: () => Promise<String>;
 }
 
-export interface LinkPreviousValuesSubscription
-  extends Promise<AsyncIterator<LinkPreviousValues>>,
+export interface PicPreviousValuesSubscription
+  extends Promise<AsyncIterator<PicPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  description: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   url: () => Promise<AsyncIterator<String>>;
+}
+
+export interface RatingSubscriptionPayload {
+  mutation: MutationType;
+  node: Rating;
+  updatedFields: String[];
+  previousValues: RatingPreviousValues;
+}
+
+export interface RatingSubscriptionPayloadPromise
+  extends Promise<RatingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = RatingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = RatingPreviousValuesPromise>() => T;
+}
+
+export interface RatingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RatingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = RatingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = RatingPreviousValuesSubscription>() => T;
+}
+
+export interface RatingPreviousValues {
+  id: ID_Output;
+  score: Int;
+}
+
+export interface RatingPreviousValuesPromise
+  extends Promise<RatingPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  score: () => Promise<Int>;
+}
+
+export interface RatingPreviousValuesSubscription
+  extends Promise<AsyncIterator<RatingPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  score: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -826,6 +2134,7 @@ export interface UserSubscriptionPayloadSubscription
 export interface UserPreviousValues {
   id: ID_Output;
   name: String;
+  birthMonth: String;
   email: String;
   password: String;
 }
@@ -835,6 +2144,7 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  birthMonth: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
 }
@@ -844,6 +2154,7 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  birthMonth: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
 }
@@ -860,6 +2171,11 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -868,11 +2184,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -887,11 +2198,23 @@ export type Long = string;
 
 export const models: Model[] = [
   {
-    name: "Link",
+    name: "User",
     embedded: false
   },
   {
-    name: "User",
+    name: "Blurb",
+    embedded: false
+  },
+  {
+    name: "Pic",
+    embedded: false
+  },
+  {
+    name: "Rating",
+    embedded: false
+  },
+  {
+    name: "Feedback",
     embedded: false
   }
 ];

@@ -29,14 +29,6 @@ module.exports = {
       user,
     };
   },
-  post: (parent, args, context, info) => {
-    const userID = getUserID(context);
-    return context.prisma.createLink({
-      url: args.url,
-      description: args.description,
-      postedBy: { connect: { id: userID } },
-    });
-  },
   addBlurb: (parent, args, context) => {
     const userID = getUserID(context);
     return context.prisma.createBlurb({
@@ -46,7 +38,7 @@ module.exports = {
   },
   addPic: (parent, args, context) => {
     const userID = getUserID(context);
-    return context.prisma.createBlurb({
+    return context.prisma.createPic({
       url: args.url,
       owner: { connect: { id: userID } },
     });

@@ -3,6 +3,7 @@ type User {
   name: String!
   birthMonth: String!
   email: String! @unique
+  password: String!
   blurbs: [Blurb!]!
   pics: [Pic!]!
   feedback: [Feedback!]!
@@ -10,14 +11,14 @@ type User {
 
 type Blurb {
   id: ID! @id
-  user: User!
+  owner: User!
   text: String!
   ratings: [Rating!]!
 }
 
 type Pic {
   id: ID! @id
-  user: User!
+  owner: User!
   url: String!
   ratings: [Rating!]!
 }
@@ -31,7 +32,8 @@ type Rating {
 
 type Feedback {
   id: ID! @id
-  user: User!
+  contentOwner: User! @relation(name: "receiver")
+  feedbackGiver: User! @relation(name: "giver")
   text: String!
   createdAt: DateTime! @createdAt
 }
