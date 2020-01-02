@@ -250,10 +250,12 @@ scalar DateTime
 
 type Feedback {
   id: ID!
-  contentOwner: User!
-  feedbackGiver: String!
   text: String!
   createdAt: DateTime!
+  flagged: Boolean!
+  flaggedBy: User
+  feedbackReceiver: User!
+  feedbackGiver: User!
 }
 
 type FeedbackConnection {
@@ -264,20 +266,50 @@ type FeedbackConnection {
 
 input FeedbackCreateInput {
   id: ID
-  contentOwner: UserCreateOneWithoutFeedbackInput!
-  feedbackGiver: String!
   text: String!
+  flagged: Boolean!
+  flaggedBy: UserCreateOneWithoutFeedbackFlagedInput
+  feedbackReceiver: UserCreateOneWithoutFeedbackReceivedInput!
+  feedbackGiver: UserCreateOneWithoutFeedbackGivenInput!
 }
 
-input FeedbackCreateManyWithoutContentOwnerInput {
-  create: [FeedbackCreateWithoutContentOwnerInput!]
+input FeedbackCreateManyWithoutFeedbackGiverInput {
+  create: [FeedbackCreateWithoutFeedbackGiverInput!]
   connect: [FeedbackWhereUniqueInput!]
 }
 
-input FeedbackCreateWithoutContentOwnerInput {
+input FeedbackCreateManyWithoutFeedbackReceiverInput {
+  create: [FeedbackCreateWithoutFeedbackReceiverInput!]
+  connect: [FeedbackWhereUniqueInput!]
+}
+
+input FeedbackCreateManyWithoutFlaggedByInput {
+  create: [FeedbackCreateWithoutFlaggedByInput!]
+  connect: [FeedbackWhereUniqueInput!]
+}
+
+input FeedbackCreateWithoutFeedbackGiverInput {
   id: ID
-  feedbackGiver: String!
   text: String!
+  flagged: Boolean!
+  flaggedBy: UserCreateOneWithoutFeedbackFlagedInput
+  feedbackReceiver: UserCreateOneWithoutFeedbackReceivedInput!
+}
+
+input FeedbackCreateWithoutFeedbackReceiverInput {
+  id: ID
+  text: String!
+  flagged: Boolean!
+  flaggedBy: UserCreateOneWithoutFeedbackFlagedInput
+  feedbackGiver: UserCreateOneWithoutFeedbackGivenInput!
+}
+
+input FeedbackCreateWithoutFlaggedByInput {
+  id: ID
+  text: String!
+  flagged: Boolean!
+  feedbackReceiver: UserCreateOneWithoutFeedbackReceivedInput!
+  feedbackGiver: UserCreateOneWithoutFeedbackGivenInput!
 }
 
 type FeedbackEdge {
@@ -288,19 +320,19 @@ type FeedbackEdge {
 enum FeedbackOrderByInput {
   id_ASC
   id_DESC
-  feedbackGiver_ASC
-  feedbackGiver_DESC
   text_ASC
   text_DESC
   createdAt_ASC
   createdAt_DESC
+  flagged_ASC
+  flagged_DESC
 }
 
 type FeedbackPreviousValues {
   id: ID!
-  feedbackGiver: String!
   text: String!
   createdAt: DateTime!
+  flagged: Boolean!
 }
 
 input FeedbackScalarWhereInput {
@@ -318,20 +350,6 @@ input FeedbackScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  feedbackGiver: String
-  feedbackGiver_not: String
-  feedbackGiver_in: [String!]
-  feedbackGiver_not_in: [String!]
-  feedbackGiver_lt: String
-  feedbackGiver_lte: String
-  feedbackGiver_gt: String
-  feedbackGiver_gte: String
-  feedbackGiver_contains: String
-  feedbackGiver_not_contains: String
-  feedbackGiver_starts_with: String
-  feedbackGiver_not_starts_with: String
-  feedbackGiver_ends_with: String
-  feedbackGiver_not_ends_with: String
   text: String
   text_not: String
   text_in: [String!]
@@ -354,6 +372,8 @@ input FeedbackScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  flagged: Boolean
+  flagged_not: Boolean
   AND: [FeedbackScalarWhereInput!]
   OR: [FeedbackScalarWhereInput!]
   NOT: [FeedbackScalarWhereInput!]
@@ -378,29 +398,55 @@ input FeedbackSubscriptionWhereInput {
 }
 
 input FeedbackUpdateInput {
-  contentOwner: UserUpdateOneRequiredWithoutFeedbackInput
-  feedbackGiver: String
   text: String
+  flagged: Boolean
+  flaggedBy: UserUpdateOneWithoutFeedbackFlagedInput
+  feedbackReceiver: UserUpdateOneRequiredWithoutFeedbackReceivedInput
+  feedbackGiver: UserUpdateOneRequiredWithoutFeedbackGivenInput
 }
 
 input FeedbackUpdateManyDataInput {
-  feedbackGiver: String
   text: String
+  flagged: Boolean
 }
 
 input FeedbackUpdateManyMutationInput {
-  feedbackGiver: String
   text: String
+  flagged: Boolean
 }
 
-input FeedbackUpdateManyWithoutContentOwnerInput {
-  create: [FeedbackCreateWithoutContentOwnerInput!]
+input FeedbackUpdateManyWithoutFeedbackGiverInput {
+  create: [FeedbackCreateWithoutFeedbackGiverInput!]
   delete: [FeedbackWhereUniqueInput!]
   connect: [FeedbackWhereUniqueInput!]
   set: [FeedbackWhereUniqueInput!]
   disconnect: [FeedbackWhereUniqueInput!]
-  update: [FeedbackUpdateWithWhereUniqueWithoutContentOwnerInput!]
-  upsert: [FeedbackUpsertWithWhereUniqueWithoutContentOwnerInput!]
+  update: [FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput!]
+  upsert: [FeedbackUpsertWithWhereUniqueWithoutFeedbackGiverInput!]
+  deleteMany: [FeedbackScalarWhereInput!]
+  updateMany: [FeedbackUpdateManyWithWhereNestedInput!]
+}
+
+input FeedbackUpdateManyWithoutFeedbackReceiverInput {
+  create: [FeedbackCreateWithoutFeedbackReceiverInput!]
+  delete: [FeedbackWhereUniqueInput!]
+  connect: [FeedbackWhereUniqueInput!]
+  set: [FeedbackWhereUniqueInput!]
+  disconnect: [FeedbackWhereUniqueInput!]
+  update: [FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput!]
+  upsert: [FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput!]
+  deleteMany: [FeedbackScalarWhereInput!]
+  updateMany: [FeedbackUpdateManyWithWhereNestedInput!]
+}
+
+input FeedbackUpdateManyWithoutFlaggedByInput {
+  create: [FeedbackCreateWithoutFlaggedByInput!]
+  delete: [FeedbackWhereUniqueInput!]
+  connect: [FeedbackWhereUniqueInput!]
+  set: [FeedbackWhereUniqueInput!]
+  disconnect: [FeedbackWhereUniqueInput!]
+  update: [FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput!]
+  upsert: [FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput!]
   deleteMany: [FeedbackScalarWhereInput!]
   updateMany: [FeedbackUpdateManyWithWhereNestedInput!]
 }
@@ -410,20 +456,58 @@ input FeedbackUpdateManyWithWhereNestedInput {
   data: FeedbackUpdateManyDataInput!
 }
 
-input FeedbackUpdateWithoutContentOwnerDataInput {
-  feedbackGiver: String
+input FeedbackUpdateWithoutFeedbackGiverDataInput {
   text: String
+  flagged: Boolean
+  flaggedBy: UserUpdateOneWithoutFeedbackFlagedInput
+  feedbackReceiver: UserUpdateOneRequiredWithoutFeedbackReceivedInput
 }
 
-input FeedbackUpdateWithWhereUniqueWithoutContentOwnerInput {
-  where: FeedbackWhereUniqueInput!
-  data: FeedbackUpdateWithoutContentOwnerDataInput!
+input FeedbackUpdateWithoutFeedbackReceiverDataInput {
+  text: String
+  flagged: Boolean
+  flaggedBy: UserUpdateOneWithoutFeedbackFlagedInput
+  feedbackGiver: UserUpdateOneRequiredWithoutFeedbackGivenInput
 }
 
-input FeedbackUpsertWithWhereUniqueWithoutContentOwnerInput {
+input FeedbackUpdateWithoutFlaggedByDataInput {
+  text: String
+  flagged: Boolean
+  feedbackReceiver: UserUpdateOneRequiredWithoutFeedbackReceivedInput
+  feedbackGiver: UserUpdateOneRequiredWithoutFeedbackGivenInput
+}
+
+input FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput {
   where: FeedbackWhereUniqueInput!
-  update: FeedbackUpdateWithoutContentOwnerDataInput!
-  create: FeedbackCreateWithoutContentOwnerInput!
+  data: FeedbackUpdateWithoutFeedbackGiverDataInput!
+}
+
+input FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput {
+  where: FeedbackWhereUniqueInput!
+  data: FeedbackUpdateWithoutFeedbackReceiverDataInput!
+}
+
+input FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput {
+  where: FeedbackWhereUniqueInput!
+  data: FeedbackUpdateWithoutFlaggedByDataInput!
+}
+
+input FeedbackUpsertWithWhereUniqueWithoutFeedbackGiverInput {
+  where: FeedbackWhereUniqueInput!
+  update: FeedbackUpdateWithoutFeedbackGiverDataInput!
+  create: FeedbackCreateWithoutFeedbackGiverInput!
+}
+
+input FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput {
+  where: FeedbackWhereUniqueInput!
+  update: FeedbackUpdateWithoutFeedbackReceiverDataInput!
+  create: FeedbackCreateWithoutFeedbackReceiverInput!
+}
+
+input FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput {
+  where: FeedbackWhereUniqueInput!
+  update: FeedbackUpdateWithoutFlaggedByDataInput!
+  create: FeedbackCreateWithoutFlaggedByInput!
 }
 
 input FeedbackWhereInput {
@@ -441,21 +525,6 @@ input FeedbackWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  contentOwner: UserWhereInput
-  feedbackGiver: String
-  feedbackGiver_not: String
-  feedbackGiver_in: [String!]
-  feedbackGiver_not_in: [String!]
-  feedbackGiver_lt: String
-  feedbackGiver_lte: String
-  feedbackGiver_gt: String
-  feedbackGiver_gte: String
-  feedbackGiver_contains: String
-  feedbackGiver_not_contains: String
-  feedbackGiver_starts_with: String
-  feedbackGiver_not_starts_with: String
-  feedbackGiver_ends_with: String
-  feedbackGiver_not_ends_with: String
   text: String
   text_not: String
   text_in: [String!]
@@ -478,6 +547,11 @@ input FeedbackWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  flagged: Boolean
+  flagged_not: Boolean
+  flaggedBy: UserWhereInput
+  feedbackReceiver: UserWhereInput
+  feedbackGiver: UserWhereInput
   AND: [FeedbackWhereInput!]
   OR: [FeedbackWhereInput!]
   NOT: [FeedbackWhereInput!]
@@ -1007,7 +1081,9 @@ type User {
   password: String!
   blurbs(where: BlurbWhereInput, orderBy: BlurbOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blurb!]
   pics(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pic!]
-  feedback(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
+  feedbackReceived(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
+  feedbackGiven(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
+  feedbackFlaged(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
 }
 
 type UserConnection {
@@ -1024,7 +1100,9 @@ input UserCreateInput {
   password: String!
   blurbs: BlurbCreateManyWithoutOwnerInput
   pics: PicCreateManyWithoutOwnerInput
-  feedback: FeedbackCreateManyWithoutContentOwnerInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackCreateManyWithoutFlaggedByInput
 }
 
 input UserCreateOneWithoutBlurbsInput {
@@ -1032,8 +1110,18 @@ input UserCreateOneWithoutBlurbsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutFeedbackInput {
-  create: UserCreateWithoutFeedbackInput
+input UserCreateOneWithoutFeedbackFlagedInput {
+  create: UserCreateWithoutFeedbackFlagedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFeedbackGivenInput {
+  create: UserCreateWithoutFeedbackGivenInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFeedbackReceivedInput {
+  create: UserCreateWithoutFeedbackReceivedInput
   connect: UserWhereUniqueInput
 }
 
@@ -1049,10 +1137,12 @@ input UserCreateWithoutBlurbsInput {
   email: String!
   password: String!
   pics: PicCreateManyWithoutOwnerInput
-  feedback: FeedbackCreateManyWithoutContentOwnerInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackCreateManyWithoutFlaggedByInput
 }
 
-input UserCreateWithoutFeedbackInput {
+input UserCreateWithoutFeedbackFlagedInput {
   id: ID
   name: String!
   birthMonth: String!
@@ -1060,6 +1150,32 @@ input UserCreateWithoutFeedbackInput {
   password: String!
   blurbs: BlurbCreateManyWithoutOwnerInput
   pics: PicCreateManyWithoutOwnerInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+}
+
+input UserCreateWithoutFeedbackGivenInput {
+  id: ID
+  name: String!
+  birthMonth: String!
+  email: String!
+  password: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  pics: PicCreateManyWithoutOwnerInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  feedbackFlaged: FeedbackCreateManyWithoutFlaggedByInput
+}
+
+input UserCreateWithoutFeedbackReceivedInput {
+  id: ID
+  name: String!
+  birthMonth: String!
+  email: String!
+  password: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  pics: PicCreateManyWithoutOwnerInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackCreateManyWithoutFlaggedByInput
 }
 
 input UserCreateWithoutPicsInput {
@@ -1069,7 +1185,9 @@ input UserCreateWithoutPicsInput {
   email: String!
   password: String!
   blurbs: BlurbCreateManyWithoutOwnerInput
-  feedback: FeedbackCreateManyWithoutContentOwnerInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackCreateManyWithoutFlaggedByInput
 }
 
 type UserEdge {
@@ -1123,7 +1241,9 @@ input UserUpdateInput {
   password: String
   blurbs: BlurbUpdateManyWithoutOwnerInput
   pics: PicUpdateManyWithoutOwnerInput
-  feedback: FeedbackUpdateManyWithoutContentOwnerInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackUpdateManyWithoutFlaggedByInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1140,10 +1260,17 @@ input UserUpdateOneRequiredWithoutBlurbsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutFeedbackInput {
-  create: UserCreateWithoutFeedbackInput
-  update: UserUpdateWithoutFeedbackDataInput
-  upsert: UserUpsertWithoutFeedbackInput
+input UserUpdateOneRequiredWithoutFeedbackGivenInput {
+  create: UserCreateWithoutFeedbackGivenInput
+  update: UserUpdateWithoutFeedbackGivenDataInput
+  upsert: UserUpsertWithoutFeedbackGivenInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutFeedbackReceivedInput {
+  create: UserCreateWithoutFeedbackReceivedInput
+  update: UserUpdateWithoutFeedbackReceivedDataInput
+  upsert: UserUpsertWithoutFeedbackReceivedInput
   connect: UserWhereUniqueInput
 }
 
@@ -1154,22 +1281,57 @@ input UserUpdateOneRequiredWithoutPicsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneWithoutFeedbackFlagedInput {
+  create: UserCreateWithoutFeedbackFlagedInput
+  update: UserUpdateWithoutFeedbackFlagedDataInput
+  upsert: UserUpsertWithoutFeedbackFlagedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutBlurbsDataInput {
   name: String
   birthMonth: String
   email: String
   password: String
   pics: PicUpdateManyWithoutOwnerInput
-  feedback: FeedbackUpdateManyWithoutContentOwnerInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackUpdateManyWithoutFlaggedByInput
 }
 
-input UserUpdateWithoutFeedbackDataInput {
+input UserUpdateWithoutFeedbackFlagedDataInput {
   name: String
   birthMonth: String
   email: String
   password: String
   blurbs: BlurbUpdateManyWithoutOwnerInput
   pics: PicUpdateManyWithoutOwnerInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+}
+
+input UserUpdateWithoutFeedbackGivenDataInput {
+  name: String
+  birthMonth: String
+  email: String
+  password: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  pics: PicUpdateManyWithoutOwnerInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  feedbackFlaged: FeedbackUpdateManyWithoutFlaggedByInput
+}
+
+input UserUpdateWithoutFeedbackReceivedDataInput {
+  name: String
+  birthMonth: String
+  email: String
+  password: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  pics: PicUpdateManyWithoutOwnerInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackUpdateManyWithoutFlaggedByInput
 }
 
 input UserUpdateWithoutPicsDataInput {
@@ -1178,7 +1340,9 @@ input UserUpdateWithoutPicsDataInput {
   email: String
   password: String
   blurbs: BlurbUpdateManyWithoutOwnerInput
-  feedback: FeedbackUpdateManyWithoutContentOwnerInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackFlaged: FeedbackUpdateManyWithoutFlaggedByInput
 }
 
 input UserUpsertWithoutBlurbsInput {
@@ -1186,9 +1350,19 @@ input UserUpsertWithoutBlurbsInput {
   create: UserCreateWithoutBlurbsInput!
 }
 
-input UserUpsertWithoutFeedbackInput {
-  update: UserUpdateWithoutFeedbackDataInput!
-  create: UserCreateWithoutFeedbackInput!
+input UserUpsertWithoutFeedbackFlagedInput {
+  update: UserUpdateWithoutFeedbackFlagedDataInput!
+  create: UserCreateWithoutFeedbackFlagedInput!
+}
+
+input UserUpsertWithoutFeedbackGivenInput {
+  update: UserUpdateWithoutFeedbackGivenDataInput!
+  create: UserCreateWithoutFeedbackGivenInput!
+}
+
+input UserUpsertWithoutFeedbackReceivedInput {
+  update: UserUpdateWithoutFeedbackReceivedDataInput!
+  create: UserCreateWithoutFeedbackReceivedInput!
 }
 
 input UserUpsertWithoutPicsInput {
@@ -1273,9 +1447,15 @@ input UserWhereInput {
   pics_every: PicWhereInput
   pics_some: PicWhereInput
   pics_none: PicWhereInput
-  feedback_every: FeedbackWhereInput
-  feedback_some: FeedbackWhereInput
-  feedback_none: FeedbackWhereInput
+  feedbackReceived_every: FeedbackWhereInput
+  feedbackReceived_some: FeedbackWhereInput
+  feedbackReceived_none: FeedbackWhereInput
+  feedbackGiven_every: FeedbackWhereInput
+  feedbackGiven_some: FeedbackWhereInput
+  feedbackGiven_none: FeedbackWhereInput
+  feedbackFlaged_every: FeedbackWhereInput
+  feedbackFlaged_some: FeedbackWhereInput
+  feedbackFlaged_none: FeedbackWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

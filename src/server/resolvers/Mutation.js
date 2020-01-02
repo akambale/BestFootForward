@@ -4,6 +4,9 @@ const { APP_SECRET, getUserID } = require('../utils.js');
 
 module.exports = {
   signup: async (parent, args, context, info) => {
+    if (args.password.length < 8) {
+      throw new Error('Password is too short');
+    }
     const password = await bcrypt.hash(args.password, 10);
     const user = await context.prisma.createUser({ ...args, password });
     const token = jwt.sign({ userID: user.id }, APP_SECRET);
@@ -59,8 +62,21 @@ module.exports = {
     const userID = getUserID(context);
     return context.prisma.createFeedback({
       text: args.text,
+      flagged: false,
       feedbackGiver: { connect: { id: userID } },
-      contentOwner: { connect: { id: args.ownerID } },
+      feedbackReceiver: { connect: { id: args.ownerID } },
+    });
+  },
+  flagFeedback: (parent, args, context) => {
+    const userID = getUserID(context);
+    return context.prisma.updateFeedback({
+      data: {
+        flagged: true,
+        flaggedBy: { connect: { id: userID } },
+      },
+      where: {
+        id: args.id,
+      },
     });
   },
 };

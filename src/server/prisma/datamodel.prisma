@@ -6,7 +6,9 @@ type User {
   password: String!
   blurbs: [Blurb!]!
   pics: [Pic!]!
-  feedback: [Feedback!]!
+  feedbackReceived: [Feedback!]! @relation(name: "Recieve")
+  feedbackGiven: [Feedback!]! @relation(name: "Give")
+  feedbackFlaged: [Feedback!]! @relation(name: "Flag")
 }
 
 type Blurb {
@@ -32,8 +34,10 @@ type Rating {
 
 type Feedback {
   id: ID! @id
-  contentOwner: User! @relation(name: "receiver")
-  feedbackGiver: User! @relation(name: "giver")
   text: String!
   createdAt: DateTime! @createdAt
+  flagged: Boolean!
+  flaggedBy: User @relation(name: "Flag")
+  feedbackReceiver: User! @relation(name: "Recieve")
+  feedbackGiver: User! @relation(name: "Give")
 }

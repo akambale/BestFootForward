@@ -1,4 +1,7 @@
 module.exports = {
-  contentOwner: (parent, args, context) => context.prisma.feedback({ id: parent.id }).owner(),
-  feedbackGiver: (parent, args, context) => context.prisma.feedback({ id: parent.id }).owner(),
+  feedbackReceiver: (parent, args, context) =>
+    context.prisma.feedback({ id: parent.id }).feedbackReceiver(),
+  feedbackGiver: (parent, args, context) =>
+    context.prisma.feedback({ id: parent.id }).feedbackGiver(),
+  flaggedBy: (parent, args, context) => context.prisma.feedback({ id: parent.id }).flaggedBy(),
 };

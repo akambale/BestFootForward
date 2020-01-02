@@ -9,6 +9,7 @@ type Mutation {
   addPic(url: String!): Pic!
   rate(blurbID: String, picID: String, score: Int!): Rating!
   giveFeedback(text: String!, ownerID: String!): Feedback!
+  flagFeedback(id: ID!): Feedback!
 }
 
 type AuthPayload {
@@ -24,7 +25,8 @@ type User {
   email: String!
   blurbs: [Blurb!]!
   pics: [Pic!]!
-  feedback: [Feedback!]!
+  feedbackReceived: [Feedback!]!
+  feedbackGiven: [Feedback!]!
 }
 
 type Blurb {
@@ -50,7 +52,10 @@ type Rating {
 
 type Feedback {
   id: ID!
-  contentOwner: User!
-  feedbackGiver: User!
   text: String!
+  createdAt: String!
+  flagged: Boolean!
+  flaggedBy: User
+  feedbackReceiver: User!
+  feedbackGiver: User!
 }
