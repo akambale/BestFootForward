@@ -1,0 +1,55 @@
+type Query {
+  info: String!
+  feed: [Link!]!
+  name: [Name]!
+  link(id: ID!): Link
+}
+
+type Mutation {
+  post(url: String!, description: String!): Link!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  birthMonth: String!
+  email: String!
+  blurbs: [Blurb!]!
+  pics: [Pic!]!
+  feedback: [Feedback!]!
+}
+
+type Blurb {
+  id: ID!
+  owner: User!
+  text: String!
+  ratings: [Rating!]!
+}
+
+type Pic {
+  id: ID!
+  owner: User!
+  url: String!
+  ratings: [Rating!]!
+}
+
+type Rating {
+  id: ID!
+  pic: Pic
+  blurb: Blurb
+  score: Int!
+}
+
+type Feedback {
+  id: ID!
+  contentOwner: User!
+  feedbackGiver: User!
+  text: String!
+}

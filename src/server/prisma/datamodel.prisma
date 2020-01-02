@@ -1,0 +1,37 @@
+type User {
+  id: ID! @id
+  name: String!
+  birthMonth: String!
+  email: String! @unique
+  blurbs: [Blurb!]!
+  pics: [Pic!]!
+  feedback: [Feedback!]!
+}
+
+type Blurb {
+  id: ID! @id
+  user: User!
+  text: String!
+  ratings: [Rating!]!
+}
+
+type Pic {
+  id: ID! @id
+  user: User!
+  url: String!
+  ratings: [Rating!]!
+}
+
+type Rating {
+  id: ID! @id
+  pic: Pic
+  blurb: Blurb
+  score: Int!
+}
+
+type Feedback {
+  id: ID! @id
+  user: User!
+  text: String!
+  createdAt: DateTime! @createdAt
+}
