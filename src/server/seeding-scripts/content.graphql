@@ -1,0 +1,6 @@
+{
+  mutation {
+    addBlurb(text: "I like singing in the shower")
+    addPic(url: "https://google.com")
+  }
+}

@@ -1,0 +1,199 @@
+{
+  mutation {
+    signup(
+      name: "alice"
+      email: "alice@prisma.io"
+      password: "graphqlz"
+      birthday: "1990-01"
+      maxAge: 27
+      minAge: 33
+      genderIdentity: createGender(
+        male: false
+        female: true
+        nonBi: false
+      )
+      genderPreference: createGender(
+        male: true
+        female: false
+        nonBi: false        
+      )
+    )
+
+     signup(
+      name: "amogh"
+      email: "amogh@prisma.io"
+      password: "graphqlz"
+      birthday: "1994-01"
+      minAge: 22
+      maxAge: 27
+      genderIdentity: createGender(
+        male: true
+        female: false
+        nonBi: false
+      )
+      genderPreference: createGender(
+        male: false
+        female: true
+        nonBi: false        
+      )
+    )
+
+
+     signup(
+      name: "bob"
+      email: "bob@prisma.io"
+      password: "graphqlz"
+      birthday: "1973-01"
+      minAge: 35
+      maxAge: 50
+      genderIdentity: createGender(
+        male: true
+        female: false
+        nonBi: false
+      )
+      genderPreference: createGender(
+        male: false
+        female: true
+        nonBi: false        
+      )
+    )
+
+
+     signup(
+      name: "marshmello"
+      email: "marshmello@prisma.io"
+      password: "graphqlz"
+      birthday: "1996-01"
+      minAge: 18
+      maxAge: 25
+      genderIdentity: createGender(
+        male: false
+        female: true
+        nonBi: true
+      )
+      genderPreference: createGender(
+        male: true
+        female: false
+        nonBi: true        
+      )
+    )
+
+
+     signup(
+      name: "Gayle"
+      email: "gayle@prisma.io"
+      password: "graphqlz"
+      birthday: "1978-01"
+      minAge: 30
+      maxAge: 50
+      genderIdentity: createGender(
+        male: false
+        female: true
+        nonBi: false
+      )
+      genderPreference: createGender(
+        male: true
+        female: false
+        nonBi: false        
+      )
+    )
+
+
+     signup(
+      name: "speedoguy"
+      email: "speedoguy@prisma.io"
+      password: "graphqlz"
+      birthday: "1995-01"
+      minAge: 20
+      maxAge: 30
+      genderIdentity: createGender(
+        male: true
+        female: true
+        nonBi: false
+      )
+      genderPreference: createGender(
+        male: true
+        female: true
+        nonBi: true        
+      )
+    )
+
+
+     signup(
+      name: "Cameron"
+      email: "cameron@prisma.io"
+      password: "graphqlz"
+      birthday: "1990-01"
+      minAge: 25
+      maxAge: 22
+      genderIdentity: createGender(
+        male: false
+        female: true
+        nonBi: true
+      )
+      genderPreference: createGender(
+        male: true
+        female: false
+        nonBi: false        
+      )
+    )
+
+
+     signup(
+      name: "Dalton"
+      email: "dalton@prisma.io"
+      password: "graphqlz"
+      birthday: "1992-01"
+      minAge: 25
+      maxAge: 28
+      genderIdentity: createGender(
+        male: true
+        female: true
+        nonBi: false
+      )
+      genderPreference: createGender(
+        male: true
+        female: false
+        nonBi: false        
+      )
+    )
+
+     signup(
+      name: "Helen"
+      email: "helen@prisma.io"
+      password: "graphqlz"
+      birthday: "1975-08"
+      minAge: 40
+      maxAge: 50
+      genderIdentity: createGender(
+        male: false
+        female: true
+        nonBi: false
+      )
+      genderPreference: createGender(
+        male: true
+        female: false
+        nonBi: true        
+      )
+    )
+
+     signup(
+      name: "Duval"
+      email: "duval@prisma.io"
+      password: "graphqlz"
+      birthday: "1970-01"
+      minAge: 40
+      maxAge: 55
+      genderIdentity: createGender(
+        male: true
+        female: false
+        nonBi: true
+      )
+      genderPreference: createGender(
+        male: true
+        female: true
+        nonBi: true        
+      )
+    )
+  }
+}

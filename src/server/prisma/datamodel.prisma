@@ -1,14 +1,25 @@
 type User {
   id: ID! @id
-  name: String!
-  birthMonth: String!
+  name: String! # firstname only 
   email: String! @unique
   password: String!
   blurbs: [Blurb!]!
   pics: [Pic!]!
   feedbackReceived: [Feedback!]! @relation(name: "Recieve")
   feedbackGiven: [Feedback!]! @relation(name: "Give")
-  feedbackFlaged: [Feedback!]! @relation(name: "Flag")
+  feedbackFlagged: [Feedback!]! @relation(name: "Flag")
+  birthday: String!
+  maxAge: Int!
+  minAge: Int!
+  genderIdentity: Gender!
+  genderPreference: Gender!
+}
+
+type Gender {
+  male: Boolean!
+  female: Boolean!
+  nonBi: Boolean!
+  owner: User!
 }
 
 type Blurb {
@@ -30,6 +41,10 @@ type Rating {
   pic: Pic
   blurb: Blurb
   score: Int!
+  ratingGiverAge: Int!
+  ratingGiver: User!
+  # copying the rating giver's age in this type because age will change over time
+  # User gender is less likely to change, so its' ok to query it from the user
 }
 
 type Feedback {

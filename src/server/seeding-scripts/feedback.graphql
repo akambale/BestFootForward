@@ -1,0 +1,5 @@
+{
+  mutation {
+    giveFeedback(text: "this profile is perfect!", ownerID: "ck4wy2l50rsf00b09opu9tmgr")
+  }
+}

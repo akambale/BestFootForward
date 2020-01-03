@@ -20,13 +20,24 @@ type AuthPayload {
 type User {
   id: ID!
   name: String!
+  email: String! # firstname only
   password: String!
-  birthMonth: String!
-  email: String!
   blurbs: [Blurb!]!
   pics: [Pic!]!
   feedbackReceived: [Feedback!]!
   feedbackGiven: [Feedback!]!
+  feedbackFlagged: [Feedback!]!
+  birthday: String!
+  maxAge: Int!
+  minAge: Int!
+  genderIdentity: Gender!
+  genderPreference: Gender!
+}
+
+type Gender {
+  male: Boolean!
+  female: Boolean!
+  nonBi: Boolean!
 }
 
 type Blurb {
@@ -48,6 +59,10 @@ type Rating {
   pic: Pic
   blurb: Blurb
   score: Int!
+  ratingGiverAge: Int!
+  ratingGiver: User!
+  # copying the rating giver's age in this type because age will change over time
+  # User gender is less likely to change, so its' ok to query it from the user
 }
 
 type Feedback {

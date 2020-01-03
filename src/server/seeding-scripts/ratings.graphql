@@ -1,0 +1,13 @@
+{
+  mutation {
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+    rate(score: 1, blurbID: "ck4wy1nadzwq50b00tlt1hlkz")
+  }
+}
