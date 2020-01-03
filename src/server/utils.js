@@ -11,4 +11,18 @@ module.exports = {
     }
     throw new Error('Not authenticated');
   },
+  convertToEpoch: str => {
+    const time = new Date(str);
+    return Math.floor(time.getTime() / 1000);
+  },
+  getMinAdultBirthday: () => {
+    const eighteenYearsInSeconds = 567648000;
+    const time = new Date();
+    const timeInSeconds = Math.floor(time.getTime() / 1000);
+    return timeInSeconds - eighteenYearsInSeconds;
+  },
+  getCurrentTime: () => {
+    const time = new Date();
+    return Math.floor(time.getTime() / 1000);
+  },
 };

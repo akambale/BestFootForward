@@ -1,12 +1,32 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { APP_SECRET, getUserID } = require('../utils.js');
+const { APP_SECRET, getUserID, convertToEpoch, getMinAdultBirthday } = require('../utils.js');
 
 module.exports = {
   signup: async (parent, args, context, info) => {
     if (args.password.length < 8) {
       throw new Error('Password is too short');
     }
+    const epochBirthday = convertToEpoch(args.birthday);
+    const minAdultBirthday = getMinAdultBirthday();
+    if (epochBirthday < minAdultBirthday) {
+      throw new Error('Invalid birthday. You must be 18 years or older to create an account.');
+    }
+    if (args.maxAge - args.minAge < 4 || args.minAge < 18 || args.maxAge > 55) {
+      throw new Error(
+        'Invalid age range. Please stop trying to query the graphql server directly.',
+      );
+    }
+    let { male, female, nonBi } = args.genderIdentity;
+    if (male || female || nonBi === false) {
+      throw new Error('Invalid gender identity. Please select at least one.');
+    }
+    ({ male, female, nonBi } = args.genderPreference);
+    if (male || female || nonBi === false) {
+      throw new Error('Invalid gender preference. Please select at least one.');
+    }
+    //TODO email validation
+
     const password = await bcrypt.hash(args.password, 10);
     const user = await context.prisma.createUser({ ...args, password });
     const token = jwt.sign({ userID: user.id }, APP_SECRET);
@@ -47,7 +67,9 @@ module.exports = {
     });
   },
   rate: (parent, args, context) => {
+    const userID = getUserID(context);
     let obj;
+
     if (args.blurbID) {
       obj = { blurb: { connect: { id: args.blurbID } } };
     } else {
@@ -55,6 +77,7 @@ module.exports = {
     }
     return context.prisma.createRating({
       ...obj,
+      ratingGiver: { connect: { id: userID } },
       score: args.score,
     });
   },
@@ -62,6 +85,7 @@ module.exports = {
     const userID = getUserID(context);
     return context.prisma.createFeedback({
       text: args.text,
+      // createdAt: getCurrentTime(),
       flagged: false,
       feedbackGiver: { connect: { id: userID } },
       feedbackReceiver: { connect: { id: args.ownerID } },

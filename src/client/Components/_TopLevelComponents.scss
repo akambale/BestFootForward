@@ -69,6 +69,7 @@
 .menu {
   width: 100%;
   z-index: 100;
+  animation-fill-mode: forwards;
 
   &__button {
     border: 0.2rem solid $color-secondary;
@@ -94,6 +95,7 @@
     z-index: 10;
     overflow: hidden;
     height: 0rem;
+    animation-fill-mode: forwards;
   }
 
   &__dismiss {
@@ -105,6 +107,7 @@
     top: 0;
     width: 100%;
     z-index: 9;
+    animation-fill-mode: forwards;
   }
 }
 

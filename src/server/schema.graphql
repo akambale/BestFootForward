@@ -3,7 +3,16 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!, birthMonth: String!): AuthPayload
+  signup(
+    email: String!
+    password: String!
+    name: String!
+    birthday: String!
+    maxAge: Int!
+    minAge: Int!
+    genderIdentity: Gender!
+    genderPreference: Gender!
+  ): AuthPayload
   login(email: String!, password: String!): AuthPayload
   addBlurb(text: String!): Blurb!
   addPic(url: String!): Pic!
@@ -19,8 +28,9 @@ type AuthPayload {
 
 type User {
   id: ID!
-  name: String!
-  email: String! # firstname only
+  firstName: String
+  lastName: String
+  email: String!
   password: String!
   blurbs: [Blurb!]!
   pics: [Pic!]!
@@ -35,10 +45,12 @@ type User {
 }
 
 type Gender {
+  id: ID!
   male: Boolean!
   female: Boolean!
   nonBi: Boolean!
-}
+  identityOwner: User
+  preferenceOwner: User
 
 type Blurb {
   id: ID!

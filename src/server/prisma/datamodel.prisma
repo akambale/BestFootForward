@@ -1,6 +1,7 @@
 type User {
   id: ID! @id
-  name: String! # firstname only 
+  firstName: String 
+  lastName: String 
   email: String! @unique
   password: String!
   blurbs: [Blurb!]!
@@ -11,15 +12,17 @@ type User {
   birthday: String!
   maxAge: Int!
   minAge: Int!
-  genderIdentity: Gender!
-  genderPreference: Gender!
+  genderIdentity: Gender! @relation(name: "Identity", link: TABLE)
+  genderPreference: Gender! @relation(name: "Preference", link: TABLE)
 }
 
 type Gender {
+  id: ID! @id
   male: Boolean!
   female: Boolean!
   nonBi: Boolean!
-  owner: User!
+  identityOwner: User @relation(name: "Identity")
+  preferenceOwner: User @relation(name: "Preference")
 }
 
 type Blurb {

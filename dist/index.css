@@ -336,7 +336,8 @@ body {
 
 .menu {
   width: 100%;
-  z-index: 100; }
+  z-index: 100;
+  animation-fill-mode: forwards; }
   .menu__button {
     border: 0.2rem solid #d86490;
     text-align: center;
@@ -356,7 +357,8 @@ body {
     width: 100%;
     z-index: 10;
     overflow: hidden;
-    height: 0rem; }
+    height: 0rem;
+    animation-fill-mode: forwards; }
   .menu__dismiss {
     background-color: gray;
     height: 100%;
@@ -365,7 +367,8 @@ body {
     right: 0;
     top: 0;
     width: 100%;
-    z-index: 9; }
+    z-index: 9;
+    animation-fill-mode: forwards; }
 
 .about {
   margin: 2rem;
