@@ -1,5 +1,5 @@
 {
-  "name": "BestFootForward",
+  "name": "best-foot",
   "version": "1.0.0",
   "description": "An app to help you improve your dating profile",
   "main": "server.js",
@@ -17,7 +17,6 @@
     "votes": "mysql -u root -p < src/db/seed-votes.sql"
   },
   "author": "Amogh Kambale",
-  "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "@reach/router": "^1.2.1",
