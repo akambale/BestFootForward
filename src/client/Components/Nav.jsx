@@ -56,7 +56,7 @@ const Nav = () => {
           </svg>
         </Link>
       </nav>
-      <Menu toggleMenu={toggleMenu} showMenu={showMenu} />
+      {showMenu ? <Menu toggleMenu={toggleMenu} /> : null}
     </header>
   );
 };

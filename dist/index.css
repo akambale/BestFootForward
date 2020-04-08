@@ -368,7 +368,7 @@ body {
   .menu__dismiss {
     background-color: gray;
     height: 100%;
-    opacity: 0;
+    opacity: 0.5;
     position: absolute;
     right: 0;
     top: 0;

@@ -6,14 +6,14 @@ const About = () => (
     <h4 className='about__heading'>State of the app</h4>
     <p className='about__paragraph'>
       HEY FYI this app is still in it's alpha release so we can't guarantee that we won't lose your
-      data or even your entire account. Please use the website with that scary fact in mind. <br />
+      data or even your entire account. Please use the website with that scary knowledge in mind.{' '}
       <br />
-      The UI (user interface) is going to be rather ugly for the time being, I'm sorry about that.
-      As a person who <i>literally gets paid from 9-5 to make stuff pretty on the web,</i> it hurts
-      my soul to make this compromise. But this website is like my child and the cobbler's children
-      shall have no shoes; this cobbler is very tired at the end of the work week and just wants to
-      sleep in on Saturday. Eventually, I'll make the website a delight to use but my initial
-      concern is to get the website working behind the scenes.
+      <br />
+      The UI (user interface) is going to be rather ugly for the time being, I'm sorry about that. I{' '}
+      <i>literally get paid from 9-5 to make stuff pretty on the web,</i> but this website is like
+      my child and the cobbler's children shall have no shoes; this cobbler is very tired at the end
+      of the work week and just wants to sleep in on Saturday. Eventually, I'll make the website a
+      delight to use but my initial concern is to get the website working behind the scenes.
       <br />
       <br />
       If you do run into any odd problems, please reach us at hello@bestfoot.dating
@@ -43,6 +43,11 @@ const About = () => (
       As of now, this app is completely free to use and does not have any ads or ways to make money.
       This app costs about $550 per year to bring to you. If you've found it useful and want to help
       me out with the expenses, my venmo is @amoghkambale
+    </p>
+    <h4 className='about__heading'>Contact</h4>
+    <p className='about__paragraph'>
+      If you have any comments, questions, concerns, suggestions, etc, please get in touch at
+      hello@bestfoot.dating
     </p>
     <p className='login__commitments'>Our commitments to you</p>
     <ol>
