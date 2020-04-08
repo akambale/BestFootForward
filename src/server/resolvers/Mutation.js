@@ -9,7 +9,7 @@ module.exports = {
     }
     const epochBirthday = convertToEpoch(args.birthday);
     const minAdultBirthday = getMinAdultBirthday();
-    if (epochBirthday < minAdultBirthday) {
+    if (epochBirthday > minAdultBirthday) {
       throw new Error('Invalid birthday. You must be 18 years or older to create an account.');
     }
     if (args.maxAge - args.minAge < 4 || args.minAge < 18 || args.maxAge > 55) {
@@ -17,18 +17,27 @@ module.exports = {
         'Invalid age range. Please stop trying to query the graphql server directly.',
       );
     }
-    let { male, female, nonBi } = args.genderIdentity;
-    if (male || female || nonBi === false) {
+    let {
+      genderIdentityMale,
+      genderIdentityFemale,
+      genderIdentityNonBi,
+      genderPreferenceMale,
+      genderPreferenceFemale,
+      genderPreferenceNonBi,
+    } = args;
+    if ((genderIdentityMale || genderIdentityFemale || genderIdentityNonBi) === false) {
       throw new Error('Invalid gender identity. Please select at least one.');
     }
-    ({ male, female, nonBi } = args.genderPreference);
-    if (male || female || nonBi === false) {
+    if ((genderPreferenceMale || genderPreferenceFemale || genderPreferenceNonBi) === false) {
       throw new Error('Invalid gender preference. Please select at least one.');
     }
     //TODO email validation
 
     const password = await bcrypt.hash(args.password, 10);
-    const user = await context.prisma.createUser({ ...args, password });
+    const user = await context.prisma.createUser({
+      ...args,
+      password,
+    });
     const token = jwt.sign({ userID: user.id }, APP_SECRET);
     return {
       token,

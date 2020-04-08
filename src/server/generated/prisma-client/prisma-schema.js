@@ -11,10 +11,6 @@ type AggregateFeedback {
   count: Int!
 }
 
-type AggregateGender {
-  count: Int!
-}
-
 type AggregatePic {
   count: Int!
 }
@@ -565,181 +561,6 @@ input FeedbackWhereUniqueInput {
   id: ID
 }
 
-type Gender {
-  id: ID!
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
-  identityOwner: User
-  preferenceOwner: User
-}
-
-type GenderConnection {
-  pageInfo: PageInfo!
-  edges: [GenderEdge]!
-  aggregate: AggregateGender!
-}
-
-input GenderCreateInput {
-  id: ID
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
-  identityOwner: UserCreateOneWithoutGenderIdentityInput
-  preferenceOwner: UserCreateOneWithoutGenderPreferenceInput
-}
-
-input GenderCreateOneWithoutIdentityOwnerInput {
-  create: GenderCreateWithoutIdentityOwnerInput
-  connect: GenderWhereUniqueInput
-}
-
-input GenderCreateOneWithoutPreferenceOwnerInput {
-  create: GenderCreateWithoutPreferenceOwnerInput
-  connect: GenderWhereUniqueInput
-}
-
-input GenderCreateWithoutIdentityOwnerInput {
-  id: ID
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
-  preferenceOwner: UserCreateOneWithoutGenderPreferenceInput
-}
-
-input GenderCreateWithoutPreferenceOwnerInput {
-  id: ID
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
-  identityOwner: UserCreateOneWithoutGenderIdentityInput
-}
-
-type GenderEdge {
-  node: Gender!
-  cursor: String!
-}
-
-enum GenderOrderByInput {
-  id_ASC
-  id_DESC
-  male_ASC
-  male_DESC
-  female_ASC
-  female_DESC
-  nonBi_ASC
-  nonBi_DESC
-}
-
-type GenderPreviousValues {
-  id: ID!
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
-}
-
-type GenderSubscriptionPayload {
-  mutation: MutationType!
-  node: Gender
-  updatedFields: [String!]
-  previousValues: GenderPreviousValues
-}
-
-input GenderSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: GenderWhereInput
-  AND: [GenderSubscriptionWhereInput!]
-  OR: [GenderSubscriptionWhereInput!]
-  NOT: [GenderSubscriptionWhereInput!]
-}
-
-input GenderUpdateInput {
-  male: Boolean
-  female: Boolean
-  nonBi: Boolean
-  identityOwner: UserUpdateOneWithoutGenderIdentityInput
-  preferenceOwner: UserUpdateOneWithoutGenderPreferenceInput
-}
-
-input GenderUpdateManyMutationInput {
-  male: Boolean
-  female: Boolean
-  nonBi: Boolean
-}
-
-input GenderUpdateOneRequiredWithoutIdentityOwnerInput {
-  create: GenderCreateWithoutIdentityOwnerInput
-  update: GenderUpdateWithoutIdentityOwnerDataInput
-  upsert: GenderUpsertWithoutIdentityOwnerInput
-  connect: GenderWhereUniqueInput
-}
-
-input GenderUpdateOneRequiredWithoutPreferenceOwnerInput {
-  create: GenderCreateWithoutPreferenceOwnerInput
-  update: GenderUpdateWithoutPreferenceOwnerDataInput
-  upsert: GenderUpsertWithoutPreferenceOwnerInput
-  connect: GenderWhereUniqueInput
-}
-
-input GenderUpdateWithoutIdentityOwnerDataInput {
-  male: Boolean
-  female: Boolean
-  nonBi: Boolean
-  preferenceOwner: UserUpdateOneWithoutGenderPreferenceInput
-}
-
-input GenderUpdateWithoutPreferenceOwnerDataInput {
-  male: Boolean
-  female: Boolean
-  nonBi: Boolean
-  identityOwner: UserUpdateOneWithoutGenderIdentityInput
-}
-
-input GenderUpsertWithoutIdentityOwnerInput {
-  update: GenderUpdateWithoutIdentityOwnerDataInput!
-  create: GenderCreateWithoutIdentityOwnerInput!
-}
-
-input GenderUpsertWithoutPreferenceOwnerInput {
-  update: GenderUpdateWithoutPreferenceOwnerDataInput!
-  create: GenderCreateWithoutPreferenceOwnerInput!
-}
-
-input GenderWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  male: Boolean
-  male_not: Boolean
-  female: Boolean
-  female_not: Boolean
-  nonBi: Boolean
-  nonBi_not: Boolean
-  identityOwner: UserWhereInput
-  preferenceOwner: UserWhereInput
-  AND: [GenderWhereInput!]
-  OR: [GenderWhereInput!]
-  NOT: [GenderWhereInput!]
-}
-
-input GenderWhereUniqueInput {
-  id: ID
-}
-
 scalar Long
 
 type Mutation {
@@ -755,12 +576,6 @@ type Mutation {
   upsertFeedback(where: FeedbackWhereUniqueInput!, create: FeedbackCreateInput!, update: FeedbackUpdateInput!): Feedback!
   deleteFeedback(where: FeedbackWhereUniqueInput!): Feedback
   deleteManyFeedbacks(where: FeedbackWhereInput): BatchPayload!
-  createGender(data: GenderCreateInput!): Gender!
-  updateGender(data: GenderUpdateInput!, where: GenderWhereUniqueInput!): Gender
-  updateManyGenders(data: GenderUpdateManyMutationInput!, where: GenderWhereInput): BatchPayload!
-  upsertGender(where: GenderWhereUniqueInput!, create: GenderCreateInput!, update: GenderUpdateInput!): Gender!
-  deleteGender(where: GenderWhereUniqueInput!): Gender
-  deleteManyGenders(where: GenderWhereInput): BatchPayload!
   createPic(data: PicCreateInput!): Pic!
   updatePic(data: PicUpdateInput!, where: PicWhereUniqueInput!): Pic
   updateManyPics(data: PicUpdateManyMutationInput!, where: PicWhereInput): BatchPayload!
@@ -1024,9 +839,6 @@ type Query {
   feedback(where: FeedbackWhereUniqueInput!): Feedback
   feedbacks(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback]!
   feedbacksConnection(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedbackConnection!
-  gender(where: GenderWhereUniqueInput!): Gender
-  genders(where: GenderWhereInput, orderBy: GenderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Gender]!
-  gendersConnection(where: GenderWhereInput, orderBy: GenderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GenderConnection!
   pic(where: PicWhereUniqueInput!): Pic
   pics(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pic]!
   picsConnection(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PicConnection!
@@ -1292,28 +1104,31 @@ input RatingWhereUniqueInput {
 type Subscription {
   blurb(where: BlurbSubscriptionWhereInput): BlurbSubscriptionPayload
   feedback(where: FeedbackSubscriptionWhereInput): FeedbackSubscriptionPayload
-  gender(where: GenderSubscriptionWhereInput): GenderSubscriptionPayload
   pic(where: PicSubscriptionWhereInput): PicSubscriptionPayload
   rating(where: RatingSubscriptionWhereInput): RatingSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User {
-  id: ID!
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs(where: BlurbWhereInput, orderBy: BlurbOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blurb!]
-  pics(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pic!]
-  feedbackReceived(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
-  feedbackGiven(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
-  feedbackFlagged(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
   birthday: String!
+  blurbs(where: BlurbWhereInput, orderBy: BlurbOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Blurb!]
+  email: String!
+  feedbackFlagged(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
+  feedbackGiven(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
+  feedbackReceived(where: FeedbackWhereInput, orderBy: FeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feedback!]
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID!
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: Gender!
-  genderPreference: Gender!
+  password: String!
+  pics(where: PicWhereInput, orderBy: PicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pic!]
 }
 
 type UserConnection {
@@ -1323,21 +1138,25 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs: BlurbCreateManyWithoutOwnerInput
-  pics: PicCreateManyWithoutOwnerInput
-  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
   birthday: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  email: String!
+  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput!
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput!
+  password: String!
+  pics: PicCreateManyWithoutOwnerInput
 }
 
 input UserCreateOneInput {
@@ -1365,138 +1184,114 @@ input UserCreateOneWithoutFeedbackReceivedInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutGenderIdentityInput {
-  create: UserCreateWithoutGenderIdentityInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutGenderPreferenceInput {
-  create: UserCreateWithoutGenderPreferenceInput
-  connect: UserWhereUniqueInput
-}
-
 input UserCreateOneWithoutPicsInput {
   create: UserCreateWithoutPicsInput
   connect: UserWhereUniqueInput
 }
 
 input UserCreateWithoutBlurbsInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  pics: PicCreateManyWithoutOwnerInput
-  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
   birthday: String!
+  email: String!
+  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput!
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput!
+  password: String!
+  pics: PicCreateManyWithoutOwnerInput
 }
 
 input UserCreateWithoutFeedbackFlaggedInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs: BlurbCreateManyWithoutOwnerInput
-  pics: PicCreateManyWithoutOwnerInput
-  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
   birthday: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  email: String!
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput!
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput!
+  password: String!
+  pics: PicCreateManyWithoutOwnerInput
 }
 
 input UserCreateWithoutFeedbackGivenInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs: BlurbCreateManyWithoutOwnerInput
-  pics: PicCreateManyWithoutOwnerInput
-  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
-  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
   birthday: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  email: String!
+  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput!
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput!
+  password: String!
+  pics: PicCreateManyWithoutOwnerInput
 }
 
 input UserCreateWithoutFeedbackReceivedInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs: BlurbCreateManyWithoutOwnerInput
-  pics: PicCreateManyWithoutOwnerInput
-  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
   birthday: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  email: String!
+  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput!
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput!
-}
-
-input UserCreateWithoutGenderIdentityInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
   password: String!
-  blurbs: BlurbCreateManyWithoutOwnerInput
   pics: PicCreateManyWithoutOwnerInput
-  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
-  birthday: String!
-  maxAge: Int!
-  minAge: Int!
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput!
-}
-
-input UserCreateWithoutGenderPreferenceInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs: BlurbCreateManyWithoutOwnerInput
-  pics: PicCreateManyWithoutOwnerInput
-  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
-  birthday: String!
-  maxAge: Int!
-  minAge: Int!
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput!
 }
 
 input UserCreateWithoutPicsInput {
-  id: ID
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs: BlurbCreateManyWithoutOwnerInput
-  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
   birthday: String!
+  blurbs: BlurbCreateManyWithoutOwnerInput
+  email: String!
+  feedbackFlagged: FeedbackCreateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackCreateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackCreateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput!
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput!
+  password: String!
 }
 
 type UserEdge {
@@ -1505,33 +1300,51 @@ type UserEdge {
 }
 
 enum UserOrderByInput {
-  id_ASC
-  id_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
   birthday_ASC
   birthday_DESC
+  email_ASC
+  email_DESC
+  firstName_ASC
+  firstName_DESC
+  genderIdentityMale_ASC
+  genderIdentityMale_DESC
+  genderIdentityFemale_ASC
+  genderIdentityFemale_DESC
+  genderIdentityNonBi_ASC
+  genderIdentityNonBi_DESC
+  genderPreferenceMale_ASC
+  genderPreferenceMale_DESC
+  genderPreferenceFemale_ASC
+  genderPreferenceFemale_DESC
+  genderPreferenceNonBi_ASC
+  genderPreferenceNonBi_DESC
+  id_ASC
+  id_DESC
+  lastName_ASC
+  lastName_DESC
   maxAge_ASC
   maxAge_DESC
   minAge_ASC
   minAge_DESC
+  password_ASC
+  password_DESC
 }
 
 type UserPreviousValues {
-  id: ID!
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
   birthday: String!
+  email: String!
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID!
+  lastName: String
   maxAge: Int!
   minAge: Int!
+  password: String!
 }
 
 type UserSubscriptionPayload {
@@ -1553,47 +1366,61 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
-  pics: PicUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
   birthday: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  email: String
+  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
+  password: String
+  pics: PicUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
-  pics: PicUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
   birthday: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  email: String
+  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
+  password: String
+  pics: PicUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateManyMutationInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
   birthday: String
+  email: String
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
+  password: String
 }
 
 input UserUpdateOneRequiredInput {
@@ -1640,134 +1467,104 @@ input UserUpdateOneWithoutFeedbackFlaggedInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutGenderIdentityInput {
-  create: UserCreateWithoutGenderIdentityInput
-  update: UserUpdateWithoutGenderIdentityDataInput
-  upsert: UserUpsertWithoutGenderIdentityInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateOneWithoutGenderPreferenceInput {
-  create: UserCreateWithoutGenderPreferenceInput
-  update: UserUpdateWithoutGenderPreferenceDataInput
-  upsert: UserUpsertWithoutGenderPreferenceInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateWithoutBlurbsDataInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  pics: PicUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
   birthday: String
+  email: String
+  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
+  password: String
+  pics: PicUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateWithoutFeedbackFlaggedDataInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
-  pics: PicUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
   birthday: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  email: String
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
+  password: String
+  pics: PicUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateWithoutFeedbackGivenDataInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
-  pics: PicUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
   birthday: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  email: String
+  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
+  password: String
+  pics: PicUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateWithoutFeedbackReceivedDataInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
-  pics: PicUpdateManyWithoutOwnerInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
   birthday: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  email: String
+  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
-}
-
-input UserUpdateWithoutGenderIdentityDataInput {
-  firstName: String
-  lastName: String
-  email: String
   password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
   pics: PicUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
-  birthday: String
-  maxAge: Int
-  minAge: Int
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
-}
-
-input UserUpdateWithoutGenderPreferenceDataInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
-  pics: PicUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
-  birthday: String
-  maxAge: Int
-  minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
 }
 
 input UserUpdateWithoutPicsDataInput {
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  blurbs: BlurbUpdateManyWithoutOwnerInput
-  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
-  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
-  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
   birthday: String
+  blurbs: BlurbUpdateManyWithoutOwnerInput
+  email: String
+  feedbackFlagged: FeedbackUpdateManyWithoutFlaggedByInput
+  feedbackGiven: FeedbackUpdateManyWithoutFeedbackGiverInput
+  feedbackReceived: FeedbackUpdateManyWithoutFeedbackReceiverInput
+  firstName: String
+  genderIdentityMale: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityNonBi: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceNonBi: Boolean
+  lastName: String
   maxAge: Int
   minAge: Int
-  genderIdentity: GenderUpdateOneRequiredWithoutIdentityOwnerInput
-  genderPreference: GenderUpdateOneRequiredWithoutPreferenceOwnerInput
+  password: String
 }
 
 input UserUpsertNestedInput {
@@ -1795,107 +1592,12 @@ input UserUpsertWithoutFeedbackReceivedInput {
   create: UserCreateWithoutFeedbackReceivedInput!
 }
 
-input UserUpsertWithoutGenderIdentityInput {
-  update: UserUpdateWithoutGenderIdentityDataInput!
-  create: UserCreateWithoutGenderIdentityInput!
-}
-
-input UserUpsertWithoutGenderPreferenceInput {
-  update: UserUpdateWithoutGenderPreferenceDataInput!
-  create: UserCreateWithoutGenderPreferenceInput!
-}
-
 input UserUpsertWithoutPicsInput {
   update: UserUpdateWithoutPicsDataInput!
   create: UserCreateWithoutPicsInput!
 }
 
 input UserWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  firstName: String
-  firstName_not: String
-  firstName_in: [String!]
-  firstName_not_in: [String!]
-  firstName_lt: String
-  firstName_lte: String
-  firstName_gt: String
-  firstName_gte: String
-  firstName_contains: String
-  firstName_not_contains: String
-  firstName_starts_with: String
-  firstName_not_starts_with: String
-  firstName_ends_with: String
-  firstName_not_ends_with: String
-  lastName: String
-  lastName_not: String
-  lastName_in: [String!]
-  lastName_not_in: [String!]
-  lastName_lt: String
-  lastName_lte: String
-  lastName_gt: String
-  lastName_gte: String
-  lastName_contains: String
-  lastName_not_contains: String
-  lastName_starts_with: String
-  lastName_not_starts_with: String
-  lastName_ends_with: String
-  lastName_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  blurbs_every: BlurbWhereInput
-  blurbs_some: BlurbWhereInput
-  blurbs_none: BlurbWhereInput
-  pics_every: PicWhereInput
-  pics_some: PicWhereInput
-  pics_none: PicWhereInput
-  feedbackReceived_every: FeedbackWhereInput
-  feedbackReceived_some: FeedbackWhereInput
-  feedbackReceived_none: FeedbackWhereInput
-  feedbackGiven_every: FeedbackWhereInput
-  feedbackGiven_some: FeedbackWhereInput
-  feedbackGiven_none: FeedbackWhereInput
-  feedbackFlagged_every: FeedbackWhereInput
-  feedbackFlagged_some: FeedbackWhereInput
-  feedbackFlagged_none: FeedbackWhereInput
   birthday: String
   birthday_not: String
   birthday_in: [String!]
@@ -1910,6 +1612,86 @@ input UserWhereInput {
   birthday_not_starts_with: String
   birthday_ends_with: String
   birthday_not_ends_with: String
+  blurbs_every: BlurbWhereInput
+  blurbs_some: BlurbWhereInput
+  blurbs_none: BlurbWhereInput
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  feedbackFlagged_every: FeedbackWhereInput
+  feedbackFlagged_some: FeedbackWhereInput
+  feedbackFlagged_none: FeedbackWhereInput
+  feedbackGiven_every: FeedbackWhereInput
+  feedbackGiven_some: FeedbackWhereInput
+  feedbackGiven_none: FeedbackWhereInput
+  feedbackReceived_every: FeedbackWhereInput
+  feedbackReceived_some: FeedbackWhereInput
+  feedbackReceived_none: FeedbackWhereInput
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  genderIdentityMale: Boolean
+  genderIdentityMale_not: Boolean
+  genderIdentityFemale: Boolean
+  genderIdentityFemale_not: Boolean
+  genderIdentityNonBi: Boolean
+  genderIdentityNonBi_not: Boolean
+  genderPreferenceMale: Boolean
+  genderPreferenceMale_not: Boolean
+  genderPreferenceFemale: Boolean
+  genderPreferenceFemale_not: Boolean
+  genderPreferenceNonBi: Boolean
+  genderPreferenceNonBi_not: Boolean
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
   maxAge: Int
   maxAge_not: Int
   maxAge_in: [Int!]
@@ -1926,16 +1708,31 @@ input UserWhereInput {
   minAge_lte: Int
   minAge_gt: Int
   minAge_gte: Int
-  genderIdentity: GenderWhereInput
-  genderPreference: GenderWhereInput
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  pics_every: PicWhereInput
+  pics_some: PicWhereInput
+  pics_none: PicWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {
-  id: ID
   email: String
+  id: ID
 }
 `
       }

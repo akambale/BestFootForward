@@ -1,0 +1,135 @@
+# This is sample SDL schema for GraphQL Faker.
+#
+# There are two directives you can use to enhance fake data:
+#   - @fake
+#   - @examples
+# Each directive has autocompletion working so start by typing @
+#
+# Press save or Cmd+Enter to apply the changes and update server. Switch to GraphiQL
+# on the left panel to immediately test your changes.
+# This tool also supports extending existing APIs. Check graphql-faker --help
+#
+# Developed with ❤️ by APIs.guru | https://github.com/APIs-guru/graphql-faker
+
+# This is sample SDL schema for GraphQL Faker.
+#
+# There are two directives you can use to enhance fake data:
+#   - @fake
+#   - @examples
+# Each directive has autocompletion working so start by typing @
+#
+# Press save or Cmd+Enter to apply the changes and update server. Switch to GraphiQL
+# on the left panel to immediately test your changes.
+# This tool also supports extending existing APIs. Check graphql-faker --help
+#
+# Developed with ❤️ by APIs.guru | https://github.com/APIs-guru/graphql-faker
+
+# type Company {
+#   name: String @fake(type:companyName)
+#   industry: String @examples(values: ["IT", "Manufacturing", "Medicine", "Media"])
+#   employees: [Employee!] @listLength(min: 5, max: 10)
+# }
+
+# type Employee {
+#   firstName: String @fake(type: firstName, locale:en_CA)
+#   lastName: String @fake(type: lastName, locale:en_CA)
+#   address: String @fake(type:streetAddress, options: { useFullAddress: true })
+#   subordinates: [Employee!] @listLength(min: 0, max: 3)
+#   company: Company
+# }
+
+# type Query {
+#   employee(id: ID): Employee
+#   company(id: ID): Company
+#   allCompanies: [Company!]
+# }
+
+type Query {
+  users: [User!]! @listLength(min:5 max: 10)
+}
+
+type Mutation {
+  signup(
+    email: String!
+    password: String!
+    firstName: String!
+    lastName: String!
+    birthday: String!
+    maxAge: Int!
+    minAge: Int!
+    genderIdentityMale: Boolean!
+    genderIdentityFemale: Boolean!
+    genderIdentityNonBi: Boolean!
+    genderPreferenceMale: Boolean!
+    genderPreferenceFemale: Boolean!
+    genderPreferenceNonBi: Boolean!
+  ): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+  addBlurb(text: String!): Blurb!
+  addPic(url: String!): Pic!
+  rate(blurbID: String, picID: String, score: Int!): Rating!
+  giveFeedback(text: String!, ownerID: String!): Feedback!
+  flagFeedback(id: ID!): Feedback!
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  birthday: String! @fake(type: pastDate, options:{dateFormat:"YYYY-MM"})
+  blurbs: [Blurb!]! @listLength(min: 1 max: 10)
+  email: String! @fake(type: email)
+  feedbackFlagged: [Feedback!]!
+  feedbackGiven: [Feedback!]!
+  feedbackReceived: [Feedback!]!
+  firstName: String @fake(type: firstName)
+  genderIdentityMale: Boolean! @examples(values: [true, false])
+  genderIdentityFemale: Boolean! @examples(values: [true, false])
+  genderIdentityNonBi: Boolean! @examples(values: [true, false])
+  genderPreferenceMale: Boolean! @examples(values: [true, false])
+  genderPreferenceFemale: Boolean! @examples(values: [true, false])
+  genderPreferenceNonBi: Boolean! @examples(values: [true, false])
+  id: ID!
+  lastName: String @fake(type: lastName)
+  maxAge: Int! 
+  minAge: Int!
+  password: String! @examples(values: ["graphQLq"])
+  pics: [Pic!]! @listLength(min: 1 max: 10)
+}
+
+type Blurb {
+  id: ID!
+  owner: User!
+  text: String! @fake(type:lorem)
+  ratings: [Rating!]! @listLength(min:10 max: 100)
+}
+
+type Pic {
+  id: ID!
+  owner: User!
+  url: String! @fake(type: imageUrl, options:{imageHeight: 200, imageWidth:300, imageCategory:people})
+  ratings: [Rating!]!  @listLength(min:10 max: 100)
+}
+
+type Rating {
+  id: ID!
+  pic: Pic
+  blurb: Blurb
+  score: Int! @examples(values: [1, 0])
+  ratingGiverAge: Int!
+  ratingGiver: User!
+  # copying the rating giver's age in this type because age will change over time
+  # User gender is less likely to change, so its' ok to query it from the user
+}
+
+type Feedback {
+  id: ID!
+  text: String! @fake(type: lorem)
+  createdAt: String!
+  flagged: Boolean! @examples(values: [true, false])
+  flaggedBy: User
+  feedbackReceiver: User!
+  feedbackGiver: User!
+}

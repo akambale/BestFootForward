@@ -94,7 +94,8 @@
     width: 100%;
     z-index: 10;
     overflow: hidden;
-    height: 0rem;
+    // height: auto;
+    // max-height: 0rem;
     animation-fill-mode: forwards;
   }
 

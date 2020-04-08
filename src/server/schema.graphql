@@ -6,12 +6,17 @@ type Mutation {
   signup(
     email: String!
     password: String!
-    name: String!
+    firstName: String!
+    lastName: String!
     birthday: String!
     maxAge: Int!
     minAge: Int!
-    genderIdentity: GenderInput!
-    genderPreference: GenderInput!
+    genderIdentityMale: Boolean!
+    genderIdentityFemale: Boolean!
+    genderIdentityNonBi: Boolean!
+    genderPreferenceMale: Boolean!
+    genderPreferenceFemale: Boolean!
+    genderPreferenceNonBi: Boolean!
   ): AuthPayload
   login(email: String!, password: String!): AuthPayload
   addBlurb(text: String!): Blurb!
@@ -27,36 +32,25 @@ type AuthPayload {
 }
 
 type User {
-  id: ID!
-  firstName: String
-  lastName: String
-  email: String!
-  password: String!
-  blurbs: [Blurb!]!
-  pics: [Pic!]!
-  feedbackReceived: [Feedback!]!
-  feedbackGiven: [Feedback!]!
-  feedbackFlagged: [Feedback!]!
   birthday: String!
+  blurbs: [Blurb!]!
+  email: String!
+  feedbackFlagged: [Feedback!]!
+  feedbackGiven: [Feedback!]!
+  feedbackReceived: [Feedback!]!
+  firstName: String
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID!
+  lastName: String
   maxAge: Int!
   minAge: Int!
-  genderIdentity: Gender!
-  genderPreference: Gender!
-}
-
-type Gender {
-  id: ID!
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
-  identityOwner: User
-  preferenceOwner: User
-}
-
-type GenderInput {
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
+  password: String!
+  pics: [Pic!]!
 }
 
 type Blurb {

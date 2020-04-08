@@ -4,9 +4,9 @@ import { useTransition, animated } from 'react-spring';
 
 const Menu = ({ toggleMenu, showMenu }) => {
   const menuStyle = useTransition(showMenu, null, {
-    from: { height: '0rem' },
-    enter: { height: '30rem' },
-    leave: { height: '0rem' },
+    from: { height: '0%' },
+    enter: { height: '45%' },
+    leave: { height: '0%' },
   });
   const dismissStyle = useTransition(showMenu, null, {
     from: { opacity: 0 },
@@ -15,7 +15,7 @@ const Menu = ({ toggleMenu, showMenu }) => {
   });
   return (
     <div className='menu'>
-      <animated.div className='menu__container' style={menuStyle[0].props} key={menuStyle[0].key}>
+      {/* <animated.div className='menu__container' style={menuStyle[0].props} key={menuStyle[0].key}>
         <Link className='menu__button' to='/' onClick={toggleMenu}>
           Browse Profiles
         </Link>
@@ -34,7 +34,7 @@ const Menu = ({ toggleMenu, showMenu }) => {
         onClick={toggleMenu}
         style={dismissStyle[0].props}
         key={dismissStyle[0].key}
-      />
+      /> */}
     </div>
   );
 };

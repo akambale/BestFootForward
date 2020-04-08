@@ -1,28 +1,23 @@
 type User {
-  id: ID! @id
-  firstName: String 
-  lastName: String 
-  email: String! @unique
-  password: String!
-  blurbs: [Blurb!]!
-  pics: [Pic!]!
-  feedbackReceived: [Feedback!]! @relation(name: "Recieve")
-  feedbackGiven: [Feedback!]! @relation(name: "Give")
-  feedbackFlagged: [Feedback!]! @relation(name: "Flag")
   birthday: String!
+  blurbs: [Blurb!]!
+  email: String! @unique
+  feedbackFlagged: [Feedback!]! @relation(name: "Flag")
+  feedbackGiven: [Feedback!]! @relation(name: "Give")
+  feedbackReceived: [Feedback!]! @relation(name: "Recieve")
+  firstName: String 
+  genderIdentityMale: Boolean!
+  genderIdentityFemale: Boolean!
+  genderIdentityNonBi: Boolean!
+  genderPreferenceMale: Boolean!
+  genderPreferenceFemale: Boolean!
+  genderPreferenceNonBi: Boolean!
+  id: ID! @id
+  lastName: String 
   maxAge: Int!
   minAge: Int!
-  genderIdentity: Gender! @relation(name: "Identity", link: TABLE)
-  genderPreference: Gender! @relation(name: "Preference", link: TABLE)
-}
-
-type Gender {
-  id: ID! @id
-  male: Boolean!
-  female: Boolean!
-  nonBi: Boolean!
-  identityOwner: User @relation(name: "Identity")
-  preferenceOwner: User @relation(name: "Preference")
+  password: String!
+  pics: [Pic!]!
 }
 
 type Blurb {

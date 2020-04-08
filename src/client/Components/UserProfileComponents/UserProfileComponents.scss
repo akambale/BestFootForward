@@ -1,10 +1,23 @@
 .login {
-  height: 6rem;
   width: 90%;
   margin: 2rem auto;
-  background-color: lightgreen;
+
+  &__toggle {
+    width: 50%;
+  }
 
   &__btn {
-    // width: 3rem;
+    // width: 50%;
+  }
+
+  &__iframe {
+    overflow: scroll;
+    margin: 3rem 0;
+    width: 100%;
+    height: 30%;
+  }
+
+  &__tos-link {
+    color: blue;
   }
 }

@@ -18,7 +18,6 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   blurb: (where?: BlurbWhereInput) => Promise<boolean>;
   feedback: (where?: FeedbackWhereInput) => Promise<boolean>;
-  gender: (where?: GenderWhereInput) => Promise<boolean>;
   pic: (where?: PicWhereInput) => Promise<boolean>;
   rating: (where?: RatingWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
@@ -81,25 +80,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => FeedbackConnectionPromise;
-  gender: (where: GenderWhereUniqueInput) => GenderNullablePromise;
-  genders: (args?: {
-    where?: GenderWhereInput;
-    orderBy?: GenderOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Gender>;
-  gendersConnection: (args?: {
-    where?: GenderWhereInput;
-    orderBy?: GenderOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => GenderConnectionPromise;
   pic: (where: PicWhereUniqueInput) => PicNullablePromise;
   pics: (args?: {
     where?: PicWhereInput;
@@ -195,22 +175,6 @@ export interface Prisma {
   }) => FeedbackPromise;
   deleteFeedback: (where: FeedbackWhereUniqueInput) => FeedbackPromise;
   deleteManyFeedbacks: (where?: FeedbackWhereInput) => BatchPayloadPromise;
-  createGender: (data: GenderCreateInput) => GenderPromise;
-  updateGender: (args: {
-    data: GenderUpdateInput;
-    where: GenderWhereUniqueInput;
-  }) => GenderPromise;
-  updateManyGenders: (args: {
-    data: GenderUpdateManyMutationInput;
-    where?: GenderWhereInput;
-  }) => BatchPayloadPromise;
-  upsertGender: (args: {
-    where: GenderWhereUniqueInput;
-    create: GenderCreateInput;
-    update: GenderUpdateInput;
-  }) => GenderPromise;
-  deleteGender: (where: GenderWhereUniqueInput) => GenderPromise;
-  deleteManyGenders: (where?: GenderWhereInput) => BatchPayloadPromise;
   createPic: (data: PicCreateInput) => PicPromise;
   updatePic: (args: {
     data: PicUpdateInput;
@@ -274,9 +238,6 @@ export interface Subscription {
   feedback: (
     where?: FeedbackSubscriptionWhereInput
   ) => FeedbackSubscriptionPayloadSubscription;
-  gender: (
-    where?: GenderSubscriptionWhereInput
-  ) => GenderSubscriptionPayloadSubscription;
   pic: (
     where?: PicSubscriptionWhereInput
   ) => PicSubscriptionPayloadSubscription;
@@ -298,16 +259,6 @@ export interface ClientConstructor<T> {
 
 export type BlurbOrderByInput = "id_ASC" | "id_DESC" | "text_ASC" | "text_DESC";
 
-export type PicOrderByInput = "id_ASC" | "id_DESC" | "url_ASC" | "url_DESC";
-
-export type RatingOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "score_ASC"
-  | "score_DESC"
-  | "ratingGiverAge_ASC"
-  | "ratingGiverAge_DESC";
-
 export type FeedbackOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -318,33 +269,45 @@ export type FeedbackOrderByInput =
   | "flagged_ASC"
   | "flagged_DESC";
 
-export type GenderOrderByInput =
+export type PicOrderByInput = "id_ASC" | "id_DESC" | "url_ASC" | "url_DESC";
+
+export type RatingOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "male_ASC"
-  | "male_DESC"
-  | "female_ASC"
-  | "female_DESC"
-  | "nonBi_ASC"
-  | "nonBi_DESC";
+  | "score_ASC"
+  | "score_DESC"
+  | "ratingGiverAge_ASC"
+  | "ratingGiverAge_DESC";
 
 export type UserOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "firstName_ASC"
-  | "firstName_DESC"
-  | "lastName_ASC"
-  | "lastName_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "password_ASC"
-  | "password_DESC"
   | "birthday_ASC"
   | "birthday_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "firstName_ASC"
+  | "firstName_DESC"
+  | "genderIdentityMale_ASC"
+  | "genderIdentityMale_DESC"
+  | "genderIdentityFemale_ASC"
+  | "genderIdentityFemale_DESC"
+  | "genderIdentityNonBi_ASC"
+  | "genderIdentityNonBi_DESC"
+  | "genderPreferenceMale_ASC"
+  | "genderPreferenceMale_DESC"
+  | "genderPreferenceFemale_ASC"
+  | "genderPreferenceFemale_DESC"
+  | "genderPreferenceNonBi_ASC"
+  | "genderPreferenceNonBi_DESC"
+  | "id_ASC"
+  | "id_DESC"
+  | "lastName_ASC"
+  | "lastName_DESC"
   | "maxAge_ASC"
   | "maxAge_DESC"
   | "minAge_ASC"
-  | "minAge_DESC";
+  | "minAge_DESC"
+  | "password_ASC"
+  | "password_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -391,91 +354,6 @@ export interface BlurbWhereInput {
 }
 
 export interface UserWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  firstName_not?: Maybe<String>;
-  firstName_in?: Maybe<String[] | String>;
-  firstName_not_in?: Maybe<String[] | String>;
-  firstName_lt?: Maybe<String>;
-  firstName_lte?: Maybe<String>;
-  firstName_gt?: Maybe<String>;
-  firstName_gte?: Maybe<String>;
-  firstName_contains?: Maybe<String>;
-  firstName_not_contains?: Maybe<String>;
-  firstName_starts_with?: Maybe<String>;
-  firstName_not_starts_with?: Maybe<String>;
-  firstName_ends_with?: Maybe<String>;
-  firstName_not_ends_with?: Maybe<String>;
-  lastName?: Maybe<String>;
-  lastName_not?: Maybe<String>;
-  lastName_in?: Maybe<String[] | String>;
-  lastName_not_in?: Maybe<String[] | String>;
-  lastName_lt?: Maybe<String>;
-  lastName_lte?: Maybe<String>;
-  lastName_gt?: Maybe<String>;
-  lastName_gte?: Maybe<String>;
-  lastName_contains?: Maybe<String>;
-  lastName_not_contains?: Maybe<String>;
-  lastName_starts_with?: Maybe<String>;
-  lastName_not_starts_with?: Maybe<String>;
-  lastName_ends_with?: Maybe<String>;
-  lastName_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  blurbs_every?: Maybe<BlurbWhereInput>;
-  blurbs_some?: Maybe<BlurbWhereInput>;
-  blurbs_none?: Maybe<BlurbWhereInput>;
-  pics_every?: Maybe<PicWhereInput>;
-  pics_some?: Maybe<PicWhereInput>;
-  pics_none?: Maybe<PicWhereInput>;
-  feedbackReceived_every?: Maybe<FeedbackWhereInput>;
-  feedbackReceived_some?: Maybe<FeedbackWhereInput>;
-  feedbackReceived_none?: Maybe<FeedbackWhereInput>;
-  feedbackGiven_every?: Maybe<FeedbackWhereInput>;
-  feedbackGiven_some?: Maybe<FeedbackWhereInput>;
-  feedbackGiven_none?: Maybe<FeedbackWhereInput>;
-  feedbackFlagged_every?: Maybe<FeedbackWhereInput>;
-  feedbackFlagged_some?: Maybe<FeedbackWhereInput>;
-  feedbackFlagged_none?: Maybe<FeedbackWhereInput>;
   birthday?: Maybe<String>;
   birthday_not?: Maybe<String>;
   birthday_in?: Maybe<String[] | String>;
@@ -490,6 +368,86 @@ export interface UserWhereInput {
   birthday_not_starts_with?: Maybe<String>;
   birthday_ends_with?: Maybe<String>;
   birthday_not_ends_with?: Maybe<String>;
+  blurbs_every?: Maybe<BlurbWhereInput>;
+  blurbs_some?: Maybe<BlurbWhereInput>;
+  blurbs_none?: Maybe<BlurbWhereInput>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  feedbackFlagged_every?: Maybe<FeedbackWhereInput>;
+  feedbackFlagged_some?: Maybe<FeedbackWhereInput>;
+  feedbackFlagged_none?: Maybe<FeedbackWhereInput>;
+  feedbackGiven_every?: Maybe<FeedbackWhereInput>;
+  feedbackGiven_some?: Maybe<FeedbackWhereInput>;
+  feedbackGiven_none?: Maybe<FeedbackWhereInput>;
+  feedbackReceived_every?: Maybe<FeedbackWhereInput>;
+  feedbackReceived_some?: Maybe<FeedbackWhereInput>;
+  feedbackReceived_none?: Maybe<FeedbackWhereInput>;
+  firstName?: Maybe<String>;
+  firstName_not?: Maybe<String>;
+  firstName_in?: Maybe<String[] | String>;
+  firstName_not_in?: Maybe<String[] | String>;
+  firstName_lt?: Maybe<String>;
+  firstName_lte?: Maybe<String>;
+  firstName_gt?: Maybe<String>;
+  firstName_gte?: Maybe<String>;
+  firstName_contains?: Maybe<String>;
+  firstName_not_contains?: Maybe<String>;
+  firstName_starts_with?: Maybe<String>;
+  firstName_not_starts_with?: Maybe<String>;
+  firstName_ends_with?: Maybe<String>;
+  firstName_not_ends_with?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityMale_not?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityFemale_not?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderIdentityNonBi_not?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceMale_not?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceFemale_not?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  genderPreferenceNonBi_not?: Maybe<Boolean>;
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  lastName?: Maybe<String>;
+  lastName_not?: Maybe<String>;
+  lastName_in?: Maybe<String[] | String>;
+  lastName_not_in?: Maybe<String[] | String>;
+  lastName_lt?: Maybe<String>;
+  lastName_lte?: Maybe<String>;
+  lastName_gt?: Maybe<String>;
+  lastName_gte?: Maybe<String>;
+  lastName_contains?: Maybe<String>;
+  lastName_not_contains?: Maybe<String>;
+  lastName_starts_with?: Maybe<String>;
+  lastName_not_starts_with?: Maybe<String>;
+  lastName_ends_with?: Maybe<String>;
+  lastName_not_ends_with?: Maybe<String>;
   maxAge?: Maybe<Int>;
   maxAge_not?: Maybe<Int>;
   maxAge_in?: Maybe<Int[] | Int>;
@@ -506,11 +464,73 @@ export interface UserWhereInput {
   minAge_lte?: Maybe<Int>;
   minAge_gt?: Maybe<Int>;
   minAge_gte?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderWhereInput>;
-  genderPreference?: Maybe<GenderWhereInput>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  pics_every?: Maybe<PicWhereInput>;
+  pics_some?: Maybe<PicWhereInput>;
+  pics_none?: Maybe<PicWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface FeedbackWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  flagged?: Maybe<Boolean>;
+  flagged_not?: Maybe<Boolean>;
+  flaggedBy?: Maybe<UserWhereInput>;
+  feedbackReceiver?: Maybe<UserWhereInput>;
+  feedbackGiver?: Maybe<UserWhereInput>;
+  AND?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
+  OR?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
+  NOT?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
 }
 
 export interface PicWhereInput {
@@ -590,86 +610,7 @@ export interface RatingWhereInput {
   NOT?: Maybe<RatingWhereInput[] | RatingWhereInput>;
 }
 
-export interface FeedbackWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  flagged?: Maybe<Boolean>;
-  flagged_not?: Maybe<Boolean>;
-  flaggedBy?: Maybe<UserWhereInput>;
-  feedbackReceiver?: Maybe<UserWhereInput>;
-  feedbackGiver?: Maybe<UserWhereInput>;
-  AND?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
-  OR?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
-  NOT?: Maybe<FeedbackWhereInput[] | FeedbackWhereInput>;
-}
-
-export interface GenderWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  male?: Maybe<Boolean>;
-  male_not?: Maybe<Boolean>;
-  female?: Maybe<Boolean>;
-  female_not?: Maybe<Boolean>;
-  nonBi?: Maybe<Boolean>;
-  nonBi_not?: Maybe<Boolean>;
-  identityOwner?: Maybe<UserWhereInput>;
-  preferenceOwner?: Maybe<UserWhereInput>;
-  AND?: Maybe<GenderWhereInput[] | GenderWhereInput>;
-  OR?: Maybe<GenderWhereInput[] | GenderWhereInput>;
-  NOT?: Maybe<GenderWhereInput[] | GenderWhereInput>;
-}
-
 export type FeedbackWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type GenderWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -682,8 +623,8 @@ export type RatingWhereUniqueInput = AtLeastOne<{
 }>;
 
 export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
+  email: Maybe<String>;
+  id?: Maybe<ID_Input>;
 }>;
 
 export interface BlurbCreateInput {
@@ -699,78 +640,65 @@ export interface UserCreateOneWithoutBlurbsInput {
 }
 
 export interface UserCreateWithoutBlurbsInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
-  password: String;
-  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
   birthday: String;
+  email: String;
+  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id?: Maybe<ID_Input>;
+  lastName?: Maybe<String>;
   maxAge: Int;
   minAge: Int;
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput;
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput;
+  password: String;
+  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
 }
 
-export interface PicCreateManyWithoutOwnerInput {
-  create?: Maybe<PicCreateWithoutOwnerInput[] | PicCreateWithoutOwnerInput>;
-  connect?: Maybe<PicWhereUniqueInput[] | PicWhereUniqueInput>;
+export interface FeedbackCreateManyWithoutFlaggedByInput {
+  create?: Maybe<
+    FeedbackCreateWithoutFlaggedByInput[] | FeedbackCreateWithoutFlaggedByInput
+  >;
+  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
 }
 
-export interface PicCreateWithoutOwnerInput {
+export interface FeedbackCreateWithoutFlaggedByInput {
   id?: Maybe<ID_Input>;
-  url: String;
-  ratings?: Maybe<RatingCreateManyWithoutPicInput>;
-}
-
-export interface RatingCreateManyWithoutPicInput {
-  create?: Maybe<RatingCreateWithoutPicInput[] | RatingCreateWithoutPicInput>;
-  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
-}
-
-export interface RatingCreateWithoutPicInput {
-  id?: Maybe<ID_Input>;
-  blurb?: Maybe<BlurbCreateOneWithoutRatingsInput>;
-  score: Int;
-  ratingGiverAge: Int;
-  ratingGiver: UserCreateOneInput;
-}
-
-export interface BlurbCreateOneWithoutRatingsInput {
-  create?: Maybe<BlurbCreateWithoutRatingsInput>;
-  connect?: Maybe<BlurbWhereUniqueInput>;
-}
-
-export interface BlurbCreateWithoutRatingsInput {
-  id?: Maybe<ID_Input>;
-  owner: UserCreateOneWithoutBlurbsInput;
   text: String;
+  flagged: Boolean;
+  feedbackReceiver: UserCreateOneWithoutFeedbackReceivedInput;
+  feedbackGiver: UserCreateOneWithoutFeedbackGivenInput;
 }
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
+export interface UserCreateOneWithoutFeedbackReceivedInput {
+  create?: Maybe<UserCreateWithoutFeedbackReceivedInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
-  password: String;
-  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
-  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
+export interface UserCreateWithoutFeedbackReceivedInput {
   birthday: String;
+  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
+  email: String;
+  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id?: Maybe<ID_Input>;
+  lastName?: Maybe<String>;
   maxAge: Int;
   minAge: Int;
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput;
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput;
+  password: String;
+  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
 }
 
 export interface BlurbCreateManyWithoutOwnerInput {
@@ -816,58 +744,24 @@ export interface UserCreateOneWithoutPicsInput {
 }
 
 export interface UserCreateWithoutPicsInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
-  password: String;
+  birthday: String;
   blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
+  email: String;
   feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
-  birthday: String;
-  maxAge: Int;
-  minAge: Int;
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput;
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput;
-}
-
-export interface FeedbackCreateManyWithoutFeedbackReceiverInput {
-  create?: Maybe<
-    | FeedbackCreateWithoutFeedbackReceiverInput[]
-    | FeedbackCreateWithoutFeedbackReceiverInput
-  >;
-  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-}
-
-export interface FeedbackCreateWithoutFeedbackReceiverInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  flagged: Boolean;
-  flaggedBy?: Maybe<UserCreateOneWithoutFeedbackFlaggedInput>;
-  feedbackGiver: UserCreateOneWithoutFeedbackGivenInput;
-}
-
-export interface UserCreateOneWithoutFeedbackFlaggedInput {
-  create?: Maybe<UserCreateWithoutFeedbackFlaggedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutFeedbackFlaggedInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
-  password: String;
-  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
-  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
   feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
-  birthday: String;
+  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id?: Maybe<ID_Input>;
+  lastName?: Maybe<String>;
   maxAge: Int;
   minAge: Int;
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput;
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput;
+  password: String;
 }
 
 export interface FeedbackCreateManyWithoutFeedbackGiverInput {
@@ -886,40 +780,45 @@ export interface FeedbackCreateWithoutFeedbackGiverInput {
   feedbackReceiver: UserCreateOneWithoutFeedbackReceivedInput;
 }
 
-export interface UserCreateOneWithoutFeedbackReceivedInput {
-  create?: Maybe<UserCreateWithoutFeedbackReceivedInput>;
+export interface UserCreateOneWithoutFeedbackFlaggedInput {
+  create?: Maybe<UserCreateWithoutFeedbackFlaggedInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutFeedbackReceivedInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
-  password: String;
-  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
-  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
-  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
+export interface UserCreateWithoutFeedbackFlaggedInput {
   birthday: String;
+  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
+  email: String;
+  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id?: Maybe<ID_Input>;
+  lastName?: Maybe<String>;
   maxAge: Int;
   minAge: Int;
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput;
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput;
+  password: String;
+  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
 }
 
-export interface FeedbackCreateManyWithoutFlaggedByInput {
+export interface FeedbackCreateManyWithoutFeedbackReceiverInput {
   create?: Maybe<
-    FeedbackCreateWithoutFlaggedByInput[] | FeedbackCreateWithoutFlaggedByInput
+    | FeedbackCreateWithoutFeedbackReceiverInput[]
+    | FeedbackCreateWithoutFeedbackReceiverInput
   >;
   connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
 }
 
-export interface FeedbackCreateWithoutFlaggedByInput {
+export interface FeedbackCreateWithoutFeedbackReceiverInput {
   id?: Maybe<ID_Input>;
   text: String;
   flagged: Boolean;
-  feedbackReceiver: UserCreateOneWithoutFeedbackReceivedInput;
+  flaggedBy?: Maybe<UserCreateOneWithoutFeedbackFlaggedInput>;
   feedbackGiver: UserCreateOneWithoutFeedbackGivenInput;
 }
 
@@ -929,90 +828,86 @@ export interface UserCreateOneWithoutFeedbackGivenInput {
 }
 
 export interface UserCreateWithoutFeedbackGivenInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
-  password: String;
-  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
-  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
-  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
   birthday: String;
+  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
+  email: String;
+  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
+  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id?: Maybe<ID_Input>;
+  lastName?: Maybe<String>;
   maxAge: Int;
   minAge: Int;
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput;
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput;
+  password: String;
+  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
 }
 
-export interface GenderCreateOneWithoutIdentityOwnerInput {
-  create?: Maybe<GenderCreateWithoutIdentityOwnerInput>;
-  connect?: Maybe<GenderWhereUniqueInput>;
+export interface PicCreateManyWithoutOwnerInput {
+  create?: Maybe<PicCreateWithoutOwnerInput[] | PicCreateWithoutOwnerInput>;
+  connect?: Maybe<PicWhereUniqueInput[] | PicWhereUniqueInput>;
 }
 
-export interface GenderCreateWithoutIdentityOwnerInput {
+export interface PicCreateWithoutOwnerInput {
   id?: Maybe<ID_Input>;
-  male: Boolean;
-  female: Boolean;
-  nonBi: Boolean;
-  preferenceOwner?: Maybe<UserCreateOneWithoutGenderPreferenceInput>;
+  url: String;
+  ratings?: Maybe<RatingCreateManyWithoutPicInput>;
 }
 
-export interface UserCreateOneWithoutGenderPreferenceInput {
-  create?: Maybe<UserCreateWithoutGenderPreferenceInput>;
+export interface RatingCreateManyWithoutPicInput {
+  create?: Maybe<RatingCreateWithoutPicInput[] | RatingCreateWithoutPicInput>;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+}
+
+export interface RatingCreateWithoutPicInput {
+  id?: Maybe<ID_Input>;
+  blurb?: Maybe<BlurbCreateOneWithoutRatingsInput>;
+  score: Int;
+  ratingGiverAge: Int;
+  ratingGiver: UserCreateOneInput;
+}
+
+export interface BlurbCreateOneWithoutRatingsInput {
+  create?: Maybe<BlurbCreateWithoutRatingsInput>;
+  connect?: Maybe<BlurbWhereUniqueInput>;
+}
+
+export interface BlurbCreateWithoutRatingsInput {
+  id?: Maybe<ID_Input>;
+  owner: UserCreateOneWithoutBlurbsInput;
+  text: String;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutGenderPreferenceInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
-  password: String;
-  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
-  pics?: Maybe<PicCreateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
+export interface UserCreateInput {
   birthday: String;
+  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
+  email: String;
+  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id?: Maybe<ID_Input>;
+  lastName?: Maybe<String>;
   maxAge: Int;
   minAge: Int;
-  genderIdentity: GenderCreateOneWithoutIdentityOwnerInput;
-}
-
-export interface GenderCreateOneWithoutPreferenceOwnerInput {
-  create?: Maybe<GenderCreateWithoutPreferenceOwnerInput>;
-  connect?: Maybe<GenderWhereUniqueInput>;
-}
-
-export interface GenderCreateWithoutPreferenceOwnerInput {
-  id?: Maybe<ID_Input>;
-  male: Boolean;
-  female: Boolean;
-  nonBi: Boolean;
-  identityOwner?: Maybe<UserCreateOneWithoutGenderIdentityInput>;
-}
-
-export interface UserCreateOneWithoutGenderIdentityInput {
-  create?: Maybe<UserCreateWithoutGenderIdentityInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutGenderIdentityInput {
-  id?: Maybe<ID_Input>;
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email: String;
   password: String;
-  blurbs?: Maybe<BlurbCreateManyWithoutOwnerInput>;
   pics?: Maybe<PicCreateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackCreateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackCreateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackCreateManyWithoutFlaggedByInput>;
-  birthday: String;
-  maxAge: Int;
-  minAge: Int;
-  genderPreference: GenderCreateOneWithoutPreferenceOwnerInput;
 }
 
 export interface BlurbUpdateInput {
@@ -1029,19 +924,319 @@ export interface UserUpdateOneRequiredWithoutBlurbsInput {
 }
 
 export interface UserUpdateWithoutBlurbsDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
   birthday?: Maybe<String>;
+  email?: Maybe<String>;
+  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
   maxAge?: Maybe<Int>;
   minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
+  password?: Maybe<String>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
+}
+
+export interface FeedbackUpdateManyWithoutFlaggedByInput {
+  create?: Maybe<
+    FeedbackCreateWithoutFlaggedByInput[] | FeedbackCreateWithoutFlaggedByInput
+  >;
+  delete?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  set?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  disconnect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  update?: Maybe<
+    | FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput[]
+    | FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput
+  >;
+  upsert?: Maybe<
+    | FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput[]
+    | FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput
+  >;
+  deleteMany?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
+  updateMany?: Maybe<
+    | FeedbackUpdateManyWithWhereNestedInput[]
+    | FeedbackUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput {
+  where: FeedbackWhereUniqueInput;
+  data: FeedbackUpdateWithoutFlaggedByDataInput;
+}
+
+export interface FeedbackUpdateWithoutFlaggedByDataInput {
+  text?: Maybe<String>;
+  flagged?: Maybe<Boolean>;
+  feedbackReceiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackReceivedInput>;
+  feedbackGiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackGivenInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutFeedbackReceivedInput {
+  create?: Maybe<UserCreateWithoutFeedbackReceivedInput>;
+  update?: Maybe<UserUpdateWithoutFeedbackReceivedDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFeedbackReceivedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutFeedbackReceivedDataInput {
+  birthday?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  email?: Maybe<String>;
+  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
+  maxAge?: Maybe<Int>;
+  minAge?: Maybe<Int>;
+  password?: Maybe<String>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
+}
+
+export interface BlurbUpdateManyWithoutOwnerInput {
+  create?: Maybe<BlurbCreateWithoutOwnerInput[] | BlurbCreateWithoutOwnerInput>;
+  delete?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  connect?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  set?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  disconnect?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
+  update?: Maybe<
+    | BlurbUpdateWithWhereUniqueWithoutOwnerInput[]
+    | BlurbUpdateWithWhereUniqueWithoutOwnerInput
+  >;
+  upsert?: Maybe<
+    | BlurbUpsertWithWhereUniqueWithoutOwnerInput[]
+    | BlurbUpsertWithWhereUniqueWithoutOwnerInput
+  >;
+  deleteMany?: Maybe<BlurbScalarWhereInput[] | BlurbScalarWhereInput>;
+  updateMany?: Maybe<
+    BlurbUpdateManyWithWhereNestedInput[] | BlurbUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface BlurbUpdateWithWhereUniqueWithoutOwnerInput {
+  where: BlurbWhereUniqueInput;
+  data: BlurbUpdateWithoutOwnerDataInput;
+}
+
+export interface BlurbUpdateWithoutOwnerDataInput {
+  text?: Maybe<String>;
+  ratings?: Maybe<RatingUpdateManyWithoutBlurbInput>;
+}
+
+export interface RatingUpdateManyWithoutBlurbInput {
+  create?: Maybe<
+    RatingCreateWithoutBlurbInput[] | RatingCreateWithoutBlurbInput
+  >;
+  delete?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  set?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  disconnect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  update?: Maybe<
+    | RatingUpdateWithWhereUniqueWithoutBlurbInput[]
+    | RatingUpdateWithWhereUniqueWithoutBlurbInput
+  >;
+  upsert?: Maybe<
+    | RatingUpsertWithWhereUniqueWithoutBlurbInput[]
+    | RatingUpsertWithWhereUniqueWithoutBlurbInput
+  >;
+  deleteMany?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  updateMany?: Maybe<
+    | RatingUpdateManyWithWhereNestedInput[]
+    | RatingUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RatingUpdateWithWhereUniqueWithoutBlurbInput {
+  where: RatingWhereUniqueInput;
+  data: RatingUpdateWithoutBlurbDataInput;
+}
+
+export interface RatingUpdateWithoutBlurbDataInput {
+  pic?: Maybe<PicUpdateOneWithoutRatingsInput>;
+  score?: Maybe<Int>;
+  ratingGiverAge?: Maybe<Int>;
+  ratingGiver?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface PicUpdateOneWithoutRatingsInput {
+  create?: Maybe<PicCreateWithoutRatingsInput>;
+  update?: Maybe<PicUpdateWithoutRatingsDataInput>;
+  upsert?: Maybe<PicUpsertWithoutRatingsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PicWhereUniqueInput>;
+}
+
+export interface PicUpdateWithoutRatingsDataInput {
+  owner?: Maybe<UserUpdateOneRequiredWithoutPicsInput>;
+  url?: Maybe<String>;
+}
+
+export interface UserUpdateOneRequiredWithoutPicsInput {
+  create?: Maybe<UserCreateWithoutPicsInput>;
+  update?: Maybe<UserUpdateWithoutPicsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPicsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutPicsDataInput {
+  birthday?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  email?: Maybe<String>;
+  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
+  maxAge?: Maybe<Int>;
+  minAge?: Maybe<Int>;
+  password?: Maybe<String>;
+}
+
+export interface FeedbackUpdateManyWithoutFeedbackGiverInput {
+  create?: Maybe<
+    | FeedbackCreateWithoutFeedbackGiverInput[]
+    | FeedbackCreateWithoutFeedbackGiverInput
+  >;
+  delete?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  set?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  disconnect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  update?: Maybe<
+    | FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput[]
+    | FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput
+  >;
+  upsert?: Maybe<
+    | FeedbackUpsertWithWhereUniqueWithoutFeedbackGiverInput[]
+    | FeedbackUpsertWithWhereUniqueWithoutFeedbackGiverInput
+  >;
+  deleteMany?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
+  updateMany?: Maybe<
+    | FeedbackUpdateManyWithWhereNestedInput[]
+    | FeedbackUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput {
+  where: FeedbackWhereUniqueInput;
+  data: FeedbackUpdateWithoutFeedbackGiverDataInput;
+}
+
+export interface FeedbackUpdateWithoutFeedbackGiverDataInput {
+  text?: Maybe<String>;
+  flagged?: Maybe<Boolean>;
+  flaggedBy?: Maybe<UserUpdateOneWithoutFeedbackFlaggedInput>;
+  feedbackReceiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackReceivedInput>;
+}
+
+export interface UserUpdateOneWithoutFeedbackFlaggedInput {
+  create?: Maybe<UserCreateWithoutFeedbackFlaggedInput>;
+  update?: Maybe<UserUpdateWithoutFeedbackFlaggedDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFeedbackFlaggedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutFeedbackFlaggedDataInput {
+  birthday?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  email?: Maybe<String>;
+  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
+  maxAge?: Maybe<Int>;
+  minAge?: Maybe<Int>;
+  password?: Maybe<String>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
+}
+
+export interface FeedbackUpdateManyWithoutFeedbackReceiverInput {
+  create?: Maybe<
+    | FeedbackCreateWithoutFeedbackReceiverInput[]
+    | FeedbackCreateWithoutFeedbackReceiverInput
+  >;
+  delete?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  set?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  disconnect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
+  update?: Maybe<
+    | FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput[]
+    | FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput
+  >;
+  upsert?: Maybe<
+    | FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput[]
+    | FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput
+  >;
+  deleteMany?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
+  updateMany?: Maybe<
+    | FeedbackUpdateManyWithWhereNestedInput[]
+    | FeedbackUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput {
+  where: FeedbackWhereUniqueInput;
+  data: FeedbackUpdateWithoutFeedbackReceiverDataInput;
+}
+
+export interface FeedbackUpdateWithoutFeedbackReceiverDataInput {
+  text?: Maybe<String>;
+  flagged?: Maybe<Boolean>;
+  flaggedBy?: Maybe<UserUpdateOneWithoutFeedbackFlaggedInput>;
+  feedbackGiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackGivenInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutFeedbackGivenInput {
+  create?: Maybe<UserCreateWithoutFeedbackGivenInput>;
+  update?: Maybe<UserUpdateWithoutFeedbackGivenDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFeedbackGivenInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutFeedbackGivenDataInput {
+  birthday?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  email?: Maybe<String>;
+  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
+  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
+  maxAge?: Maybe<Int>;
+  minAge?: Maybe<Int>;
+  password?: Maybe<String>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
 }
 
 export interface PicUpdateManyWithoutOwnerInput {
@@ -1134,398 +1329,130 @@ export interface UserUpdateOneRequiredInput {
 }
 
 export interface UserUpdateDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
   birthday?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  email?: Maybe<String>;
+  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
   maxAge?: Maybe<Int>;
   minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
+  password?: Maybe<String>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
 }
 
-export interface BlurbUpdateManyWithoutOwnerInput {
-  create?: Maybe<BlurbCreateWithoutOwnerInput[] | BlurbCreateWithoutOwnerInput>;
-  delete?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
-  connect?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
-  set?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
-  disconnect?: Maybe<BlurbWhereUniqueInput[] | BlurbWhereUniqueInput>;
-  update?: Maybe<
-    | BlurbUpdateWithWhereUniqueWithoutOwnerInput[]
-    | BlurbUpdateWithWhereUniqueWithoutOwnerInput
-  >;
-  upsert?: Maybe<
-    | BlurbUpsertWithWhereUniqueWithoutOwnerInput[]
-    | BlurbUpsertWithWhereUniqueWithoutOwnerInput
-  >;
-  deleteMany?: Maybe<BlurbScalarWhereInput[] | BlurbScalarWhereInput>;
-  updateMany?: Maybe<
-    BlurbUpdateManyWithWhereNestedInput[] | BlurbUpdateManyWithWhereNestedInput
-  >;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
-export interface BlurbUpdateWithWhereUniqueWithoutOwnerInput {
-  where: BlurbWhereUniqueInput;
-  data: BlurbUpdateWithoutOwnerDataInput;
-}
-
-export interface BlurbUpdateWithoutOwnerDataInput {
-  text?: Maybe<String>;
-  ratings?: Maybe<RatingUpdateManyWithoutBlurbInput>;
-}
-
-export interface RatingUpdateManyWithoutBlurbInput {
-  create?: Maybe<
-    RatingCreateWithoutBlurbInput[] | RatingCreateWithoutBlurbInput
-  >;
-  delete?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
-  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
-  set?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
-  disconnect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
-  update?: Maybe<
-    | RatingUpdateWithWhereUniqueWithoutBlurbInput[]
-    | RatingUpdateWithWhereUniqueWithoutBlurbInput
-  >;
-  upsert?: Maybe<
-    | RatingUpsertWithWhereUniqueWithoutBlurbInput[]
-    | RatingUpsertWithWhereUniqueWithoutBlurbInput
-  >;
-  deleteMany?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
-  updateMany?: Maybe<
-    | RatingUpdateManyWithWhereNestedInput[]
-    | RatingUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface RatingUpdateWithWhereUniqueWithoutBlurbInput {
+export interface RatingUpsertWithWhereUniqueWithoutPicInput {
   where: RatingWhereUniqueInput;
-  data: RatingUpdateWithoutBlurbDataInput;
+  update: RatingUpdateWithoutPicDataInput;
+  create: RatingCreateWithoutPicInput;
 }
 
-export interface RatingUpdateWithoutBlurbDataInput {
-  pic?: Maybe<PicUpdateOneWithoutRatingsInput>;
+export interface RatingScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  score?: Maybe<Int>;
+  score_not?: Maybe<Int>;
+  score_in?: Maybe<Int[] | Int>;
+  score_not_in?: Maybe<Int[] | Int>;
+  score_lt?: Maybe<Int>;
+  score_lte?: Maybe<Int>;
+  score_gt?: Maybe<Int>;
+  score_gte?: Maybe<Int>;
+  ratingGiverAge?: Maybe<Int>;
+  ratingGiverAge_not?: Maybe<Int>;
+  ratingGiverAge_in?: Maybe<Int[] | Int>;
+  ratingGiverAge_not_in?: Maybe<Int[] | Int>;
+  ratingGiverAge_lt?: Maybe<Int>;
+  ratingGiverAge_lte?: Maybe<Int>;
+  ratingGiverAge_gt?: Maybe<Int>;
+  ratingGiverAge_gte?: Maybe<Int>;
+  AND?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  OR?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  NOT?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+}
+
+export interface RatingUpdateManyWithWhereNestedInput {
+  where: RatingScalarWhereInput;
+  data: RatingUpdateManyDataInput;
+}
+
+export interface RatingUpdateManyDataInput {
   score?: Maybe<Int>;
   ratingGiverAge?: Maybe<Int>;
-  ratingGiver?: Maybe<UserUpdateOneRequiredInput>;
 }
 
-export interface PicUpdateOneWithoutRatingsInput {
-  create?: Maybe<PicCreateWithoutRatingsInput>;
-  update?: Maybe<PicUpdateWithoutRatingsDataInput>;
-  upsert?: Maybe<PicUpsertWithoutRatingsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<PicWhereUniqueInput>;
+export interface PicUpsertWithWhereUniqueWithoutOwnerInput {
+  where: PicWhereUniqueInput;
+  update: PicUpdateWithoutOwnerDataInput;
+  create: PicCreateWithoutOwnerInput;
 }
 
-export interface PicUpdateWithoutRatingsDataInput {
-  owner?: Maybe<UserUpdateOneRequiredWithoutPicsInput>;
+export interface PicScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
   url?: Maybe<String>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  AND?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
+  OR?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
+  NOT?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutPicsInput {
-  create?: Maybe<UserCreateWithoutPicsInput>;
-  update?: Maybe<UserUpdateWithoutPicsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPicsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface PicUpdateManyWithWhereNestedInput {
+  where: PicScalarWhereInput;
+  data: PicUpdateManyDataInput;
 }
 
-export interface UserUpdateWithoutPicsDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
-  birthday?: Maybe<String>;
-  maxAge?: Maybe<Int>;
-  minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
-}
-
-export interface FeedbackUpdateManyWithoutFeedbackReceiverInput {
-  create?: Maybe<
-    | FeedbackCreateWithoutFeedbackReceiverInput[]
-    | FeedbackCreateWithoutFeedbackReceiverInput
-  >;
-  delete?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  set?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  disconnect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  update?: Maybe<
-    | FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput[]
-    | FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput
-  >;
-  upsert?: Maybe<
-    | FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput[]
-    | FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput
-  >;
-  deleteMany?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
-  updateMany?: Maybe<
-    | FeedbackUpdateManyWithWhereNestedInput[]
-    | FeedbackUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface FeedbackUpdateWithWhereUniqueWithoutFeedbackReceiverInput {
-  where: FeedbackWhereUniqueInput;
-  data: FeedbackUpdateWithoutFeedbackReceiverDataInput;
-}
-
-export interface FeedbackUpdateWithoutFeedbackReceiverDataInput {
-  text?: Maybe<String>;
-  flagged?: Maybe<Boolean>;
-  flaggedBy?: Maybe<UserUpdateOneWithoutFeedbackFlaggedInput>;
-  feedbackGiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackGivenInput>;
-}
-
-export interface UserUpdateOneWithoutFeedbackFlaggedInput {
-  create?: Maybe<UserCreateWithoutFeedbackFlaggedInput>;
-  update?: Maybe<UserUpdateWithoutFeedbackFlaggedDataInput>;
-  upsert?: Maybe<UserUpsertWithoutFeedbackFlaggedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutFeedbackFlaggedDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  birthday?: Maybe<String>;
-  maxAge?: Maybe<Int>;
-  minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
-}
-
-export interface FeedbackUpdateManyWithoutFeedbackGiverInput {
-  create?: Maybe<
-    | FeedbackCreateWithoutFeedbackGiverInput[]
-    | FeedbackCreateWithoutFeedbackGiverInput
-  >;
-  delete?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  set?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  disconnect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  update?: Maybe<
-    | FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput[]
-    | FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput
-  >;
-  upsert?: Maybe<
-    | FeedbackUpsertWithWhereUniqueWithoutFeedbackGiverInput[]
-    | FeedbackUpsertWithWhereUniqueWithoutFeedbackGiverInput
-  >;
-  deleteMany?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
-  updateMany?: Maybe<
-    | FeedbackUpdateManyWithWhereNestedInput[]
-    | FeedbackUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface FeedbackUpdateWithWhereUniqueWithoutFeedbackGiverInput {
-  where: FeedbackWhereUniqueInput;
-  data: FeedbackUpdateWithoutFeedbackGiverDataInput;
-}
-
-export interface FeedbackUpdateWithoutFeedbackGiverDataInput {
-  text?: Maybe<String>;
-  flagged?: Maybe<Boolean>;
-  flaggedBy?: Maybe<UserUpdateOneWithoutFeedbackFlaggedInput>;
-  feedbackReceiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackReceivedInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutFeedbackReceivedInput {
-  create?: Maybe<UserCreateWithoutFeedbackReceivedInput>;
-  update?: Maybe<UserUpdateWithoutFeedbackReceivedDataInput>;
-  upsert?: Maybe<UserUpsertWithoutFeedbackReceivedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutFeedbackReceivedDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
-  birthday?: Maybe<String>;
-  maxAge?: Maybe<Int>;
-  minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
-}
-
-export interface FeedbackUpdateManyWithoutFlaggedByInput {
-  create?: Maybe<
-    FeedbackCreateWithoutFlaggedByInput[] | FeedbackCreateWithoutFlaggedByInput
-  >;
-  delete?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  connect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  set?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  disconnect?: Maybe<FeedbackWhereUniqueInput[] | FeedbackWhereUniqueInput>;
-  update?: Maybe<
-    | FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput[]
-    | FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput
-  >;
-  upsert?: Maybe<
-    | FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput[]
-    | FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput
-  >;
-  deleteMany?: Maybe<FeedbackScalarWhereInput[] | FeedbackScalarWhereInput>;
-  updateMany?: Maybe<
-    | FeedbackUpdateManyWithWhereNestedInput[]
-    | FeedbackUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface FeedbackUpdateWithWhereUniqueWithoutFlaggedByInput {
-  where: FeedbackWhereUniqueInput;
-  data: FeedbackUpdateWithoutFlaggedByDataInput;
-}
-
-export interface FeedbackUpdateWithoutFlaggedByDataInput {
-  text?: Maybe<String>;
-  flagged?: Maybe<Boolean>;
-  feedbackReceiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackReceivedInput>;
-  feedbackGiver?: Maybe<UserUpdateOneRequiredWithoutFeedbackGivenInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutFeedbackGivenInput {
-  create?: Maybe<UserCreateWithoutFeedbackGivenInput>;
-  update?: Maybe<UserUpdateWithoutFeedbackGivenDataInput>;
-  upsert?: Maybe<UserUpsertWithoutFeedbackGivenInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutFeedbackGivenDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
-  birthday?: Maybe<String>;
-  maxAge?: Maybe<Int>;
-  minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
-}
-
-export interface GenderUpdateOneRequiredWithoutIdentityOwnerInput {
-  create?: Maybe<GenderCreateWithoutIdentityOwnerInput>;
-  update?: Maybe<GenderUpdateWithoutIdentityOwnerDataInput>;
-  upsert?: Maybe<GenderUpsertWithoutIdentityOwnerInput>;
-  connect?: Maybe<GenderWhereUniqueInput>;
-}
-
-export interface GenderUpdateWithoutIdentityOwnerDataInput {
-  male?: Maybe<Boolean>;
-  female?: Maybe<Boolean>;
-  nonBi?: Maybe<Boolean>;
-  preferenceOwner?: Maybe<UserUpdateOneWithoutGenderPreferenceInput>;
-}
-
-export interface UserUpdateOneWithoutGenderPreferenceInput {
-  create?: Maybe<UserCreateWithoutGenderPreferenceInput>;
-  update?: Maybe<UserUpdateWithoutGenderPreferenceDataInput>;
-  upsert?: Maybe<UserUpsertWithoutGenderPreferenceInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutGenderPreferenceDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
-  birthday?: Maybe<String>;
-  maxAge?: Maybe<Int>;
-  minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-}
-
-export interface UserUpsertWithoutGenderPreferenceInput {
-  update: UserUpdateWithoutGenderPreferenceDataInput;
-  create: UserCreateWithoutGenderPreferenceInput;
-}
-
-export interface GenderUpsertWithoutIdentityOwnerInput {
-  update: GenderUpdateWithoutIdentityOwnerDataInput;
-  create: GenderCreateWithoutIdentityOwnerInput;
-}
-
-export interface GenderUpdateOneRequiredWithoutPreferenceOwnerInput {
-  create?: Maybe<GenderCreateWithoutPreferenceOwnerInput>;
-  update?: Maybe<GenderUpdateWithoutPreferenceOwnerDataInput>;
-  upsert?: Maybe<GenderUpsertWithoutPreferenceOwnerInput>;
-  connect?: Maybe<GenderWhereUniqueInput>;
-}
-
-export interface GenderUpdateWithoutPreferenceOwnerDataInput {
-  male?: Maybe<Boolean>;
-  female?: Maybe<Boolean>;
-  nonBi?: Maybe<Boolean>;
-  identityOwner?: Maybe<UserUpdateOneWithoutGenderIdentityInput>;
-}
-
-export interface UserUpdateOneWithoutGenderIdentityInput {
-  create?: Maybe<UserCreateWithoutGenderIdentityInput>;
-  update?: Maybe<UserUpdateWithoutGenderIdentityDataInput>;
-  upsert?: Maybe<UserUpsertWithoutGenderIdentityInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutGenderIdentityDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
-  birthday?: Maybe<String>;
-  maxAge?: Maybe<Int>;
-  minAge?: Maybe<Int>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
-}
-
-export interface UserUpsertWithoutGenderIdentityInput {
-  update: UserUpdateWithoutGenderIdentityDataInput;
-  create: UserCreateWithoutGenderIdentityInput;
-}
-
-export interface GenderUpsertWithoutPreferenceOwnerInput {
-  update: GenderUpdateWithoutPreferenceOwnerDataInput;
-  create: GenderCreateWithoutPreferenceOwnerInput;
+export interface PicUpdateManyDataInput {
+  url?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutFeedbackGivenInput {
@@ -1533,10 +1460,10 @@ export interface UserUpsertWithoutFeedbackGivenInput {
   create: UserCreateWithoutFeedbackGivenInput;
 }
 
-export interface FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput {
+export interface FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput {
   where: FeedbackWhereUniqueInput;
-  update: FeedbackUpdateWithoutFlaggedByDataInput;
-  create: FeedbackCreateWithoutFlaggedByInput;
+  update: FeedbackUpdateWithoutFeedbackReceiverDataInput;
+  create: FeedbackCreateWithoutFeedbackReceiverInput;
 }
 
 export interface FeedbackScalarWhereInput {
@@ -1593,26 +1520,15 @@ export interface FeedbackUpdateManyDataInput {
   flagged?: Maybe<Boolean>;
 }
 
-export interface UserUpsertWithoutFeedbackReceivedInput {
-  update: UserUpdateWithoutFeedbackReceivedDataInput;
-  create: UserCreateWithoutFeedbackReceivedInput;
+export interface UserUpsertWithoutFeedbackFlaggedInput {
+  update: UserUpdateWithoutFeedbackFlaggedDataInput;
+  create: UserCreateWithoutFeedbackFlaggedInput;
 }
 
 export interface FeedbackUpsertWithWhereUniqueWithoutFeedbackGiverInput {
   where: FeedbackWhereUniqueInput;
   update: FeedbackUpdateWithoutFeedbackGiverDataInput;
   create: FeedbackCreateWithoutFeedbackGiverInput;
-}
-
-export interface UserUpsertWithoutFeedbackFlaggedInput {
-  update: UserUpdateWithoutFeedbackFlaggedDataInput;
-  create: UserCreateWithoutFeedbackFlaggedInput;
-}
-
-export interface FeedbackUpsertWithWhereUniqueWithoutFeedbackReceiverInput {
-  where: FeedbackWhereUniqueInput;
-  update: FeedbackUpdateWithoutFeedbackReceiverDataInput;
-  create: FeedbackCreateWithoutFeedbackReceiverInput;
 }
 
 export interface UserUpsertWithoutPicsInput {
@@ -1629,52 +1545,6 @@ export interface RatingUpsertWithWhereUniqueWithoutBlurbInput {
   where: RatingWhereUniqueInput;
   update: RatingUpdateWithoutBlurbDataInput;
   create: RatingCreateWithoutBlurbInput;
-}
-
-export interface RatingScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  score?: Maybe<Int>;
-  score_not?: Maybe<Int>;
-  score_in?: Maybe<Int[] | Int>;
-  score_not_in?: Maybe<Int[] | Int>;
-  score_lt?: Maybe<Int>;
-  score_lte?: Maybe<Int>;
-  score_gt?: Maybe<Int>;
-  score_gte?: Maybe<Int>;
-  ratingGiverAge?: Maybe<Int>;
-  ratingGiverAge_not?: Maybe<Int>;
-  ratingGiverAge_in?: Maybe<Int[] | Int>;
-  ratingGiverAge_not_in?: Maybe<Int[] | Int>;
-  ratingGiverAge_lt?: Maybe<Int>;
-  ratingGiverAge_lte?: Maybe<Int>;
-  ratingGiverAge_gt?: Maybe<Int>;
-  ratingGiverAge_gte?: Maybe<Int>;
-  AND?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
-  OR?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
-  NOT?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
-}
-
-export interface RatingUpdateManyWithWhereNestedInput {
-  where: RatingScalarWhereInput;
-  data: RatingUpdateManyDataInput;
-}
-
-export interface RatingUpdateManyDataInput {
-  score?: Maybe<Int>;
-  ratingGiverAge?: Maybe<Int>;
 }
 
 export interface BlurbUpsertWithWhereUniqueWithoutOwnerInput {
@@ -1726,64 +1596,15 @@ export interface BlurbUpdateManyDataInput {
   text?: Maybe<String>;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface UserUpsertWithoutFeedbackReceivedInput {
+  update: UserUpdateWithoutFeedbackReceivedDataInput;
+  create: UserCreateWithoutFeedbackReceivedInput;
 }
 
-export interface RatingUpsertWithWhereUniqueWithoutPicInput {
-  where: RatingWhereUniqueInput;
-  update: RatingUpdateWithoutPicDataInput;
-  create: RatingCreateWithoutPicInput;
-}
-
-export interface PicUpsertWithWhereUniqueWithoutOwnerInput {
-  where: PicWhereUniqueInput;
-  update: PicUpdateWithoutOwnerDataInput;
-  create: PicCreateWithoutOwnerInput;
-}
-
-export interface PicScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
-  OR?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
-  NOT?: Maybe<PicScalarWhereInput[] | PicScalarWhereInput>;
-}
-
-export interface PicUpdateManyWithWhereNestedInput {
-  where: PicScalarWhereInput;
-  data: PicUpdateManyDataInput;
-}
-
-export interface PicUpdateManyDataInput {
-  url?: Maybe<String>;
+export interface FeedbackUpsertWithWhereUniqueWithoutFlaggedByInput {
+  where: FeedbackWhereUniqueInput;
+  update: FeedbackUpdateWithoutFlaggedByDataInput;
+  create: FeedbackCreateWithoutFlaggedByInput;
 }
 
 export interface UserUpsertWithoutBlurbsInput {
@@ -1815,29 +1636,6 @@ export interface FeedbackUpdateInput {
 export interface FeedbackUpdateManyMutationInput {
   text?: Maybe<String>;
   flagged?: Maybe<Boolean>;
-}
-
-export interface GenderCreateInput {
-  id?: Maybe<ID_Input>;
-  male: Boolean;
-  female: Boolean;
-  nonBi: Boolean;
-  identityOwner?: Maybe<UserCreateOneWithoutGenderIdentityInput>;
-  preferenceOwner?: Maybe<UserCreateOneWithoutGenderPreferenceInput>;
-}
-
-export interface GenderUpdateInput {
-  male?: Maybe<Boolean>;
-  female?: Maybe<Boolean>;
-  nonBi?: Maybe<Boolean>;
-  identityOwner?: Maybe<UserUpdateOneWithoutGenderIdentityInput>;
-  preferenceOwner?: Maybe<UserUpdateOneWithoutGenderPreferenceInput>;
-}
-
-export interface GenderUpdateManyMutationInput {
-  male?: Maybe<Boolean>;
-  female?: Maybe<Boolean>;
-  nonBi?: Maybe<Boolean>;
 }
 
 export interface PicCreateInput {
@@ -1880,30 +1678,40 @@ export interface RatingUpdateManyMutationInput {
 }
 
 export interface UserUpdateInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
-  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
-  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
-  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
-  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
   birthday?: Maybe<String>;
+  blurbs?: Maybe<BlurbUpdateManyWithoutOwnerInput>;
+  email?: Maybe<String>;
+  feedbackFlagged?: Maybe<FeedbackUpdateManyWithoutFlaggedByInput>;
+  feedbackGiven?: Maybe<FeedbackUpdateManyWithoutFeedbackGiverInput>;
+  feedbackReceived?: Maybe<FeedbackUpdateManyWithoutFeedbackReceiverInput>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
   maxAge?: Maybe<Int>;
   minAge?: Maybe<Int>;
-  genderIdentity?: Maybe<GenderUpdateOneRequiredWithoutIdentityOwnerInput>;
-  genderPreference?: Maybe<GenderUpdateOneRequiredWithoutPreferenceOwnerInput>;
+  password?: Maybe<String>;
+  pics?: Maybe<PicUpdateManyWithoutOwnerInput>;
 }
 
 export interface UserUpdateManyMutationInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
   birthday?: Maybe<String>;
+  email?: Maybe<String>;
+  firstName?: Maybe<String>;
+  genderIdentityMale?: Maybe<Boolean>;
+  genderIdentityFemale?: Maybe<Boolean>;
+  genderIdentityNonBi?: Maybe<Boolean>;
+  genderPreferenceMale?: Maybe<Boolean>;
+  genderPreferenceFemale?: Maybe<Boolean>;
+  genderPreferenceNonBi?: Maybe<Boolean>;
+  lastName?: Maybe<String>;
   maxAge?: Maybe<Int>;
   minAge?: Maybe<Int>;
+  password?: Maybe<String>;
 }
 
 export interface BlurbSubscriptionWhereInput {
@@ -1930,17 +1738,6 @@ export interface FeedbackSubscriptionWhereInput {
   NOT?: Maybe<
     FeedbackSubscriptionWhereInput[] | FeedbackSubscriptionWhereInput
   >;
-}
-
-export interface GenderSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<GenderWhereInput>;
-  AND?: Maybe<GenderSubscriptionWhereInput[] | GenderSubscriptionWhereInput>;
-  OR?: Maybe<GenderSubscriptionWhereInput[] | GenderSubscriptionWhereInput>;
-  NOT?: Maybe<GenderSubscriptionWhereInput[] | GenderSubscriptionWhereInput>;
 }
 
 export interface PicSubscriptionWhereInput {
@@ -2035,22 +1832,24 @@ export interface BlurbNullablePromise
 }
 
 export interface User {
-  id: ID_Output;
-  firstName?: String;
-  lastName?: String;
-  email: String;
-  password: String;
   birthday: String;
+  email: String;
+  firstName?: String;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id: ID_Output;
+  lastName?: String;
   maxAge: Int;
   minAge: Int;
+  password: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
+  birthday: () => Promise<String>;
   blurbs: <T = FragmentableArray<Blurb>>(args?: {
     where?: BlurbWhereInput;
     orderBy?: BlurbOrderByInput;
@@ -2060,16 +1859,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  pics: <T = FragmentableArray<Pic>>(args?: {
-    where?: PicWhereInput;
-    orderBy?: PicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  feedbackReceived: <T = FragmentableArray<Feedback>>(args?: {
+  email: () => Promise<String>;
+  feedbackFlagged: <T = FragmentableArray<Feedback>>(args?: {
     where?: FeedbackWhereInput;
     orderBy?: FeedbackOrderByInput;
     skip?: Int;
@@ -2087,7 +1878,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  feedbackFlagged: <T = FragmentableArray<Feedback>>(args?: {
+  feedbackReceived: <T = FragmentableArray<Feedback>>(args?: {
     where?: FeedbackWhereInput;
     orderBy?: FeedbackOrderByInput;
     skip?: Int;
@@ -2096,21 +1887,33 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  birthday: () => Promise<String>;
+  firstName: () => Promise<String>;
+  genderIdentityMale: () => Promise<Boolean>;
+  genderIdentityFemale: () => Promise<Boolean>;
+  genderIdentityNonBi: () => Promise<Boolean>;
+  genderPreferenceMale: () => Promise<Boolean>;
+  genderPreferenceFemale: () => Promise<Boolean>;
+  genderPreferenceNonBi: () => Promise<Boolean>;
+  id: () => Promise<ID_Output>;
+  lastName: () => Promise<String>;
   maxAge: () => Promise<Int>;
   minAge: () => Promise<Int>;
-  genderIdentity: <T = GenderPromise>() => T;
-  genderPreference: <T = GenderPromise>() => T;
+  password: () => Promise<String>;
+  pics: <T = FragmentableArray<Pic>>(args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
+  birthday: () => Promise<AsyncIterator<String>>;
   blurbs: <T = Promise<AsyncIterator<BlurbSubscription>>>(args?: {
     where?: BlurbWhereInput;
     orderBy?: BlurbOrderByInput;
@@ -2120,16 +1923,8 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  pics: <T = Promise<AsyncIterator<PicSubscription>>>(args?: {
-    where?: PicWhereInput;
-    orderBy?: PicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  feedbackReceived: <T = Promise<AsyncIterator<FeedbackSubscription>>>(args?: {
+  email: () => Promise<AsyncIterator<String>>;
+  feedbackFlagged: <T = Promise<AsyncIterator<FeedbackSubscription>>>(args?: {
     where?: FeedbackWhereInput;
     orderBy?: FeedbackOrderByInput;
     skip?: Int;
@@ -2147,7 +1942,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  feedbackFlagged: <T = Promise<AsyncIterator<FeedbackSubscription>>>(args?: {
+  feedbackReceived: <T = Promise<AsyncIterator<FeedbackSubscription>>>(args?: {
     where?: FeedbackWhereInput;
     orderBy?: FeedbackOrderByInput;
     skip?: Int;
@@ -2156,21 +1951,33 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  birthday: () => Promise<AsyncIterator<String>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  genderIdentityMale: () => Promise<AsyncIterator<Boolean>>;
+  genderIdentityFemale: () => Promise<AsyncIterator<Boolean>>;
+  genderIdentityNonBi: () => Promise<AsyncIterator<Boolean>>;
+  genderPreferenceMale: () => Promise<AsyncIterator<Boolean>>;
+  genderPreferenceFemale: () => Promise<AsyncIterator<Boolean>>;
+  genderPreferenceNonBi: () => Promise<AsyncIterator<Boolean>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  lastName: () => Promise<AsyncIterator<String>>;
   maxAge: () => Promise<AsyncIterator<Int>>;
   minAge: () => Promise<AsyncIterator<Int>>;
-  genderIdentity: <T = GenderSubscription>() => T;
-  genderPreference: <T = GenderSubscription>() => T;
+  password: () => Promise<AsyncIterator<String>>;
+  pics: <T = Promise<AsyncIterator<PicSubscription>>>(args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
+  birthday: () => Promise<String>;
   blurbs: <T = FragmentableArray<Blurb>>(args?: {
     where?: BlurbWhereInput;
     orderBy?: BlurbOrderByInput;
@@ -2180,16 +1987,8 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  pics: <T = FragmentableArray<Pic>>(args?: {
-    where?: PicWhereInput;
-    orderBy?: PicOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  feedbackReceived: <T = FragmentableArray<Feedback>>(args?: {
+  email: () => Promise<String>;
+  feedbackFlagged: <T = FragmentableArray<Feedback>>(args?: {
     where?: FeedbackWhereInput;
     orderBy?: FeedbackOrderByInput;
     skip?: Int;
@@ -2207,7 +2006,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  feedbackFlagged: <T = FragmentableArray<Feedback>>(args?: {
+  feedbackReceived: <T = FragmentableArray<Feedback>>(args?: {
     where?: FeedbackWhereInput;
     orderBy?: FeedbackOrderByInput;
     skip?: Int;
@@ -2216,11 +2015,68 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  birthday: () => Promise<String>;
+  firstName: () => Promise<String>;
+  genderIdentityMale: () => Promise<Boolean>;
+  genderIdentityFemale: () => Promise<Boolean>;
+  genderIdentityNonBi: () => Promise<Boolean>;
+  genderPreferenceMale: () => Promise<Boolean>;
+  genderPreferenceFemale: () => Promise<Boolean>;
+  genderPreferenceNonBi: () => Promise<Boolean>;
+  id: () => Promise<ID_Output>;
+  lastName: () => Promise<String>;
   maxAge: () => Promise<Int>;
   minAge: () => Promise<Int>;
-  genderIdentity: <T = GenderPromise>() => T;
-  genderPreference: <T = GenderPromise>() => T;
+  password: () => Promise<String>;
+  pics: <T = FragmentableArray<Pic>>(args?: {
+    where?: PicWhereInput;
+    orderBy?: PicOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Feedback {
+  id: ID_Output;
+  text: String;
+  createdAt: DateTimeOutput;
+  flagged: Boolean;
+}
+
+export interface FeedbackPromise extends Promise<Feedback>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  flagged: () => Promise<Boolean>;
+  flaggedBy: <T = UserPromise>() => T;
+  feedbackReceiver: <T = UserPromise>() => T;
+  feedbackGiver: <T = UserPromise>() => T;
+}
+
+export interface FeedbackSubscription
+  extends Promise<AsyncIterator<Feedback>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  flagged: () => Promise<AsyncIterator<Boolean>>;
+  flaggedBy: <T = UserSubscription>() => T;
+  feedbackReceiver: <T = UserSubscription>() => T;
+  feedbackGiver: <T = UserSubscription>() => T;
+}
+
+export interface FeedbackNullablePromise
+  extends Promise<Feedback | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  flagged: () => Promise<Boolean>;
+  flaggedBy: <T = UserPromise>() => T;
+  feedbackReceiver: <T = UserPromise>() => T;
+  feedbackGiver: <T = UserPromise>() => T;
 }
 
 export interface Pic {
@@ -2310,85 +2166,6 @@ export interface RatingNullablePromise
   score: () => Promise<Int>;
   ratingGiverAge: () => Promise<Int>;
   ratingGiver: <T = UserPromise>() => T;
-}
-
-export interface Feedback {
-  id: ID_Output;
-  text: String;
-  createdAt: DateTimeOutput;
-  flagged: Boolean;
-}
-
-export interface FeedbackPromise extends Promise<Feedback>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  flagged: () => Promise<Boolean>;
-  flaggedBy: <T = UserPromise>() => T;
-  feedbackReceiver: <T = UserPromise>() => T;
-  feedbackGiver: <T = UserPromise>() => T;
-}
-
-export interface FeedbackSubscription
-  extends Promise<AsyncIterator<Feedback>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  flagged: () => Promise<AsyncIterator<Boolean>>;
-  flaggedBy: <T = UserSubscription>() => T;
-  feedbackReceiver: <T = UserSubscription>() => T;
-  feedbackGiver: <T = UserSubscription>() => T;
-}
-
-export interface FeedbackNullablePromise
-  extends Promise<Feedback | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  flagged: () => Promise<Boolean>;
-  flaggedBy: <T = UserPromise>() => T;
-  feedbackReceiver: <T = UserPromise>() => T;
-  feedbackGiver: <T = UserPromise>() => T;
-}
-
-export interface Gender {
-  id: ID_Output;
-  male: Boolean;
-  female: Boolean;
-  nonBi: Boolean;
-}
-
-export interface GenderPromise extends Promise<Gender>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  male: () => Promise<Boolean>;
-  female: () => Promise<Boolean>;
-  nonBi: () => Promise<Boolean>;
-  identityOwner: <T = UserPromise>() => T;
-  preferenceOwner: <T = UserPromise>() => T;
-}
-
-export interface GenderSubscription
-  extends Promise<AsyncIterator<Gender>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  male: () => Promise<AsyncIterator<Boolean>>;
-  female: () => Promise<AsyncIterator<Boolean>>;
-  nonBi: () => Promise<AsyncIterator<Boolean>>;
-  identityOwner: <T = UserSubscription>() => T;
-  preferenceOwner: <T = UserSubscription>() => T;
-}
-
-export interface GenderNullablePromise
-  extends Promise<Gender | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  male: () => Promise<Boolean>;
-  female: () => Promise<Boolean>;
-  nonBi: () => Promise<Boolean>;
-  identityOwner: <T = UserPromise>() => T;
-  preferenceOwner: <T = UserPromise>() => T;
 }
 
 export interface BlurbConnection {
@@ -2520,60 +2297,6 @@ export interface AggregateFeedbackPromise
 
 export interface AggregateFeedbackSubscription
   extends Promise<AsyncIterator<AggregateFeedback>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface GenderConnection {
-  pageInfo: PageInfo;
-  edges: GenderEdge[];
-}
-
-export interface GenderConnectionPromise
-  extends Promise<GenderConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<GenderEdge>>() => T;
-  aggregate: <T = AggregateGenderPromise>() => T;
-}
-
-export interface GenderConnectionSubscription
-  extends Promise<AsyncIterator<GenderConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<GenderEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateGenderSubscription>() => T;
-}
-
-export interface GenderEdge {
-  node: Gender;
-  cursor: String;
-}
-
-export interface GenderEdgePromise extends Promise<GenderEdge>, Fragmentable {
-  node: <T = GenderPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface GenderEdgeSubscription
-  extends Promise<AsyncIterator<GenderEdge>>,
-    Fragmentable {
-  node: <T = GenderSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateGender {
-  count: Int;
-}
-
-export interface AggregateGenderPromise
-  extends Promise<AggregateGender>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateGenderSubscription
-  extends Promise<AsyncIterator<AggregateGender>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -2850,56 +2573,6 @@ export interface FeedbackPreviousValuesSubscription
   flagged: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface GenderSubscriptionPayload {
-  mutation: MutationType;
-  node: Gender;
-  updatedFields: String[];
-  previousValues: GenderPreviousValues;
-}
-
-export interface GenderSubscriptionPayloadPromise
-  extends Promise<GenderSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = GenderPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = GenderPreviousValuesPromise>() => T;
-}
-
-export interface GenderSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<GenderSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = GenderSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = GenderPreviousValuesSubscription>() => T;
-}
-
-export interface GenderPreviousValues {
-  id: ID_Output;
-  male: Boolean;
-  female: Boolean;
-  nonBi: Boolean;
-}
-
-export interface GenderPreviousValuesPromise
-  extends Promise<GenderPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  male: () => Promise<Boolean>;
-  female: () => Promise<Boolean>;
-  nonBi: () => Promise<Boolean>;
-}
-
-export interface GenderPreviousValuesSubscription
-  extends Promise<AsyncIterator<GenderPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  male: () => Promise<AsyncIterator<Boolean>>;
-  female: () => Promise<AsyncIterator<Boolean>>;
-  nonBi: () => Promise<AsyncIterator<Boolean>>;
-}
-
 export interface PicSubscriptionPayload {
   mutation: MutationType;
   node: Pic;
@@ -3017,40 +2690,58 @@ export interface UserSubscriptionPayloadSubscription
 }
 
 export interface UserPreviousValues {
-  id: ID_Output;
-  firstName?: String;
-  lastName?: String;
-  email: String;
-  password: String;
   birthday: String;
+  email: String;
+  firstName?: String;
+  genderIdentityMale: Boolean;
+  genderIdentityFemale: Boolean;
+  genderIdentityNonBi: Boolean;
+  genderPreferenceMale: Boolean;
+  genderPreferenceFemale: Boolean;
+  genderPreferenceNonBi: Boolean;
+  id: ID_Output;
+  lastName?: String;
   maxAge: Int;
   minAge: Int;
+  password: String;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
   birthday: () => Promise<String>;
+  email: () => Promise<String>;
+  firstName: () => Promise<String>;
+  genderIdentityMale: () => Promise<Boolean>;
+  genderIdentityFemale: () => Promise<Boolean>;
+  genderIdentityNonBi: () => Promise<Boolean>;
+  genderPreferenceMale: () => Promise<Boolean>;
+  genderPreferenceFemale: () => Promise<Boolean>;
+  genderPreferenceNonBi: () => Promise<Boolean>;
+  id: () => Promise<ID_Output>;
+  lastName: () => Promise<String>;
   maxAge: () => Promise<Int>;
   minAge: () => Promise<Int>;
+  password: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
   birthday: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  genderIdentityMale: () => Promise<AsyncIterator<Boolean>>;
+  genderIdentityFemale: () => Promise<AsyncIterator<Boolean>>;
+  genderIdentityNonBi: () => Promise<AsyncIterator<Boolean>>;
+  genderPreferenceMale: () => Promise<AsyncIterator<Boolean>>;
+  genderPreferenceFemale: () => Promise<AsyncIterator<Boolean>>;
+  genderPreferenceNonBi: () => Promise<AsyncIterator<Boolean>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  lastName: () => Promise<AsyncIterator<String>>;
   maxAge: () => Promise<AsyncIterator<Int>>;
   minAge: () => Promise<AsyncIterator<Int>>;
+  password: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -3063,11 +2754,6 @@ export type ID_Output = string;
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
 
 /*
 DateTime scalar input type, allowing Date
@@ -3084,6 +2770,11 @@ The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
 
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
+
 export type Long = string;
 
 /**
@@ -3093,10 +2784,6 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
-    embedded: false
-  },
-  {
-    name: "Gender",
     embedded: false
   },
   {
