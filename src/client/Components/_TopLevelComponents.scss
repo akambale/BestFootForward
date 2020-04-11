@@ -113,20 +113,20 @@
 }
 
 .about {
-  margin: 2rem;
+  margin: 2rem auto;
   height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
+  max-width: 60rem;
+
+  @include respond(tab-port) {
+    margin: 2rem;
+  }
 
   &__paragraph {
-    line-height: normal;
+    margin-bottom: 1rem;
   }
 
   &__heading {
     padding: 1rem 0rem;
-    text-align: center;
   }
 
   &__button {
@@ -137,5 +137,9 @@
     background-color: $color-primary;
     padding: 1rem 2rem;
     margin: 2rem 0rem;
+  }
+
+  & > ol {
+    margin-left: 2.5rem;
   }
 }

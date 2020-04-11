@@ -377,17 +377,16 @@ body {
     animation-fill-mode: forwards; }
 
 .about {
-  margin: 2rem;
+  margin: 2rem auto;
   height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column; }
+  max-width: 60rem; }
+  @media only screen and (max-width: 56.25em) {
+    .about {
+      margin: 2rem; } }
   .about__paragraph {
-    line-height: normal; }
+    margin-bottom: 1rem; }
   .about__heading {
-    padding: 1rem 0rem;
-    text-align: center; }
+    padding: 1rem 0rem; }
   .about__button {
     border-radius: 0.7rem;
     border: 0.3rem solid #fa9874;
@@ -396,6 +395,8 @@ body {
     background-color: #fa9874;
     padding: 1rem 2rem;
     margin: 2rem 0rem; }
+  .about > ol {
+    margin-left: 2.5rem; }
 
 .lib__btn:focus {
   border: 0.3rem solid #00887a; }
