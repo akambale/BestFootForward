@@ -21,7 +21,7 @@
     "@babel/polyfill": "^7.2.5",
     "@reach/router": "^1.2.1",
     "apollo-server": "^2.9.15",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
