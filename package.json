@@ -29,7 +29,7 @@
     "graphql": "^14.5.8",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mysql": "^2.17.1",
     "prisma-binding": "^2.3.16",
     "prisma-client-lib": "^1.34.10",
